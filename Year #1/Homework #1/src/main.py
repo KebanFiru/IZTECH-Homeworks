@@ -54,13 +54,13 @@ if(len(BookTypeList) != 0):
             RentalFee = (RentalFeeDict[BookTypeList[i]]) * 14
             #Calculate fee for 14 hours with (Rental fee) * 14.For example BookTypeList[0] = 'Novel, Rental fee = RentalFeeDict['Novel'] = 2.
 
-            print(f'Book name: {BookNameList[i]},Book type: {BookTypeList[i]}, rental fee: {RentalFee}$, late fee cost: {LateBookRentTime}$')
+            print(f'Book name: {BookNameList[i]}, book type: {BookTypeList[i]}, rental fee: {RentalFee}$, late fee cost: {LateBookRentTime}$')
             TotalCost = TotalCost + RentalFee + LateBookRentTime
         else:
             RentalFee = (RentalFeeDict[BookTypeList[i]]) * BookRentTime[i]
             #This part will calculate fee with times that smaller than 14.
 
-            print(f'Book name: {BookNameList[i]}, Book type: {BookTypeList[i]}, rental fee: {RentalFee}$, late fee: 0$')
+            print(f'Book name: {BookNameList[i]}, book type: {BookTypeList[i]}, rental fee: {RentalFee}$, late fee: 0$')
             TotalCost = TotalCost + RentalFee
     print(f'Total Cost: {TotalCost}$')
     print("-------------------------------------------")
