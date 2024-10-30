@@ -10,4 +10,4 @@ The rental system must be capable of:
 
 - Display username, the total rent cost, and the total late fees
 
-In order to achieve all the aims I used dictionaries(RentalFeeDict, LateFeeDict) and lists(BookNameList, BookTypeList, BookRentTime)
+In order to achieve all the aims I used dictionaries(RentalFeeDict, LateFeeDict), and lists(BookNameList, BookTypeList, BookRentTime)
