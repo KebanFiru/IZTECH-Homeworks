@@ -34,7 +34,7 @@ for i in range(NumberofBooksWillBeRentered):
     else:
         print("The book you tried to rent is not available on the list. Try again")    
 
-if(len(BookTypeList) != 0): #Check for BookList list if there is a element or not 
+if(len(BookTypeList) != 0): #Check for BookList list if there is an element or not 
     print("-------------------------------------------")
     print(f'Username: {Username}')
     for i in range(len(BookRentTime)):
