@@ -10,7 +10,6 @@ print('''
     --- Welcome to book renting service ---
     ''')
 Username = input("Username:")
-NumberofBooksWillBeRentered = int(input("Book count you want to rent:"))
 print('''
       -------------------------------------------
       | Book Type   | Rental Fee    | Late Fee  |
@@ -23,13 +22,15 @@ print('''
         ''')
 print("You can rent for 14 days. If you want to rent more than 14 days you must give late fee for each day \n")
 
+NumberofBooksWillBeRentered = int(input("Book count you want to rent:"))
+
 for i in range(NumberofBooksWillBeRentered):     
     NameOfBook = input("Name of the book:")
     BookNameList.append(NameOfBook)                          
     TypeOfBook = input("Which type of book you want to rent:")
     if TypeOfBook.capitalize() == "Novel" or TypeOfBook == "Textbook" or TypeOfBook == "Magazine" or TypeOfBook == "Comic Book":
         # Check input if valid
-        
+
         BookTypeList.append(TypeOfBook)
         RentTimeOfBook = int(input("For how long you want to rent the book:"))
         BookRentTime.append(RentTimeOfBook)
