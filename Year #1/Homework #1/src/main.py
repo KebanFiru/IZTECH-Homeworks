@@ -3,8 +3,8 @@ TotalCost = 0
 BookNameList = [] #-> Store name of the books that gave by user
 BookTypeList = [] #-> Store type of the books that gave by user
 BookRentTime = [] #-> Store rent time of the books that gave by user
-RentalFeeDict = {'NOVEL':2, "TEXTBOOK":4, 'MAGAZİNE':1,'COMIC BOOK':1.50}
-LateFeeDict = {'NOVEL':0.5, "TEXTBOOK":1, 'MAGAZİNE':0.25,'COMIC BOOK':0.75}
+RentalFeeDict = {'NOVEL':2, "TEXTBOOK":4, 'MAGAZINE':1,'COMIC BOOK':1.50}
+LateFeeDict = {'NOVEL':0.5, "TEXTBOOK":1, 'MAGAZINE':0.25,'COMIC BOOK':0.75}
 
 print('''
     --- Welcome to book renting service ---
@@ -28,7 +28,7 @@ for i in range(NumberofBooksWillBeRentered):
     NameOfBook = input("Name of the book:")
     BookNameList.append(NameOfBook)                          
     TypeOfBook = input("Which type of book you want to rent:")
-    if TypeOfBook.upper() == "NOVEL" or TypeOfBook.upper() == "TEXTBOOK" or TypeOfBook.upper() == "MAGAZİNE" or TypeOfBook.upper() == "COMIC BOOK":
+    if TypeOfBook.upper() == "NOVEL" or TypeOfBook.upper() == "TEXTBOOK" or TypeOfBook.upper() == "MAGAZINE" or TypeOfBook.upper() == "COMIC BOOK":
         # Check input if valid
 
         BookTypeList.append(TypeOfBook.upper())
