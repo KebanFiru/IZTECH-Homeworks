@@ -53,13 +53,17 @@ if(len(BookTypeList) != 0):
             #If BookRentTime[i] > 14 the late fee will be payed. 
 
             NewBookRentTime = BookRentTime[i] - 14
-            LateBookRentTime = (LateFeeDict[BookTypeList[i]] + RentalFeeDict[BookTypeList[i]]) * NewBookRentTime
+            LateBookRentTime = (LateFeeDict[BookTypeList[i]] + RentalFee) * NewBookRentTime
             #For example i = 0 ,BookTypeList[0] = 'Novel', and LateFeeDict['Novel'] = 0.5.  
-
+    
+            RentalFee = RentalFee * 14
             print(f'BOOK NAME: {BookNameUpper} || BOOK TYPE: {BookTypeList[i]} || RENTAL FEE: {RentalFee}$ || LATE FEE COST: {LateBookRentTime}$')
             TotalCost = TotalCost + RentalFee + LateBookRentTime
         else:
             #This part will calculate fee with times that smaller than 14.
+
+            RentalFee = RentalFee*BookRentTime[i]
+            #Calculate RentalFee based on the BookRentTime[i]
 
             print(f'BOOK NAME: {BookNameUpper} || BOOK TYPE: {BookTypeList[i]} || RENTAL FEE: {RentalFee}$ || LATE FEE COST: 0$')
             TotalCost = TotalCost + RentalFee
