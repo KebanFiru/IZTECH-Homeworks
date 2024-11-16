@@ -15,7 +15,13 @@ def is_prime(value):
 
             elif value %i == 0:
                 # Increase isprime by 1 if value has no remainder  with the integer that smaller than value
+
+                #print(i) -> if you want to learn which numbers that can divide value you can delete 
+                # the comment signature behind print statement
+
                 isnotprime = True
+                break
+                #After deleting comment signature behind print you should add comment signature begind break
 
         if isnotprime == True:
                 #Check if isprime is equel to value-1. That means all the numbers that between 1 
