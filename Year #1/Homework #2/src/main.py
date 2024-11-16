@@ -1,28 +1,29 @@
 from timeit import default_timer as timer
 
 def is_prime(value):
-    isprime = 1
-    #This integer for check if value is prime or not. If value is prime, isprime is going to be equel value -1
 
     if isinstance(value, int):
         #Check if value is int or not
 
-        for i in range(1, value, 1):
+        isnotprime = False
+        
+        for i in range(2, value, 1):
             #1<= i <= value-1 because of the nature of for loop
 
             if value % i != 0:
-                # Increase isprime by 1 if value has remainder with the integer that smaller than value
-
-                isprime += 1
-            else:
                 pass
-        if isprime == value-1:
-            #Check if isprime is equel to value-1. That means all the numbers that between 1 
-            #and value-1 cant divide value without remainder and that means it's a prime number
 
-            return True
-        else:
+            elif value %i == 0:
+                # Increase isprime by 1 if value has no remainder  with the integer that smaller than value
+                isnotprime = True
+
+        if isnotprime == True:
+                #Check if isprime is equel to value-1. That means all the numbers that between 1 
+                #and value-1 cant divide value without remainder and that means it's a prime number
+
             return False
+        else:
+            return True
     else:
         print("This is not valid")
 def accuracy_test_is_prime(test_case, expected_value):
@@ -33,7 +34,18 @@ def accuracy_test_is_prime(test_case, expected_value):
     else:
         print(f"Test for {test_case} is failed")
 
-def speed_test_is_prime():
-    pass
+def speed_test_is_prime(value):
+    is_prime(value)
+    print(f"Time for {value} ", timer())
+
+
+accuracy_test_is_prime(23909, is_prime(23909))
+accuracy_test_is_prime(43177, is_prime(43177))
+accuracy_test_is_prime(31091, is_prime(31091))
+accuracy_test_is_prime(44532, is_prime(44532))
+accuracy_test_is_prime(13860, is_prime(13860))
+accuracy_test_is_prime(38243, is_prime(38243))
+
+
 
 
