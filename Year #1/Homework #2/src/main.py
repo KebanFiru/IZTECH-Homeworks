@@ -8,7 +8,7 @@ def is_prime(value):
         isnotprime = False
         
         for i in range(2, value, 1):
-            #1<= i <= value-1 because of the nature of for loop
+            #2<= i <= value-1 because of the nature of for loop
 
             if value % i != 0:
                 pass
