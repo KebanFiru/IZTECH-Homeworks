@@ -22,6 +22,7 @@ def is_prime(value):
                 isnotprime = True
                 break
                 #After deleting comment signature behind print you should add comment signature begind break
+                #Thanks to break statement code's performance is increased
 
         if isnotprime == True:
                 #Check if isprime is equel to value-1. That means all the numbers that between 1 
