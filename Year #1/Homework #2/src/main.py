@@ -26,8 +26,14 @@ def is_prime(value):
     else:
         print("This is not valid")
 def accuracy_test_is_prime(test_case, expected_value):
-    pass
+    if expected_value:
+        #if expected_valule is true than this line will start
+
+        print(f"Test for {test_case} is passed")
+    else:
+        print(f"Test for {test_case} is failed")
+
 def speed_test_is_prime():
     pass
 
-print(is_prime(23909))
+
