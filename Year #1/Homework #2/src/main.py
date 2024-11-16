@@ -21,7 +21,7 @@ def is_prime(value):
 
                 isnotprime = True
                 break
-                #After deleting comment signature behind print you should add comment signature begind break
+                #After deleting comment signature behind print you should add comment signature behind break
                 #Thanks to break statement code's performance is increased
 
         if isnotprime == True:
