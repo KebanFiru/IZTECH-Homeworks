@@ -8,3 +8,5 @@ is_prime(value) -> This function is responsable for check if value is prime or n
               For check if value is prime or not, the function uses isnotprime boolean.
 
 accuracy_test_is_prime(test_case, expected_value) -> This function is for print if test_case is prime or not
+
+speed_test_is_prime(value) -> This function is for benchmark the code
