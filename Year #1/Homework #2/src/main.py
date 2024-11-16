@@ -14,7 +14,7 @@ def is_prime(value):
                 pass
 
             elif value %i == 0:
-                # Increase isprime by 1 if value has no remainder  with the integer that smaller than value
+                # Check if value is divide by i. If i can divide value it means value is not a prime number
 
                 #print(i) -> if you want to learn which numbers that can divide value you can delete 
                 # the comment signature behind print statement
