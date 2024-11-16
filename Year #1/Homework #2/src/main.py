@@ -1,7 +1,7 @@
 from timeit import default_timer as timer
 
 def is_prime(value):
-    isprime = 0
+    isprime = 1
     #This integer for check if value is prime or not. If value is prime, isprime is going to be equel value -1
 
     if isinstance(value, int):
@@ -19,7 +19,6 @@ def is_prime(value):
         if isprime == value-1:
             #Check if isprime is equel to value-1. That means all the numbers that between 1 
             #and value-1 cant divide value without remainder and that means it's a prime number
-            print(isprime)
 
             return True
         else:
@@ -30,3 +29,5 @@ def accuracy_test_is_prime(test_case, expected_value):
     pass
 def speed_test_is_prime():
     pass
+
+print(is_prime(23909))
