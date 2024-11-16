@@ -39,12 +39,22 @@ def speed_test_is_prime(value):
     print(f"Time for {value} ", timer())
 
 
+
 accuracy_test_is_prime(23909, is_prime(23909))
 accuracy_test_is_prime(43177, is_prime(43177))
 accuracy_test_is_prime(31091, is_prime(31091))
 accuracy_test_is_prime(44532, is_prime(44532))
 accuracy_test_is_prime(13860, is_prime(13860))
 accuracy_test_is_prime(38243, is_prime(38243))
+
+speed_test_is_prime(43177)
+speed_test_is_prime(784687)
+speed_test_is_prime(12009367)
+speed_test_is_prime(231002771)
+speed_test_is_prime(3484798799)
+
+
+
 
 
 
