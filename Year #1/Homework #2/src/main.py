@@ -25,9 +25,6 @@ def is_prime(value):
                 #Thanks to break statement code's performance is increased
 
         if isnotprime == True:
-                #Check if isprime is equel to value-1. That means all the numbers that between 1 
-                #and value-1 cant divide value without remainder and that means it's a prime number
-
             return False
         else:
             return True
