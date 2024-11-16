@@ -1,4 +1,4 @@
-# 2nd Homework
+# Check For Prime Number
 
 This is second homework that gave by IZTECH Computer Engineering
 
