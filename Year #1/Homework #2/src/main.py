@@ -6,8 +6,9 @@ def is_prime(value):
         #Check if value is int or not
 
         isnotprime = False
+        SquareRootofValue = value**(1/2)
         
-        for i in range(2, value, 1):
+        for i in range(2, int(SquareRootofValue), 1):
             #2<= i <= value because of the nature of for loop
 
             if value % i != 0:
@@ -31,7 +32,7 @@ def is_prime(value):
     else:
         print("This is not valid")
 def accuracy_test_is_prime(test_case, expected_value):
-    if expected_value:
+    if expected_value == is_prime(test_case):
         #if expected_valule is true than this line will start
 
         print(f"Test for {test_case} is passed")
@@ -39,17 +40,18 @@ def accuracy_test_is_prime(test_case, expected_value):
         print(f"Test for {test_case} is failed")
 
 def speed_test_is_prime(value):
+    timer()
     is_prime(value)
     print(f"Time for {value} ", timer())
 
 
 
-accuracy_test_is_prime(23909, is_prime(23909))
-accuracy_test_is_prime(43177, is_prime(43177))
-accuracy_test_is_prime(31091, is_prime(31091))
-accuracy_test_is_prime(44532, is_prime(44532))
-accuracy_test_is_prime(13860, is_prime(13860))
-accuracy_test_is_prime(38243, is_prime(38243))
+accuracy_test_is_prime(23909, True)
+accuracy_test_is_prime(43177, True)
+accuracy_test_is_prime(31091, True)
+accuracy_test_is_prime(44532, False)
+accuracy_test_is_prime(13860, False)
+accuracy_test_is_prime(38243, False)
 
 speed_test_is_prime(43177)
 speed_test_is_prime(784687)
