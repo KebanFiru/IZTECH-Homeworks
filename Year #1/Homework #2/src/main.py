@@ -8,7 +8,7 @@ def is_prime(value):
         isnotprime = False
         SquareRootofValue = value**(1/2)
         
-        for i in range(2, int(SquareRootofValue), 1):
+        for i in range(2, int(SquareRootofValue)+1, 1):
             #2<= i <= value because of the nature of for loop
 
             if value % i != 0:
