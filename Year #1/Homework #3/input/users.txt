@@ -1,16 +1,12 @@
-g
-a
-b
-c
-d
-e
-d
-g
-f
-h
-z_d
-a_b12a
-b_c12d
+a_b, 12, d
+g_h, 12, a
+a_d, f, g
+a_b, 12, d
+g_h, 12, a
+a_d, f, g
+a_b, 12, d
+g_h, 12, a
+a_d, f, g
 a_b, 12, d
 g_h, 12, a
 a_d, f, g
