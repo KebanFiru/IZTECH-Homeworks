@@ -1,5 +1,21 @@
-a,b,c
-a, b,c
-a, b,c
-a, b,c
-a, b,c
+ID, Name, Price, Stock
+1, Phone, 5000, 10
+2, Laptop, 10000, 5
+3, Headphones, 1000, 15
+4, Tablet, 3000, 8
+5, Digital Camera, 2000, 20
+6, Gaming Mouse, 1500, 25
+7, Smart TV,7000, 4
+8, Router, 1200, 30
+9, External Hard Drive, 2000, 12
+10, Power Bank, 500, 50
+11, Webcam, 1500, 20
+12, Printer,7000, 3
+13, Graphics Card, 10000, 6
+14, Laptop Stand, 1000, 8
+15, Keyboard, 1200, 18
+16, Mouse, 500, 40
+17, Desk Lamp, 700, 10
+18, Microphone, 600, 8
+19, USB Drive, 800, 25
+20, Bluethoot Speaker, 1500, 12
