@@ -1,2 +1,2 @@
-public class Spider {
+public class Spider extends HazardCard{
 }

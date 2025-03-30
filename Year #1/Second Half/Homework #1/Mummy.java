@@ -1,2 +1,2 @@
-public class Mummy {
+public class Mummy extends HazardCard{
 }

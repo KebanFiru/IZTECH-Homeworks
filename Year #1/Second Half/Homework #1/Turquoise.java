@@ -1,2 +1,2 @@
-public class Turquoise {
+public class Turquoise extends Treasure{
 }

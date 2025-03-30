@@ -1,2 +1,2 @@
-public class Snake {
+public class Snake extends HazardCard{
 }

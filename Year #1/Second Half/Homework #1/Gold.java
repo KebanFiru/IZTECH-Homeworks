@@ -1,2 +1,2 @@
-public class Gold {
+public class Gold extends Treasure{
 }

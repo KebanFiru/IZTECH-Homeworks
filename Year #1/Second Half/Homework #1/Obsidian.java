@@ -1,2 +1,2 @@
-public class Obsidian {
+public class Obsidian extends Treasure {
 }

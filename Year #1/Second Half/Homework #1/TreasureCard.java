@@ -1,2 +1,2 @@
-public class TreasureCard {
+public class TreasureCard extends QuestCard{
 }

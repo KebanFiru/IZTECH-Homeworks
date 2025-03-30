@@ -1,2 +1,2 @@
-public class HazardCard {
+public class HazardCard extends QuestCard{
 }
