@@ -16,7 +16,7 @@ public class QuestCard {
 
     public boolean equals(Object obj){
 
-        if(obj.getClass() == Turquoise.class || obj.getClass() == Gold.class || obj.getClass() == Obsidian.class){
+        if(obj instanceof  Turquoise || obj instanceof  Gold || obj instanceof  Obsidian){
 
             return true;
 
