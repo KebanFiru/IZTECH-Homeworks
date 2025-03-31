@@ -1,2 +1,9 @@
-public class Fire {
+public class Fire extends HazardCard{
+
+    public Fire(){
+
+        super("Fire");
+
+    }
+
 }

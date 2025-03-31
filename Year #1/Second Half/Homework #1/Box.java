@@ -14,21 +14,21 @@ public class Box extends Bag<QuestCard>
         }
 
         int[] turquoiseValues = {33, 36, 39, 42, 45};
-        for (int value: turquoiseValues)
+        for (int amount: turquoiseValues)
         {
-            add(new TreasureCard("Turquoise Card" , new Turquoise(), value));
+            add(new TreasureCard("Turquoise Card" , new Turquoise(1), amount ));
         }
 
         int[] obsidianValues = {18, 21, 24, 27, 30};
-        for (int value: obsidianValues)
+        for (int amount: obsidianValues)
         {
-            add(new TreasureCard("Obsidian Card" , new Obsidian(), value));
+            add(new TreasureCard("Obsidian Card" , new Obsidian(5), amount));
         }
 
         int[] goldValues = {3, 6, 9, 12, 15};
-        for (int value: goldValues)
+        for (int amount: goldValues)
         {
-            add(new TreasureCard("Gold Card" , new Gold(), value));
+            add(new TreasureCard("Gold Card" , new Gold(10), amount));
         }
     }
 }
