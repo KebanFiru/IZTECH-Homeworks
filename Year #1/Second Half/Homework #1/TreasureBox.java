@@ -1,2 +1,2 @@
-public class TreasureBox extends Bag<QuestCard>{
-}
+public class TreasureBox extends Bag<QuestCard>
+{}

@@ -1,20 +1,16 @@
-public class Chest extends Bag <Treasure>
-{
-    public void initializedChest()
-    {
-        for (int i = 0; i < 195; i++)
-        {
+public class Chest extends Bag<Treasure> {
+    public void initializeChest() {
+        for (int i = 0; i < 195; i++) {
             add(new Turquoise(1));
         }
 
-        for (int i = 0; i < 120; i++)
-        {
+        for (int i = 0; i < 120; i++) {
             add(new Obsidian(5));
         }
 
-        for (int i = 0; i < 45; i++)
-        {
+        for (int i = 0; i < 45; i++) {
             add(new Gold(10));
         }
     }
 }
+

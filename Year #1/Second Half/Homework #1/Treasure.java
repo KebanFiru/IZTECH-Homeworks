@@ -14,4 +14,8 @@ public class Treasure {
 
     }
 
+    public int getValue() {
+        return value;
+    }
+
 }

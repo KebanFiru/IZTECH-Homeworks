@@ -18,4 +18,12 @@ public class TreasureCard extends QuestCard{
 
     }
 
+    public Treasure getTreasure() {
+        return treasure;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
 }
