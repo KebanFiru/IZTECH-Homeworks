@@ -12,7 +12,6 @@ public class TreasureCard extends QuestCard{
 
     }
 
-    @Override
     public String toString(){
 
         return "Treasure card name:" + getName() + ","+"value:"+this.value;
