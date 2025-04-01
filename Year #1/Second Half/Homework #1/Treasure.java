@@ -8,7 +8,6 @@ public class Treasure {
 
     }
 
-    @Override
     public String toString(){
 
         return "Treasure value:"+this.value ;
