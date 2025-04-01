@@ -8,7 +8,7 @@ public class HazardCard extends QuestCard{
 
     public String toString(){
 
-        return "A";
+        return "Hazard card name:"+getName();
 
     }
 

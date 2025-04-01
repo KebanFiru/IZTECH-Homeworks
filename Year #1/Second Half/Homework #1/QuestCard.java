@@ -10,7 +10,7 @@ public class QuestCard {
 
     public String toString(){
 
-        return String.format("%s", this.name);
+        return "Quest card name:"+ this.name;
 
     }
 
@@ -23,6 +23,12 @@ public class QuestCard {
         }
 
         return false;
+
+    }
+
+    public String getName(){
+
+        return this.name;
 
     }
 

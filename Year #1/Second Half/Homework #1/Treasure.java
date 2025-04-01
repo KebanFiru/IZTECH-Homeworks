@@ -11,7 +11,7 @@ public class Treasure {
     @Override
     public String toString(){
 
-        return String.format("%s", value);
+        return "Treasure value:"+this.value ;
 
     }
 
