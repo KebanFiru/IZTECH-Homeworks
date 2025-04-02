@@ -39,16 +39,16 @@ public class Bag<T> implements IBag<T> {
         if (index < 0 || index >= numberOfEntries) {
             return null;
         }
-        
+
         T result = bag[index];
-        
+
         for (int i = index; i < numberOfEntries - 1; i++) {
             bag[i] = bag[i + 1];
         }
-        
+
         bag[numberOfEntries - 1] = null;
         numberOfEntries--;
-        
+
         return result;
     }
 
@@ -114,12 +114,18 @@ public class Bag<T> implements IBag<T> {
         return numberOfEntries;
     }
 
-    public T[] toArray() {
-        T[] result = (T[]) new Object[numberOfEntries];
-        for (int i = 0; i < numberOfEntries; i++) {
-            result[i] = bag[i];
+    public Object[] toArray() {
+        try {
+            Object[] result = new Object[numberOfEntries];
+            for (int i = 0; i < numberOfEntries; i++) {
+                result[i] = bag[i];
+            }
+            return result;
+        } catch (Exception e) {
+            System.out.println("Error in toArray: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
-        return result;
     }
 
     private void doubleCapacity() {
