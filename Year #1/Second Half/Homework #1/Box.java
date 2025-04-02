@@ -1,5 +1,7 @@
 public class Box extends Bag<QuestCard> {
     public void initializeBox() {
+        clear();
+
         for (int i = 0; i < 3; i++) {
             add(new Spider());
             add(new Mummy());
