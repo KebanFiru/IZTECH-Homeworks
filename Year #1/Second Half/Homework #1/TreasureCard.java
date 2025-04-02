@@ -25,5 +25,5 @@ public class TreasureCard extends QuestCard{
     public int getValue() {
         return value;
     }
-
 }
+
