@@ -9,13 +9,6 @@ public class GameApp {
 
         game.play();
 
-        System.out.println("\n\nRunning the game again...\n");
-
-        player = new Player("Adventurer");
-        box = new Box();
-        chest = new Chest();
-        game = new Game(5, player, box, chest);
-        game.play();
     }
 }
 

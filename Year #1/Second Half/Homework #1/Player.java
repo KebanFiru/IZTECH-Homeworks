@@ -25,7 +25,7 @@ public class Player {
     public int calculateScore(){
         score = 0;
         for (int i = 0; i < tent.getCurrentSize(); i++) {
-            Treasure treasure = tent.toArray()[i];
+            Treasure treasure = (Treasure) tent.toArray()[i];
             score += treasure.getValue();
         }
         return score;
