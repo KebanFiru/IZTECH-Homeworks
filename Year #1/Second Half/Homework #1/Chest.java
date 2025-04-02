@@ -1,5 +1,7 @@
 public class Chest extends Bag<Treasure> {
     public void initializeChest() {
+        clear();
+
         for (int i = 0; i < 195; i++) {
             add(new Turquoise(1));
         }
