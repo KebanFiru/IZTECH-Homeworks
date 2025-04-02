@@ -39,13 +39,16 @@ public class Bag<T> implements IBag<T> {
         if (index < 0 || index >= numberOfEntries) {
             return null;
         }
-
+        
         T result = bag[index];
-
-        bag[index] = bag[numberOfEntries - 1];
+        
+        for (int i = index; i < numberOfEntries - 1; i++) {
+            bag[i] = bag[i + 1];
+        }
+        
         bag[numberOfEntries - 1] = null;
         numberOfEntries--;
-
+        
         return result;
     }
 
