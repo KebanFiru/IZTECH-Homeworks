@@ -20,25 +20,50 @@ public class Game {
         chest.initializeChest();
     }
 
-    public void claimTreasures(TreasureBox treasurebox){
-        while (!treasurebox.isEmpty()) {
-            QuestCard card = treasurebox.remove();
-            if (card instanceof TreasureCard) {
-                TreasureCard treasureCard = (TreasureCard) card;
-                Treasure treasureType = treasureCard.getTreasure();
-                int treasureAmount = treasureCard.getValue();
+    public void claimTreasures(TreasureBox treasureBox){
+        try {
+            while (!treasureBox.isEmpty()) {
+                QuestCard card = treasureBox.remove();
+                if (card instanceof TreasureCard) {
+                    TreasureCard treasureCard = (TreasureCard) card;
 
-                for (int i = 0; i < treasureAmount; i++) {
-                    for (int j = 0; j < chest.getCurrentSize(); j++) {
-                        Treasure chestTreasure = chest.toArray()[j];
-                        if (chestTreasure.getClass().equals(treasureType.getClass())) {
-                            chest.remove(chestTreasure);
-                            player.getTent().add(chestTreasure);
+                    System.out.println("Processing treasure card: " + treasureCard);
+
+                    Treasure treasureType = treasureCard.getTreasure();
+                    if (treasureType == null) {
+                        System.out.println("Warning: Treasure type is null for card " + treasureCard);
+                        continue;
+                    }
+
+                    int treasureAmount = treasureCard.getValue();
+                    System.out.println("Treasure type: " + treasureType.getClass().getSimpleName() + ", amount: " + treasureAmount);
+
+                    for (int i = 0; i < treasureAmount; i++) {
+                        boolean foundTreasure = false;
+                        for (int j = 0; j < chest.getCurrentSize(); j++) {
+                            Object obj = chest.toArray()[j];
+                            if (obj instanceof Treasure) {
+                                Treasure chestTreasure = (Treasure) obj;
+                                if (chestTreasure.getClass().equals(treasureType.getClass())) {
+                                    chest.remove(chestTreasure);
+                                    player.getTent().add(chestTreasure);
+                                    foundTreasure = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!foundTreasure) {
+                            System.out.println("Not enough treasures of type " + treasureType.getClass().getSimpleName() + " in the chest.");
                             break;
                         }
                     }
+                } else {
+                    System.out.println("Warning: Non-treasure card found in treasure box: " + card);
                 }
             }
+        } catch (Exception e) {
+            System.out.println("Error in claimTreasures: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -50,12 +75,25 @@ public class Game {
         for (int round = 1; round <= numberOfRounds; round++) {
             System.out.println("\nRound " + round + ":");
 
+            if (box.getCurrentSize() < 3) {
+                System.out.println("Not enough cards in the box to continue. Game ends.");
+                break;
+            }
+
             for (int roll = 1; roll <= 3; roll++) {
+                if (box.isEmpty()) {
+                    System.out.println("No more cards in the box. Ending round early.");
+                    break;
+                }
+
                 int diceResult = player.rollDice();
                 System.out.println("  Roll " + roll + ": " + diceResult);
 
+                diceResult = diceResult % box.getCurrentSize();
+
                 QuestCard drawnCard = box.removeByIndex(diceResult);
                 if (drawnCard == null) {
+                    System.out.println("  Invalid index. Rolling again.");
                     roll--;
                     continue;
                 }
