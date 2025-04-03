@@ -134,9 +134,9 @@ public class Game {
                 }
             }
 
-            int turquoiseValue = turquoiseCount * 1;  // Turquoise value is 1
-            int obsidianValue = obsidianCount * 5;    // Obsidian value is 5
-            int goldValue = goldCount * 10;           // Gold value is 10
+            int turquoiseValue = turquoiseCount * 1;  
+            int obsidianValue = obsidianCount * 5;    
+            int goldValue = goldCount * 10;           
 
             System.out.println("\nTreasures collected:");
             System.out.println("Turquoise: " + turquoiseCount + " (total value: " + turquoiseValue + ")");
