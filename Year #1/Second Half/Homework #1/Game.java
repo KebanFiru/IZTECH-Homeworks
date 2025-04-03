@@ -27,16 +27,12 @@ public class Game {
                 if (card instanceof TreasureCard) {
                     TreasureCard treasureCard = (TreasureCard) card;
 
-                    System.out.println("Processing treasure card: " + treasureCard);
-
                     Treasure treasureType = treasureCard.getTreasure();
                     if (treasureType == null) {
-                        System.out.println("Warning: Treasure type is null for card " + treasureCard);
                         continue;
                     }
 
                     int treasureAmount = treasureCard.getValue();
-                    System.out.println("Treasure type: " + treasureType.getClass().getSimpleName() + ", amount: " + treasureAmount);
 
                     for (int i = 0; i < treasureAmount; i++) {
                         boolean foundTreasure = false;
@@ -53,12 +49,9 @@ public class Game {
                             }
                         }
                         if (!foundTreasure) {
-                            System.out.println("Not enough treasures of type " + treasureType.getClass().getSimpleName() + " in the chest.");
                             break;
                         }
                     }
-                } else {
-                    System.out.println("Warning: Non-treasure card found in treasure box: " + card);
                 }
             }
         } catch (Exception e) {
@@ -124,7 +117,32 @@ public class Game {
             claimTreasures(player.getTreasureBox());
 
             int finalScore = player.calculateScore();
-            System.out.println("Final score: " + finalScore);
+
+            int turquoiseCount = 0;
+            int obsidianCount = 0;
+            int goldCount = 0;
+
+            Object[] tentTreasures = player.getTent().toArray();
+            for (int i = 0; i < tentTreasures.length; i++) {
+                Object obj = tentTreasures[i];
+                if (obj instanceof Turquoise) {
+                    turquoiseCount++;
+                } else if (obj instanceof Obsidian) {
+                    obsidianCount++;
+                } else if (obj instanceof Gold) {
+                    goldCount++;
+                }
+            }
+
+            int turquoiseValue = turquoiseCount * 1;  // Turquoise value is 1
+            int obsidianValue = obsidianCount * 5;    // Obsidian value is 5
+            int goldValue = goldCount * 10;           // Gold value is 10
+
+            System.out.println("\nTreasures collected:");
+            System.out.println("Turquoise: " + turquoiseCount + " (total value: " + turquoiseValue + ")");
+            System.out.println("Obsidian: " + obsidianCount + " (total value: " + obsidianValue + ")");
+            System.out.println("Gold: " + goldCount + " (total value: " + goldValue + ")");
+            System.out.println("\nFinal score: " + finalScore);
         }
     }
 }
