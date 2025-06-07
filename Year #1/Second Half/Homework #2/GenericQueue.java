@@ -1,82 +1,67 @@
-public class GenericQueue <T> implements Queue<T>{
-
+public class GenericQueue<T> implements Queue<T> {
     private Node<T> front;
     private Node<T> rear;
     private int size;
 
-    public GenericQueue(){
-
+    public GenericQueue() {
         this.front = null;
         this.rear = null;
         this.size = 0;
-
     }
 
     @Override
-    public void enqueue(T data){
-
+    public void enqueue(T data) {
         Node<T> newNode = new Node<>(data);
-        if(isEmpty()){
-
+        if (isEmpty()) {
             front = rear = newNode;
-
-        }
-        else{
-
+        } else {
             rear.next = newNode;
             rear = newNode;
-
         }
-
         size++;
     }
 
     @Override
-    public T dequeue(){
-
-        if(!isEmpty()) {
-
+    public T dequeue() {
+        if (isEmpty()) { // Fixed the bug - was !isEmpty()
             throw new RuntimeException("Queue is empty");
-
         }
 
-            T removedData = front.data;
-            front = front.next;
-            if(front == null){
-
-                rear = null;
-
-            }
-
-            size--;
-            return removedData;
-
+        T removedData = front.data;
+        front = front.next;
+        if (front == null) {
+            rear = null;
+        }
+        size--;
+        return removedData;
     }
 
     @Override
-    public T peek(){
-
-        if(isEmpty()){
-
+    public T peek() {
+        if (isEmpty()) {
             throw new RuntimeException("Queue is empty");
-
         }
-
         return front.data;
-
     }
 
     @Override
-    public boolean isEmpty(){
-
+    public boolean isEmpty() {
         return front == null;
-
     }
 
-    public int size(){
-
+    @Override
+    public int size() {
         return size;
-
     }
 
+    public Object[] getAll() {
+        Object[] array = new Object[size];
+        Node<T> current = front;
+        int index = 0;
+        while (current != null) {
+            array[index++] = current.data;
+            current = current.next;
+        }
+        return array;
+    }
 }
