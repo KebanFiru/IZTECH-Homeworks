@@ -1,143 +1,106 @@
 public class GenericDeque<T> implements Deque<T> {
-
     private Node<T> front;
     private Node<T> rear;
     private int size;
 
-    public GenericDeque(){
-
+    public GenericDeque() {
         this.front = null;
         this.rear = null;
         size = 0;
-
     }
 
-    public void addFront(T data){
-
+    @Override
+    public void addFront(T data) {
         Node<T> newNode = new Node<>(data);
-
-        if(isEmpty()){
-
+        if (isEmpty()) {
             front = rear = newNode;
-
-        }
-
-        else{
-
+        } else {
             newNode.next = front;
             front.prev = newNode;
             front = newNode;
-
         }
-
         size++;
-
     }
 
-    public void addRear(T data){
-
+    @Override
+    public void addRear(T data) {
         Node<T> newNode = new Node<>(data);
-
-        if(isEmpty()){
-
+        if (isEmpty()) {
             front = rear = newNode;
-
-        }
-
-        else{
-
+        } else {
             rear.next = newNode;
             newNode.prev = rear;
             rear = newNode;
-
         }
-
         size++;
-
     }
 
-    public T removeFront(){
-
-        if(isEmpty()){
-
+    @Override
+    public T removeFront() {
+        if (isEmpty()) {
             throw new RuntimeException("Deque is empty");
-
         }
-
         T removed = front.data;
         front = front.next;
-        if(front == null){
-
+        if (front == null) {
             rear = null;
-
-        }
-        else{
-
+        } else {
             front.prev = null;
-
         }
         size--;
         return removed;
-
     }
 
-    public T removeRear(){
-
-        if(isEmpty()){
-
+    @Override
+    public T removeRear() {
+        if (isEmpty()) {
             throw new RuntimeException("Deque is empty");
-
         }
-
         T removed = rear.data;
         rear = rear.prev;
-        if(rear == null){
-
+        if (rear == null) {
             front = null;
-
-        }
-        else{
-
+        } else {
             rear.next = null;
-
         }
         size--;
         return removed;
-
     }
 
-    public T peekFront(){
-
-        if(isEmpty()){
-
+    @Override
+    public T peekFront() {
+        if (isEmpty()) {
             throw new RuntimeException("Deque is empty");
-
         }
         return front.data;
-
     }
 
-    public T peekRear(){
-
-        if(isEmpty()){
-
+    @Override
+    public T peekRear() {
+        if (isEmpty()) {
             throw new RuntimeException("Deque is empty");
-
         }
         return rear.data;
-
     }
 
-    public boolean isEmpty(){
-
+    @Override
+    public boolean isEmpty() {
         return front == null;
-
     }
 
-    public int size(){
-
+    @Override
+    public int size() {
         return size;
-
     }
 
+    public Object[] getAll() {
+        Object[] array = new Object[size];
+        Node<T> current = front;
+        int index = 0;
+        while (current != null) {
+            array[index++] = current.data;
+            current = current.next;
+        }
+        return array;
+    }
 }
