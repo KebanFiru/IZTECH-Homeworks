@@ -39,7 +39,7 @@ public class GenericPriorityQueue<T extends Comparable<T>> implements PriorityQu
         }
     }
 
-    
+
     public T poll() {
         if (!highPriorityQueue.isEmpty()) {
             return highPriorityQueue.dequeue();
