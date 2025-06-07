@@ -9,7 +9,7 @@ public class GenericPriorityQueue<T extends Comparable<T>> implements PriorityQu
         this.lowPriorityQueue = new GenericQueue<>();
     }
 
-    @Override
+
     public void offer(T data) {
         if (data instanceof Ticket) {
             Ticket ticket = (Ticket) data;
@@ -39,7 +39,7 @@ public class GenericPriorityQueue<T extends Comparable<T>> implements PriorityQu
         }
     }
 
-    @Override
+    
     public T poll() {
         if (!highPriorityQueue.isEmpty()) {
             return highPriorityQueue.dequeue();
