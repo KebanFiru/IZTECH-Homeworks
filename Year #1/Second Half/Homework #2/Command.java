@@ -7,18 +7,18 @@ public class Command
     private String parameter;
     
     public Command(String type) 
-  {
+    {
         this.type = type;
-   }
+    }
     
-    public Command(String type, String parameter)
-  {
+    public Command(String type, String parameter) 
+    {
         this.type = type;
         this.parameter = parameter;
-   }
+    }
     
-    public Command(String type, String customerName, String issueDescription, String priority)
-  {
+    public Command(String type, String customerName, String issueDescription, String priority) 
+    {
         this.type = type;
         this.customerName = customerName;
         this.issueDescription = issueDescription;
