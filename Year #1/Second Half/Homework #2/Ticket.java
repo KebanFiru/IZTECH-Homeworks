@@ -19,7 +19,7 @@ public class Ticket implements Comparable<Ticket>{
     @Override
     public int compareTo(Ticket ticket){
 
-        int priorityComparison = Integer.compare(ticket.priority, this.priority); 
+        int priorityComparison = Integer.compare(ticket.priority, this.priority);
         if (priorityComparison != 0) {
             return priorityComparison;
         }
