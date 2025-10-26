@@ -10,10 +10,17 @@ public class Query {
     private Match lowestBonusPointMatch;
 
     private Gamer highestScoringGamer;
+
+    private PointsBoard pointsBoard;
+
     private String highestScoringGamerMedal;
     private double highestScoringGamerAvarage;
-    priate int highestScoringGamerTotalPoints;
-    private PointsBoard pointsBoard;
+    private int highestScoringGamerTotalPoints;
+
+    private String[] goldMedalCount;
+    private String[] silverMedalCount;
+    private String[] bronzeMedalCount;
+    private String[] noneMedalCount;
 
     private int totalTournamentPoint;
 
@@ -25,6 +32,7 @@ public class Query {
         this.pointsBoard = pointBoard;
 
         highestScoringGamer = players[0];
+
         highestScoringGamerMedal = "";
         highestScoringGamerAvarage = 0.0;
         highestScoringGamerTotalPoints = 0;
@@ -73,7 +81,7 @@ public class Query {
     public String getLowestScoringMatch(){
         findLowestScoringMatch();
 
-        int lowesttScoringMatchID = lowestScoringMatch.getMatchID;
+        int lowestScoringMatchID = lowestScoringMatch.getMatchID;
         Match[] lowestScoringMatchGames = lowestScoringMatch.getGames;
         int[] lowestScoringMatchGamesRounds = new int[3];
         int lowestScoringMatchSkillPoints = lowestScoringMatch.getSkillPoint;
@@ -110,7 +118,7 @@ public class Query {
                              Match Points: %d
                              Most Contributing Game in this Match:
                              Game: %s
-                             Contribution: %d rounds, %d points = %d""", lowesttScoringMatchID,
+                             Contribution: %d rounds, %d points = %d""", lowestScoringMatchID,
                                                   Arrays.toString(lowestScoringMatchGames),
                                                   Arrays.toString(lowestScoringMatchGamesRounds),
                                                   lowestScoringMatchRawPoints,
@@ -245,9 +253,14 @@ public class Query {
     }
     private void findTotalTournamentPoint(){
 
+        for(int i=0; i<gamers.length; i++){
+            totalTournamentPoint = totalTournamentPoint+pointsBoard.getTotalPoints(i);
+        }
     }
     private void findMetalDistrubition(){
-
+        for(int i=0; i<gamers.length; i++){
+            if()
+        }
     }
 
 }
