@@ -12,6 +12,7 @@ public class Query {
     private Gamer highestScoringGamer;
     private String highestScoringGamerMedal;
     private double highestScoringGamerAvarage;
+    priate int highestScoringGamerTotalPoints;
     private PointsBoard pointsBoard;
 
     private int totalTournamentPoint;
@@ -26,6 +27,7 @@ public class Query {
         highestScoringGamer = players[0];
         highestScoringGamerMedal = "";
         highestScoringGamerAvarage = 0.0;
+        highestScoringGamerTotalPoints = 0;
 
         totalTournamentPoint = 0;
 
@@ -155,6 +157,9 @@ public class Query {
     public String getHighestScoringGamer(){
         findHighestScoringGamer();
 
+        String highestScoringGamerNickename = highestScoringGamer.getNickename();
+        String hightestScoringGamerName = highestScoringGamer.getName();
+
         return String.format("""
                             Highest-Scoring Gamer
                             Nickname: %s
@@ -162,7 +167,11 @@ public class Query {
                             Total Points: %d
                             Avarage Per Match: %.2f
                             Medal: %s
-                            """,);
+                            """,highestScoringGamerNickename,
+                                hightestScoringGamerName,
+                                highestScoringGamerTotalPoints,
+                                highestScoringGamerAvarage,
+                                highestScoringGamerMedal);
     }
 
     public String getTotalTournamentPoints(){
@@ -225,6 +234,7 @@ public class Query {
         for(int i =0; i<gamers.length; i++){
             if(pointsBoard.getTotalPoints(i) > totalPoint){
                 totalPoint = pointsBoard.getTotalPoints(i);
+                highestScoringGamerTotalPoints = pointsBoard.getTotalPoints(i);
                 highestScoringGamerMedal = pointsBoard.getMedal(i);
                 highestScoringGamerAvarage = pointsBoard.getAvaragePerMatch(i);
                 highestScoringGamer = gamers[i];
