@@ -17,10 +17,10 @@ public class Query {
     private double highestScoringGamerAvarage;
     private int highestScoringGamerTotalPoints;
 
-    private String[] goldMedalCount;
-    private String[] silverMedalCount;
-    private String[] bronzeMedalCount;
-    private String[] noneMedalCount;
+    private int goldMedalCount;
+    private int silverMedalCount;
+    private int bronzeMedalCount;
+    private int noneMedalCount;
 
     private int totalTournamentPoint;
 
@@ -36,6 +36,11 @@ public class Query {
         highestScoringGamerMedal = "";
         highestScoringGamerAvarage = 0.0;
         highestScoringGamerTotalPoints = 0;
+
+        goldMedalCount = 0;
+        silverMedalCount = 0;
+        bronzeMedalCount = 0;
+        noneMedalCount = 0;
 
         totalTournamentPoint = 0;
 
@@ -196,7 +201,10 @@ public class Query {
                             SILVER: %d gamers(%.1f %)
                             BRONZE: %d gamers(%.1f %)
                             NONE: %d gamers(%.1f %)
-                            """, );
+                            """, goldMedalCount, (double)goldMedalCount/100,
+                                 silverMedalCount, (double)silverMedalCount/100,
+                                 bronzeMedalCount, (double)bronzeMedalCount/100,
+                                 noneMedalCount, (double)noneMedalCount/100);
     }
 
 
@@ -258,8 +266,19 @@ public class Query {
         }
     }
     private void findMetalDistrubition(){
-        for(int i=0; i<gamers.length; i++){
-            if()
+        for(gamer: gamers){
+            if(gamer.getMedal() == "GOLD"){
+                goldMedalCount += 1;
+            }
+            else if(gamer.getMedal() == "SILVER"){
+                silverMedalCount += 1;
+            }
+            else if(gamer.getMedal() == "BRONZE"){
+                bronzeMedalCount += 1;
+            }
+            else{
+                noneMedalCount += 1;
+            }
         }
     }
 
