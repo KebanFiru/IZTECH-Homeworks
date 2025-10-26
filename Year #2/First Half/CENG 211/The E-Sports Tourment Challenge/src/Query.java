@@ -2,19 +2,30 @@ import java.util.Arrays;
 
 public class Query {
 
-    private int[] totalPoints;
     private Match[][] matches;
+    private Gamer[] gamers;
 
     private Match highestScoringMatch;
     private Match lowestScoringMatch;
+    private Match lowestBonusPointMatch;
 
-    public Query(int[] totalPointsArray, Match[][] playedMatches){
+    private Gamer highestScoringGamer;
 
-        this.totalPoints = totalPointsArray;
+    private int totalTournamentPoint;
+
+    public Query( Match[][] playedMatches, Gamer[] players){
+
         this.matches = playedMatches;
+
+        this.gamers = players;
+
+        highestScoringGamer = players[0];
+
+        totalTournamentPoint = 0;
 
         this.highestScoringMatch = playedMatches[0][0];
         this.lowestScoringMatch = playedMatches[0][0];
+        this.lowestBonusPointMatch = playedMatches[0][0];
 
     }
 
@@ -22,12 +33,12 @@ public class Query {
         findHighestScoringMatch();
 
         int highestScoringMatchID = highestScoringMatch.getMatchID;
-        Match[] highestScoringMatchGames = highestScoringMatch.getMatches;
+        Match[] highestScoringMatchGames = highestScoringMatch.getGames;
         int[] highestScoringMatchGamesRounds = new int[3];
         int highestScoringMatchSkillPoints = highestScoringMatch.getSkillPoint;
         int highestScoringMatchRawPoints = highestScoringMatch. getRawPoint;
         int highestScoringMatchBonusPoints = highestScoringMatch.getBonusPoint;
-        int highestScoringMatchMatchPoints = highestScoringMatch.getMatcbPoint;
+        int highestScoringMatchMatchPoints = highestScoringMatch.getMatchPoint;
 
         for(int i=0; i<highestScoringMatchGames.length; i++){
             highestScoringMatchGamesRounds[i] = highestScoringMatchGames[i].getRounds;
@@ -35,12 +46,12 @@ public class Query {
 
         return String.format("""
                              Highest-Scoring Match:\n +
-                             Match ID: %d +
-                             Games: %s +
-                             Rounds: %s +
-                             Raw Points: %d +
-                             Skill Points: %d +
-                             Bonus Points: %d +
+                             Match ID: %d 
+                             Games: %s 
+                             Rounds: %s 
+                             Raw Points: %d 
+                             Skill Points: %d 
+                             Bonus Points: %d 
                              Match Points: %d""", highestScoringMatchID,
                                                   Arrays.toString(highestScoringMatchGames),
                                                   Arrays.toString(highestScoringMatchGamesRounds),
@@ -55,12 +66,12 @@ public class Query {
         findLowestScoringMatch();
 
         int lowesttScoringMatchID = lowestScoringMatch.getMatchID;
-        Match[] lowestScoringMatchGames = lowestScoringMatch.getMatches;
+        Match[] lowestScoringMatchGames = lowestScoringMatch.getGames;
         int[] lowestScoringMatchGamesRounds = new int[3];
         int lowestScoringMatchSkillPoints = lowestScoringMatch.getSkillPoint;
         int lowestScoringMatchRawPoints = lowestScoringMatch. getRawPoint;
         int lowestScoringMatchBonusPoints = lowestScoringMatch.getBonusPoint;
-        int lowestScoringMatchMatchPoints = lowestScoringMatch.getMatcbPoint;
+        int lowestScoringMatchMatchPoints = lowestScoringMatch.getMatchPoint;
         int [] lowestScoringMatchGamesContribution = new int[3];
         String lowestScoringMatchMostContributedGame = "";
         int lowestScoringMatchMostContributedGameRounds = 0;
@@ -81,13 +92,13 @@ public class Query {
         }
 
         return String.format("""
-                             Highest-Scoring Match:\n +
-                             Match ID: %d +
-                             Games: %s +
-                             Rounds: %s +
-                             Raw Points: %d +
-                             Skill Points: %d +
-                             Bonus Points: %d +
+                             Lowest-Scoring Match:\n +
+                             Match ID: %d 
+                             Games: %s 
+                             Rounds: %s 
+                             Raw Points: %d 
+                             Skill Points: %d 
+                             Bonus Points: %d 
                              Match Points: %d
                              Most Contributing Game in this Match:
                              Game: %s
@@ -105,8 +116,69 @@ public class Query {
 
     }
 
+    public String getMatchWithTheLowestBonusPoints(){
+        findMatchWithTheLowestBonusPoints();
+
+        int lowestBonusPointMatchID = lowestBonusPointMatch.getMatchID();
+        Match[] lowestBonusPointMatchGames = lowestBonusPointMatch.getGames;
+        int[] lowestBonusPointMatchGamesRounds = new int[3];
+        int lowestBonusPointMatchSkillPoints = lowestBonusPointMatch.getSkillPoint;
+        int lowestBonusPointMatchBonusPoints = lowestBonusPointMatch.getBonusPoint;
+        int lowestBonusPointMatchPoints = lowestBonusPointMatch.getMatchPoint;
+
+        for(int i=0; i<lowestBonusPointMatchGames.length; i++){
+            lowestBonusPointMatchGamesRounds[i] = lowestBonusPointMatchGames[i].getRounds;
+        }
+
+        return String.format("""
+                             Match with Lowest Bonus Points:\n 
+                             Match ID: %d 
+                             Games: %s 
+                             Rounds: %s 
+                             Skill Points: %d 
+                             Bonus Points: %d 
+                             Match Points: %d
+                             """, lowestBonusPointMatchID,
+                                  Arrays.toString(lowestBonusPointMatchGames),
+                                  Arrays.toString(lowestBonusPointMatchGamesRounds),
+                                  lowestBonusPointMatchSkillPoints,
+                                  lowestBonusPointMatchBonusPoints,
+                                  lowestBonusPointMatchPoints);
+    }
+
+    public String getHighestScoringGamer(){
+        findHighestScoringGamer();
+
+        return String.format("""
+                            Highest-Scoring Gamer
+                            Nickname: %s
+                            Name: %s
+                            Total Points: %d
+                            Avarage Per Match: %.2f
+                            Medal: %s
+                            """,);
+    }
+
+    public String getTotalTournamentPoints(){
+        findTotalTournamentPoint();
+
+        return String.format("Total Tournament Points across 1500 matches:%d", totalTournamentPoint);
+    }
+    public String getMedalDistribution(){
+        findMetalDistrubition();
+
+        return String.format("""
+                            Medal Distribution:
+                            GOLD: %d gamers(%.1f %)
+                            SILVER: %d gamers(%.1f %)
+                            BRONZE: %d gamers(%.1f %)
+                            NONE: %d gamers(%.1f %)
+                            """, );
+    }
+
+
     private void findHighestScoringMatch() {
-        int highestScoringMatchPoint = 0;
+        int highestScoringMatchPoint = matches[0][0].getMatchPoint;
 
         for(int i =0; i< matches.length; i++) {
             for (int j = 0; j < matches[i].length; j++) {
@@ -118,7 +190,7 @@ public class Query {
         }
     }
     private void findLowestScoringMatch(){
-        int lowestScoringMatchPoint = 0;
+        int lowestScoringMatchPoint = matches[0][0].getMatchPoint;
 
         for(int i =0; i< matches.length; i++) {
             for (int j = 0; j < matches[i].length; j++) {
@@ -128,6 +200,27 @@ public class Query {
                 }
             }
         }
+    }
+    private void findMatchWithTheLowestBonusPoints(){
+        int lowestBonusPoint = matches[0][0].getBonusPoint;
+
+        for(int i =0; i<matches.length; i++){
+            for(int j=0; j<matches[i].length; j++){
+                if(matches[i][j].getBonusPoint < lowestBonusPoint){
+                    lowestBonusPoint = matches[i][j].getBonusPoint;
+                    lowestBonusPointMatch = matches[i][j];
+                }
+            }
+        }
+    }
+    private void findHighestScoringGamer(){
+
+    }
+    private void findTotalTournamentPoint(){
+
+    }
+    private void findMetalDistrubition(){
+
     }
 
 }
