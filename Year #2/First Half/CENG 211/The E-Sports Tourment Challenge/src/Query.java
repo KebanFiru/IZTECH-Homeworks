@@ -10,14 +10,16 @@ public class Query {
     private Match lowestBonusPointMatch;
 
     private Gamer highestScoringGamer;
+    private PointsBoard pointsBoard;
 
     private int totalTournamentPoint;
 
-    public Query( Match[][] playedMatches, Gamer[] players){
+    public Query( Match[][] playedMatches, Gamer[] players, PointsBoard pointBoard){
 
         this.matches = playedMatches;
 
         this.gamers = players;
+        this.pointsBoard = pointBoard;
 
         highestScoringGamer = players[0];
 
@@ -214,6 +216,7 @@ public class Query {
         }
     }
     private void findHighestScoringGamer(){
+        pointsBoard.
 
     }
     private void findTotalTournamentPoint(){
