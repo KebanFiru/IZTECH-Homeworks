@@ -10,6 +10,14 @@ public class Query {
     }
 
     public int findHighestScoringMatch() {
-
+        Match highestScoringMatch = null;
+        for(int i =0; i< matches.length; i++){
+            for(int j=0; j<matches[i].length; j++){
+                if(matches[i][j] > highestScoringMatch){
+                    highestScoringMatch = matches[i][j];
+                }
+            }
+        }
+        return highestScoringMatch;
     }
 }
