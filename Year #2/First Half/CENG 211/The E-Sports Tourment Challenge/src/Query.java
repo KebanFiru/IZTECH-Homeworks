@@ -10,6 +10,8 @@ public class Query {
     private Match lowestBonusPointMatch;
 
     private Gamer highestScoringGamer;
+    private String highestScoringGamerMedal;
+    private double highestScoringGamerAvarage;
     private PointsBoard pointsBoard;
 
     private int totalTournamentPoint;
@@ -22,6 +24,8 @@ public class Query {
         this.pointsBoard = pointBoard;
 
         highestScoringGamer = players[0];
+        highestScoringGamerMedal = "";
+        highestScoringGamerAvarage = 0.0;
 
         totalTournamentPoint = 0;
 
@@ -211,12 +215,22 @@ public class Query {
                 if(matches[i][j].getBonusPoint < lowestBonusPoint){
                     lowestBonusPoint = matches[i][j].getBonusPoint;
                     lowestBonusPointMatch = matches[i][j];
+
                 }
             }
         }
     }
     private void findHighestScoringGamer(){
-        pointsBoard.
+        int totalPoint = 0;
+        for(int i =0; i<gamers.length; i++){
+            if(pointsBoard.getTotalPoints(i) > totalPoint){
+                totalPoint = pointsBoard.getTotalPoints(i);
+                highestScoringGamerMedal = pointsBoard.getMedal(i);
+                highestScoringGamerAvarage = pointsBoard.getAvaragePerMatch(i);
+                highestScoringGamer = gamers[i];
+
+            }
+        }
 
     }
     private void findTotalTournamentPoint(){
