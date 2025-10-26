@@ -63,6 +63,8 @@ public class Query {
         int lowestScoringMatchMatchPoints = lowestScoringMatch.getMatcbPoint;
         int [] lowestScoringMatchGamesContribution = new int[3];
         String lowestScoringMatchMostContributedGame = "";
+        int lowestScoringMatchMostContributedGameRounds = 0;
+        int lowestScoringMatchMostContributedGamePoints = 0;
 
         for(int i=0; i<lowestScoringMatchGames.length; i++){
             lowestScoringMatchGamesRounds[i] = lowestScoringMatchGames[i].getRounds;
@@ -73,6 +75,8 @@ public class Query {
             if(lowestScoringMatchGamesContributionPoint < lowestScoringMatchGamesContribution[i]){
                 lowestScoringMatchGamesContributionPoint = lowestScoringMatchGamesContribution[i];
                 lowestScoringMatchMostContributedGame = lowestScoringMatchGames[i].getName();
+                lowestScoringMatchMostContributedGameRounds = lowestScoringMatchGames[i].getRounds;
+                lowestScoringMatchMostContributedGamePoints = lowestScoringMatchGames[i].getGamePoints;
             }
         }
 
@@ -95,6 +99,8 @@ public class Query {
                                                   lowestScoringMatchBonusPoints,
                                                   lowestScoringMatchMatchPoints,
                                                   lowestScoringMatchMostContributedGame,
+                                                  lowestScoringMatchMostContributedGamePoints,
+                                                  lowestScoringMatchMostContributedGameRounds,
                                                   lowestScoringMatchGamesContributionPoint);
 
     }
