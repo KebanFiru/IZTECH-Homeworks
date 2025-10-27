@@ -14,7 +14,7 @@ public class Query {
     private PointsBoard pointsBoard;
 
     private String highestScoringGamerMedal;
-    private double highestScoringGamerAvarage;
+    private double highestScoringGamerAverage;
     private int highestScoringGamerTotalPoints;
 
     private int goldMedalCount;
@@ -34,7 +34,7 @@ public class Query {
         highestScoringGamer = players[0];
 
         highestScoringGamerMedal = "";
-        highestScoringGamerAvarage = 0.0;
+        highestScoringGamerAverage = 0.0;
         highestScoringGamerTotalPoints = 0;
 
         goldMedalCount = 0;
@@ -178,12 +178,12 @@ public class Query {
                             Nickname: %s
                             Name: %s
                             Total Points: %d
-                            Avarage Per Match: %.2f
+                            Average Per Match: %.2f
                             Medal: %s
                             """,highestScoringGamerNickname,
                                 hightestScoringGamerName,
                                 highestScoringGamerTotalPoints,
-                                highestScoringGamerAvarage,
+                                highestScoringGamerAverage,
                                 highestScoringGamerMedal);
     }
 
@@ -252,7 +252,7 @@ public class Query {
                 totalPoint = pointsBoard.getTotalPoints(i);
                 highestScoringGamerTotalPoints = pointsBoard.getTotalPoints(i);
                 highestScoringGamerMedal = pointsBoard.getMedal(i);
-                highestScoringGamerAvarage = pointsBoard.getAvaragePerMatch(i);
+                highestScoringGamerAverage = pointsBoard.getAveragePerMatch(i);
                 highestScoringGamer = gamers[i];
 
             }
