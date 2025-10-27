@@ -3,7 +3,7 @@ public class PointsBoard {
     private Gamer[] gamers;
     private Match[][] matches;
     private int[] totalPoints;
-    private double[] avaragePointPerMatch;
+    private double[] averagePointPerMatch;
     private String[] gamerMedal;
 
     public PointsBoard(Gamer[] gamers, Match[][] matches) {
@@ -13,7 +13,7 @@ public class PointsBoard {
         int n = this.gamers.length;
 
         this.totalPoints = new int[n];
-        this.avaragePointPerMatch = new double[n];
+        this.averagePointPerMatch = new double[n];
         this.gamerMedal = new String[n];
 
         calculateAll();
@@ -23,7 +23,7 @@ public class PointsBoard {
         return totalPoints[index];
     }
     public double getAveragePerMatch(int index) {
-        return avaragePointPerMatch[index];
+        return averagePointPerMatch[index];
     }
     public String getMedal(int index) {
         return gamerMedal[index];
@@ -51,7 +51,7 @@ public class PointsBoard {
                     sum = sum + match.getMatchPoint();
                 }
                 totalPoints[gamer] = sum;
-                avaragePointPerMatch[gamer] = (double)sum/15.0;
+                averagePointPerMatch[gamer] = (double)sum/15.0;
                 gamerMedal[gamer] = calculateMedal(sum);
             }
         }
@@ -73,7 +73,7 @@ public class PointsBoard {
         this.matches = newMatches;
         if (this.totalPoints == null || this.totalPoints.length != gamers.length) {
             this.totalPoints = new int[gamers.length];
-            this.avaragePointPerMatch = new double[gamers.length];
+            this.averagePointPerMatch = new double[gamers.length];
             this.gamerMedal = new String[gamers.length];
         }
         calculateAll();
