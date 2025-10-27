@@ -1,20 +1,77 @@
 public class PointsBoard {
 
-    private Gamer[] gamers;
+    private final Gamer[] gamers;
     private Match[][] matches;
-    private int[] totalPoints;
-    private double[] averagePointPerMatch;
-    private String[] gamerMedal;
+    private final int[] totalPoints;
+    private final double[] averagePointPerMatch;
+    private final String[] gamerMedal;
 
-    public PointsBoard(Gamer[] gamers, Match[][] matches) {
-        this.gamers = (gamers != null) ? gamers : new Gamer[0];
-        this.matches = (matches != null) ? matches : new Match[0][];;
+    public PointsBoard(Gamer[] players, Match[][] playedMatches) {
+        if(players == null){
+            throw new IllegalArgumentException("players must not be null");
+        }
+        else{
+            this.gamers = new Gamer[players.length];
+            for(int i=0; i<players.length; i++){
+                if(players[i] == null) {
+                    throw new IllegalArgumentException("player must not be null");
+                }
+                Gamer player = new Gamer(players[i]);
+                this.gamers[i] = player;
+            }
+        }
+        if(playedMatches == null){
+            throw new IllegalArgumentException("played matches must not be null");
+        }
+        else{
+            this.matches = new Match[playedMatches.length][playedMatches[0].length];
+            for(int i=0; i<playedMatches.length; i++){
+                for(int j=0; j<playedMatches[i].length; j++){
+                    if(playedMatches[i][j] == null){
+                        throw new IllegalArgumentException("match must not be null");
+                    }
+                    Match match = new Match(playedMatches[i][j]);
+                    this.matches[i][j] = match;
+                }
+            }
+        }
 
-        int n = this.gamers.length;
+        this.totalPoints = new int[this.gamers.length];
+        this.averagePointPerMatch = new double[this.gamers.length];
+        this.gamerMedal = new String[this.gamers.length];
 
-        this.totalPoints = new int[n];
-        this.averagePointPerMatch = new double[n];
-        this.gamerMedal = new String[n];
+        calculateAll();
+    }
+
+    public PointsBoard(PointsBoard another){
+
+        if(another.gamers == null){
+            throw new IllegalArgumentException("gamers must not be null");
+        }
+        else{
+            this.gamers = new Gamer[another.gamers.length];
+            for(int i=0; i<another.gamers.length; i++){
+                Gamer player = new Gamer(another.gamers[i]);
+                this.gamers[i] = player;
+            }
+        }
+
+        if(another.matches == null){
+            throw new IllegalArgumentException("matches must not be null");
+        }
+        else{
+            this.matches = new Match[another.matches.length][another.matches[0].length];
+            for(int i=0; i<another.matches.length; i++){
+                for(int j=0; j<another.matches[i].length; j++){
+                    Match match = new Match(another.matches[i][j]);
+                    this.matches[i][j] = match;
+                }
+            }
+        }
+
+        this.totalPoints = new int[this.gamers.length];
+        this.averagePointPerMatch = new double[this.gamers.length];
+        this.gamerMedal = new String[this.gamers.length];
 
         calculateAll();
     }
@@ -57,7 +114,6 @@ public class PointsBoard {
         }
     }
 
-
     public int calculateTournamentPoints() {
         int sum = 0;
         if(gamers.length != 0) {
@@ -69,13 +125,4 @@ public class PointsBoard {
         return sum;
     }
 
-    public void updateMatches(Match[][] newMatches) {
-        this.matches = newMatches;
-        if (this.totalPoints == null || this.totalPoints.length != gamers.length) {
-            this.totalPoints = new int[gamers.length];
-            this.averagePointPerMatch = new double[gamers.length];
-            this.gamerMedal = new String[gamers.length];
-        }
-        calculateAll();
-    }
 }
