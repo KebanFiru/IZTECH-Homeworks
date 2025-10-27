@@ -51,7 +51,7 @@ public class PointsBoard {
                     sum = sum + currentMatch.getMatchPoint();
                 }
                 totalPoints[gamer] = sum;
-                averagePointPerMatch[gamer] = (double)sum/15.0;
+                averagePointPerMatch[gamer] = (double)sum / matches[gamer].length;
                 gamerMedal[gamer] = calculateMedal(sum);
             }
         }
