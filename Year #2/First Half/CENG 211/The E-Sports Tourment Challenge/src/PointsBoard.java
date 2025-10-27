@@ -8,7 +8,7 @@ public class PointsBoard {
 
     public PointsBoard(Gamer[] gamers, Match[][] matches) {
         this.gamers = (gamers != null) ? gamers : new Gamer[0];
-        this.matches = matches;
+        this.matches = (matches != null) ? matches : new Match[0][];;
 
         int n = this.gamers.length;
 
@@ -47,7 +47,7 @@ public class PointsBoard {
             for (int gamer = 0; gamer<gamers.length; gamer++){
                 int sum = 0;
                 for(int match = 0; match<matches[gamer].length;match++){
-                    Match currentMatch = matches[gamer];
+                    Match currentMatch = matches[gamer][match];
                     sum = sum + currentMatch.getMatchPoint();
                 }
                 totalPoints[gamer] = sum;
