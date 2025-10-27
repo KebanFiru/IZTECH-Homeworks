@@ -266,14 +266,14 @@ public class Query {
         }
     }
     private void findMetalDistrubition(){
-        for(gamer: gamers){
-            if(Gamer gamer.getMedal() == "GOLD"){
+        for(Gamer gamer: gamers){
+            if( "GOLD".equals(gamer.getMedal())){
                 goldMedalCount += 1;
             }
-            else if(Gamer gamer.getMedal() == "SILVER"){
+            else if("SILVER".equals(gamer.getMedal())){
                 silverMedalCount += 1;
             }
-            else if(Gamer gamer.getMedal() == "BRONZE"){
+            else if("BRONZE".equals(gamer.getMedal())){
                 bronzeMedalCount += 1;
             }
             else{
