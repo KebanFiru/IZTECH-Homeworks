@@ -284,14 +284,14 @@ public class Query {
         }
     }
     private void findMedalDistribution(){
-        for(Gamer gamer: gamers){
-            if( "GOLD".equals(pointsBoard.getMedal())){
+        for(int i=0; i<gamers.length; i++){
+            if( "GOLD".equals(pointsBoard.getMedal(i))){
                 goldMedalCount += 1;
             }
-            else if("SILVER".equals(pointsBoard.getMedal())){
+            else if("SILVER".equals(pointsBoard.getMedal(i))){
                 silverMedalCount += 1;
             }
-            else if("BRONZE".equals(pointsBoard.getMedal())){
+            else if("BRONZE".equals(pointsBoard.getMedal(i))){
                 bronzeMedalCount += 1;
             }
             else{
