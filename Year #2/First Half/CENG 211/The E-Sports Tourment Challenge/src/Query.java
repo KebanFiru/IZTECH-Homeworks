@@ -57,7 +57,7 @@ public class Query {
         Match[] highestScoringMatchGames = highestScoringMatch.getGames();
         int[] highestScoringMatchGamesRounds = new int[3];
         int highestScoringMatchSkillPoints = highestScoringMatch.getSkillPoint();
-        int highestScoringMatchRawPoints = highestScoringMatch. getRawPoin()t;
+        int highestScoringMatchRawPoints = highestScoringMatch. getRawPoint();
         int highestScoringMatchBonusPoints = highestScoringMatch.getBonusPoint();
         int highestScoringMatchMatchPoints = highestScoringMatch.getMatchPoint();
 
