@@ -63,9 +63,9 @@ public class Query {
 
         totalTournamentPoint = 0;
 
-        this.highestScoringMatch = new Game (playedMatches[0][0]);
-        this.lowestScoringMatch = new Game (playedMatches[0][0]);
-        this.lowestBonusPointMatch = new Game (playedMatches[0][0]);
+        this.highestScoringMatch = new Match (playedMatches[0][0]);
+        this.lowestScoringMatch = new Match (playedMatches[0][0]);
+        this.lowestBonusPointMatch = new Match (playedMatches[0][0]);
     }
 
     public String getHighestScoringMatch(){
@@ -84,7 +84,7 @@ public class Query {
         }
 
         return String.format("""
-                             Highest-Scoring Match:\n +
+                             Highest-Scoring Match: +
                              Match ID: %d 
                              Games: %s 
                              Rounds: %s 
@@ -108,7 +108,7 @@ public class Query {
         Match[] lowestScoringMatchGames = lowestScoringMatch.getGames();
         int[] lowestScoringMatchGamesRounds = new int[3];
         int lowestScoringMatchSkillPoints = lowestScoringMatch.getSkillPoint();
-        int lowestScoringMatchRawPoints = lowestScoringMatch. getRawPoint();
+        int lowestScoringMatchRawPoints = lowestScoringMatch.getRawPoint();
         int lowestScoringMatchBonusPoints = lowestScoringMatch.getBonusPoint();
         int lowestScoringMatchMatchPoints = lowestScoringMatch.getMatchPoint();
         int [] lowestScoringMatchGamesContribution = new int[3];
@@ -131,7 +131,7 @@ public class Query {
         }
 
         return String.format("""
-                             Lowest-Scoring Match:\n +
+                             Lowest-Scoring Match: +
                              Match ID: %d 
                              Games: %s 
                              Rounds: %s 
@@ -189,7 +189,7 @@ public class Query {
         findHighestScoringGamer();
 
         String highestScoringGamerNickname = highestScoringGamer.getNickname();
-        String hightestScoringGamerName = highestScoringGamer.getName();
+        String highestScoringGamerName = highestScoringGamer.getName();
 
         return String.format("""
                             Highest-Scoring Gamer
@@ -199,7 +199,7 @@ public class Query {
                             Average Per Match: %.2f
                             Medal: %s
                             """,highestScoringGamerNickname,
-                                hightestScoringGamerName,
+                                highestScoringGamerName,
                                 highestScoringGamerTotalPoints,
                                 highestScoringGamerAverage,
                                 highestScoringGamerMedal);
@@ -211,7 +211,7 @@ public class Query {
         return String.format("Total Tournament Points across 1500 matches:%d", totalTournamentPoint);
     }
     public String getMedalDistribution(){
-        findMedalDistrubition();
+        findMedalDistribution();
 
         return String.format("""
                             Medal Distribution:
@@ -283,15 +283,15 @@ public class Query {
             totalTournamentPoint = totalTournamentPoint+pointsBoard.getTotalPoints(i);
         }
     }
-    private void findMedalDistrubition(){
+    private void findMedalDistribution(){
         for(Gamer gamer: gamers){
-            if( "GOLD".equals(gamer.getMedal())){
+            if( "GOLD".equals(pointsBoard.getMedal())){
                 goldMedalCount += 1;
             }
-            else if("SILVER".equals(gamer.getMedal())){
+            else if("SILVER".equals(pointsBoard.getMedal())){
                 silverMedalCount += 1;
             }
-            else if("BRONZE".equals(gamer.getMedal())){
+            else if("BRONZE".equals(pointsBoard.getMedal())){
                 bronzeMedalCount += 1;
             }
             else{
