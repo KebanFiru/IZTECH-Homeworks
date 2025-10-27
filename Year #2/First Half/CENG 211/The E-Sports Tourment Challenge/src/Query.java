@@ -26,12 +26,31 @@ public class Query {
 
     public Query( Match[][] playedMatches, Gamer[] players, PointsBoard pointBoard){
 
-        this.matches = playedMatches;
+        if(playedMatches == null) {
+            throw new IllegalArgumentException();
+        }
+        else{
+            matches = new Match[playedMatches.length][playedMatches[0].length];
+            for(int i=0; i<playedMatches.length; i++){
+                for(int j=0; j<playedMatches[i].length; j++){
+                    Match match = new Match(playedMatches[i][j]);
+                    matches[i][j] = match;
+                }
+            }
+        }
+        if(players == null){
+            throw new IllegalArgumentException();
+        }
+        else{
+            gamers = new Gamer[players.length];
+            for(int i =0; i<players.length; i++){
+                Gamer player = new Gamer(players[i]);
+                gamers[i] = player;
+            }
+        }
+        this.pointsBoard = new PointBoard(pointBoard);
 
-        this.gamers = players;
-        this.pointsBoard = pointBoard;
-
-        highestScoringGamer = players[0];
+        highestScoringGamer = new Gamer(players[0]);
 
         highestScoringGamerMedal = "";
         highestScoringGamerAverage = 0.0;
@@ -44,10 +63,9 @@ public class Query {
 
         totalTournamentPoint = 0;
 
-        this.highestScoringMatch = playedMatches[0][0];
-        this.lowestScoringMatch = playedMatches[0][0];
-        this.lowestBonusPointMatch = playedMatches[0][0];
-
+        this.highestScoringMatch = new Game (playedMatches[0][0]);
+        this.lowestScoringMatch = new Game (playedMatches[0][0]);
+        this.lowestBonusPointMatch = new Game (playedMatches[0][0]);
     }
 
     public String getHighestScoringMatch(){
