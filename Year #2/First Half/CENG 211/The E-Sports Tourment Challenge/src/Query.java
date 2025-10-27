@@ -131,7 +131,7 @@ public class Query {
         }
 
         return String.format("""
-                             Lowest-Scoring Match: +
+                             Lowest-Scoring Match: 
                              Match ID: %d 
                              Games: %s 
                              Rounds: %s 
