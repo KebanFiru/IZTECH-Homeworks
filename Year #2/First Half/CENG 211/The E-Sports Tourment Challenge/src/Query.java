@@ -267,13 +267,13 @@ public class Query {
     }
     private void findMetalDistrubition(){
         for(gamer: gamers){
-            if(gamer.getMedal() == "GOLD"){
+            if(Gamer gamer.getMedal() == "GOLD"){
                 goldMedalCount += 1;
             }
-            else if(gamer.getMedal() == "SILVER"){
+            else if(Gamer gamer.getMedal() == "SILVER"){
                 silverMedalCount += 1;
             }
-            else if(gamer.getMedal() == "BRONZE"){
+            else if(Gamer gamer.getMedal() == "BRONZE"){
                 bronzeMedalCount += 1;
             }
             else{
