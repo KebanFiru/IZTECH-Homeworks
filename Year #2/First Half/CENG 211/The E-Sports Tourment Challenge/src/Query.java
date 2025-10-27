@@ -170,7 +170,7 @@ public class Query {
     public String getHighestScoringGamer(){
         findHighestScoringGamer();
 
-        String highestScoringGamerNickname = highestScoringGamer.getNickename();
+        String highestScoringGamerNickname = highestScoringGamer.getNickname();
         String hightestScoringGamerName = highestScoringGamer.getName();
 
         return String.format("""
