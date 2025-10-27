@@ -57,7 +57,7 @@ public class Query {
         Match[] highestScoringMatchGames = highestScoringMatch.getGames();
         int[] highestScoringMatchGamesRounds = new int[3];
         int highestScoringMatchSkillPoints = highestScoringMatch.getSkillPoint();
-        int highestScoringMatchRawPoints = highestScoringMatch. getRawPoint();
+        int highestScoringMatchRawPoints = highestScoringMatch.getRawPoint();
         int highestScoringMatchBonusPoints = highestScoringMatch.getBonusPoint();
         int highestScoringMatchMatchPoints = highestScoringMatch.getMatchPoint();
 
@@ -193,7 +193,7 @@ public class Query {
         return String.format("Total Tournament Points across 1500 matches:%d", totalTournamentPoint);
     }
     public String getMedalDistribution(){
-        findMetalDistrubition();
+        findMedalDistrubition();
 
         return String.format("""
                             Medal Distribution:
@@ -265,7 +265,7 @@ public class Query {
             totalTournamentPoint = totalTournamentPoint+pointsBoard.getTotalPoints(i);
         }
     }
-    private void findMetalDistrubition(){
+    private void findMedalDistrubition(){
         for(Gamer gamer: gamers){
             if( "GOLD".equals(gamer.getMedal())){
                 goldMedalCount += 1;
