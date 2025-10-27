@@ -170,7 +170,7 @@ public class Query {
     public String getHighestScoringGamer(){
         findHighestScoringGamer();
 
-        String highestScoringGamerNickename = highestScoringGamer.getNickename();
+        String highestScoringGamerNickname = highestScoringGamer.getNickename();
         String hightestScoringGamerName = highestScoringGamer.getName();
 
         return String.format("""
@@ -180,7 +180,7 @@ public class Query {
                             Total Points: %d
                             Avarage Per Match: %.2f
                             Medal: %s
-                            """,highestScoringGamerNickename,
+                            """,highestScoringGamerNickname,
                                 hightestScoringGamerName,
                                 highestScoringGamerTotalPoints,
                                 highestScoringGamerAvarage,
