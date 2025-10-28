@@ -30,11 +30,11 @@ public class Query {
             throw new IllegalArgumentException();
         }
         else{
-            matches = new Match[playedMatches.length][playedMatches[0].length];
+            this.matches = new Match[playedMatches.length][playedMatches[0].length];
             for(int i=0; i<playedMatches.length; i++){
                 for(int j=0; j<playedMatches[i].length; j++){
                     Match match = new Match(playedMatches[i][j]);
-                    matches[i][j] = match;
+                    this.matches[i][j] = match;
                 }
             }
         }
@@ -42,30 +42,75 @@ public class Query {
             throw new IllegalArgumentException();
         }
         else{
-            gamers = new Gamer[players.length];
+            this.gamers = new Gamer[players.length];
             for(int i =0; i<players.length; i++){
                 Gamer player = new Gamer(players[i]);
-                gamers[i] = player;
+                this.gamers[i] = player;
             }
         }
         this.pointsBoard = new PointBoard(pointBoard);
 
-        highestScoringGamer = new Gamer(players[0]);
+        this.highestScoringGamer = new Gamer(players[0]);
 
-        highestScoringGamerMedal = "";
-        highestScoringGamerAverage = 0.0;
-        highestScoringGamerTotalPoints = 0;
+        this.highestScoringGamerMedal = "";
+        this.highestScoringGamerAverage = 0.0;
+        this.highestScoringGamerTotalPoints = 0;
 
-        goldMedalCount = 0;
-        silverMedalCount = 0;
-        bronzeMedalCount = 0;
-        noneMedalCount = 0;
+        this.goldMedalCount = 0;
+        this.silverMedalCount = 0;
+        this.bronzeMedalCount = 0;
+        this.noneMedalCount = 0;
 
-        totalTournamentPoint = 0;
+        this.totalTournamentPoint = 0;
 
         this.highestScoringMatch = new Match (playedMatches[0][0]);
         this.lowestScoringMatch = new Match (playedMatches[0][0]);
         this.lowestBonusPointMatch = new Match (playedMatches[0][0]);
+    }
+
+    public Query(Query another){
+        if(another.matches == null) {
+            throw new IllegalArgumentException();
+        }
+        else{
+            this.matches = new Match[another.matches.length][another.matches[0].length];
+            for(int i=0; i<another.matches.length; i++){
+                for(int j=0; j<another.matches[i].length; j++){
+                    Match match = new Match(another.matches[i][j]);
+                    this.matches[i][j] = match;
+                }
+            }
+        }
+
+        if(another.gamers == null){
+            throw new IllegalArgumentException();
+        }
+        else{
+            this.gamers = new Gamer[another.gamers.length];
+            for(int i =0; i<another.gamers.length; i++){
+                Gamer player = new Gamer(another.gamers[i]);
+                this.gamers[i] = player;
+            }
+        }
+
+        this.pointsBoard = new PointBoard(another.pointBoard);
+
+        this.highestScoringGamer = new Gamer(another.players[0]);
+
+        this.highestScoringGamerMedal = another.highestScoringGamerMedal;
+        this.highestScoringGamerAverage = another.highestScoringGamerAverage;
+        this.highestScoringGamerTotalPoints = another.highestScoringGamerTotalPoints;
+
+        this.goldMedalCount = another.goldMedalCount;
+        this.silverMedalCount = another.silverMedalCount;
+        this.bronzeMedalCount = another.bronzeMedalCount;
+        this.noneMedalCount = another.noneMedalCount;
+
+        this.totalTournamentPoint = another.totalTournamentPoint;
+
+        this.highestScoringMatch = new Match (matches[0][0]);
+        this.lowestScoringMatch = new Match (matches[0][0]);
+        this.lowestBonusPointMatch = new Match (matches[0][0]);
     }
 
     public String getHighestScoringMatch(){
