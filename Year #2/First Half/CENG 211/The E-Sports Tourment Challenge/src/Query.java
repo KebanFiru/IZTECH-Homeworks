@@ -93,7 +93,7 @@ public class Query {
             }
         }
 
-        this.pointsBoard = new PointBoard(another.pointBoard);
+        this.pointsBoard = new PointsBoard(another.pointsBoard);
 
         this.highestScoringGamer = new Gamer(another.players[0]);
 
