@@ -17,21 +17,43 @@ public class Gamer {
      * @param name The gamer's real name
      * @param phone The gamer's phone number
      * @param experienceYears Years of gaming experience
+     * @throws IllegalArgumentException if validation fails
      */
     public Gamer(int id, String nickname, String name, String phone, int experienceYears) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Gamer ID must be positive");
+        }
+        if (nickname == null || nickname.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nickname cannot be null or empty");
+        }
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        if (phone == null || phone.trim().isEmpty()) {
+            throw new IllegalArgumentException("Phone cannot be null or empty");
+        }
+        if (experienceYears < 0) {
+            throw new IllegalArgumentException("Experience years cannot be negative");
+        }
+        
         this.id = id;
-        this.nickname = nickname;
-        this.name = name;
-        this.phone = phone;
+        this.nickname = nickname.trim();
+        this.name = name.trim();
+        this.phone = phone.trim();
         this.experienceYears = experienceYears;
     }
 
     /**
-     * Copy constructor to create a new Gamer object as a copy of another.
+     * Copy constructor to create a Gamer object from another Gamer.
      * 
-     * @param other The Gamer object to copy from
+     * @param other The Gamer object to copy
+     * @throws IllegalArgumentException if other is null
      */
     public Gamer(Gamer other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Cannot copy from null Gamer object");
+        }
+        
         this.id = other.id;
         this.nickname = other.nickname;
         this.name = other.name;
@@ -52,8 +74,12 @@ public class Gamer {
      * Sets the gamer ID.
      * 
      * @param id The unique identifier to set
+     * @throws IllegalArgumentException if id is not positive
      */
     public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Gamer ID must be positive");
+        }
         this.id = id;
     }
 
@@ -70,9 +96,13 @@ public class Gamer {
      * Sets the gamer's nickname.
      * 
      * @param nickname The nickname to set
+     * @throws IllegalArgumentException if nickname is null or empty
      */
     public void setNickname(String nickname) {
-        this.nickname = nickname;
+        if (nickname == null || nickname.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nickname cannot be null or empty");
+        }
+        this.nickname = nickname.trim();
     }
 
     /**
@@ -88,9 +118,13 @@ public class Gamer {
      * Sets the gamer's real name.
      * 
      * @param name The real name to set
+     * @throws IllegalArgumentException if name is null or empty
      */
     public void setName(String name) {
-        this.name = name;
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        this.name = name.trim();
     }
 
     /**
@@ -106,9 +140,13 @@ public class Gamer {
      * Sets the gamer's phone number.
      * 
      * @param phone The phone number to set
+     * @throws IllegalArgumentException if phone is null or empty
      */
     public void setPhone(String phone) {
-        this.phone = phone;
+        if (phone == null || phone.trim().isEmpty()) {
+            throw new IllegalArgumentException("Phone cannot be null or empty");
+        }
+        this.phone = phone.trim();
     }
 
     /**
@@ -124,8 +162,12 @@ public class Gamer {
      * Sets the gamer's years of experience.
      * 
      * @param experienceYears Years of experience to set
+     * @throws IllegalArgumentException if experienceYears is negative
      */
     public void setExperienceYears(int experienceYears) {
+        if (experienceYears < 0) {
+            throw new IllegalArgumentException("Experience years cannot be negative");
+        }
         this.experienceYears = experienceYears;
     }
 
