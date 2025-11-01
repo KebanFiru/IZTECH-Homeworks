@@ -13,19 +13,35 @@ public class Game {
      * @param id The unique identifier for the game
      * @param gameName The name of the game
      * @param basePointPerRound Points awarded per round for this game
+     * @throws IllegalArgumentException if validation fails
      */
     public Game(int id, String gameName, int basePointPerRound) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Game ID must be positive");
+        }
+        if (gameName == null || gameName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Game name cannot be null or empty");
+        }
+        if (basePointPerRound <= 0) {
+            throw new IllegalArgumentException("Base point per round must be positive");
+        }
+        
         this.id = id;
-        this.gameName = gameName;
+        this.gameName = gameName.trim();
         this.basePointPerRound = basePointPerRound;
     }
 
     /**
-     * Copy constructor to create a new Game object from an existing one.
+     * Copy constructor to create a Game object from another Game.
      * 
-     * @param other The Game object to copy from
+     * @param other The Game object to copy
+     * @throws IllegalArgumentException if other is null
      */
     public Game(Game other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Cannot copy from null Game object");
+        }
+        
         this.id = other.id;
         this.gameName = other.gameName;
         this.basePointPerRound = other.basePointPerRound;
@@ -44,8 +60,12 @@ public class Game {
      * Sets the game ID.
      * 
      * @param id The unique identifier to set
+     * @throws IllegalArgumentException if id is not positive
      */
     public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Game ID must be positive");
+        }
         this.id = id;
     }
 
@@ -62,9 +82,13 @@ public class Game {
      * Sets the game name.
      * 
      * @param gameName The name to set
+     * @throws IllegalArgumentException if gameName is null or empty
      */
     public void setGameName(String gameName) {
-        this.gameName = gameName;
+        if (gameName == null || gameName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Game name cannot be null or empty");
+        }
+        this.gameName = gameName.trim();
     }
 
     /**
@@ -80,8 +104,12 @@ public class Game {
      * Sets the base points per round.
      * 
      * @param basePointPerRound Points to award per round
+     * @throws IllegalArgumentException if basePointPerRound is not positive
      */
     public void setBasePointPerRound(int basePointPerRound) {
+        if (basePointPerRound <= 0) {
+            throw new IllegalArgumentException("Base point per round must be positive");
+        }
         this.basePointPerRound = basePointPerRound;
     }
 
