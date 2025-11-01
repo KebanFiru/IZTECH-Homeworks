@@ -29,6 +29,20 @@ public class Match {
         this.matchPoints = calculateMatchPoints();
     }
 
+    public Match(Match another) {
+        if (another.gamer == null || another.games == null || another.games.length != NUM_GAMES) {
+            throw new IllegalArgumentException("Invalid match data.");
+        }
+        this.matchID = another.matchID;
+        this.gamer = another.gamer;
+        this.games = another.games;
+        this.rounds = another.rounds;
+        this.rawPoints = another.rawPoints;
+        this.skillPoints = another.skillPoints;
+        this.bonusPoints = another.bonusPoints;
+        this.matchPoints = another.matchPoints;
+    }
+
     private static int[] generateRandomRounds() {
         int[] rounds = new int[NUM_GAMES];
         for (int i = 0; i < NUM_GAMES; i++) {
@@ -48,7 +62,7 @@ public class Match {
     private int calculateRawPoints() {
         int total = 0;
         for (int i = 0; i < NUM_GAMES; i++) {
-            total += rounds[i] * games[i].getBasePoint();
+            total += rounds[i] * games[i].getBasePointPerRound();
         }
         return total;
     }
