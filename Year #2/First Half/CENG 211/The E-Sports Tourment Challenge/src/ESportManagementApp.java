@@ -1,14 +1,16 @@
-public class ESportManagementApp {
-    public static void main(String[] args) {
-        /**
-         *TODO: Use FileIO here for add Array of gamers into PointsBoard class
-         */
-        int totalGamesPlayed = 0;
-        if(totalGamesPlayed == 1500){
-            /**
-             * TODO: add logic here for PointsBoard
-             * */
-        }
+import java.io.IOException;
+import java.util.Random;
 
+public class ESportManagementApp {
+
+    private static final String GAMES_CSV = "files/games.csv";
+    private static final String GAMERS_CSV = "files/gamers.csv";
+
+    public static void main(String[] args) {
+
+        
+
+        Game[] games = FileIO.readGames(GAMES_CSV);
+        Gamer gamers = FileIO.readGamers(GAMERS_CSV)
     }
 }
