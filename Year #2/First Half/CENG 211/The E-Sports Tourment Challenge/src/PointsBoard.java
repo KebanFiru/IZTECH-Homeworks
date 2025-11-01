@@ -105,7 +105,7 @@ public class PointsBoard {
                 int sum = 0;
                 for(int match = 0; match<matches[gamer].length;match++){
                     Match currentMatch = matches[gamer][match];
-                    sum = sum + currentMatch.getMatchPoint();
+                    sum = sum + currentMatch.getMatchPoints();
                 }
                 totalPoints[gamer] = sum;
                 averagePointPerMatch[gamer] = (double)sum / matches[gamer].length;
