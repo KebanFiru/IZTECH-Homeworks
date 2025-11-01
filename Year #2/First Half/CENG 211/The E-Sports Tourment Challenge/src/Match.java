@@ -1,0 +1,126 @@
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Random;
+
+public class Match {
+    private int matchID;
+    private Gamer gamer;
+    private Game[] games;
+    private int[] rounds;
+    private int rawPoints;
+    private int skillPoints;
+    private int bonusPoints;
+    private int matchPoints;
+
+    private static final int NUM_GAMES = 3;
+    private static final Random RANDOM = new Random();
+
+    public Match(int matchID, Gamer gamer, Game[] games) {
+        if (gamer == null || games == null || games.length != NUM_GAMES) {
+            throw new IllegalArgumentException("Invalid match data.");
+        }
+        this.matchID = matchID;
+        this.gamer = new Gamer(gamer);
+        this.games = copyGames(games);
+        this.rounds = generateRandomRounds();
+        this.rawPoints = calculateRawPoints();
+        this.skillPoints = calculateSkillPoints();
+        this.bonusPoints = calculateBonusPoints();
+        this.matchPoints = calculateMatchPoints();
+    }
+
+    private static int[] generateRandomRounds() {
+        int[] rounds = new int[NUM_GAMES];
+        for (int i = 0; i < NUM_GAMES; i++) {
+            rounds[i] = RANDOM.nextInt(10) + 1;
+        }
+        return rounds;
+    }
+
+    private static Game[] copyGames(Game[] games) {
+        Game[] copy = new Game[games.length];
+        for (int i = 0; i < games.length; i++) {
+            copy[i] = new Game(games[i]);
+        }
+        return copy;
+    }
+
+    private int calculateRawPoints() {
+        int total = 0;
+        for (int i = 0; i < NUM_GAMES; i++) {
+            total += rounds[i] * games[i].getBasePoint();
+        }
+        return total;
+    }
+
+    private int calculateSkillPoints() {
+        int experience = Math.min(gamer.getExperienceYears(), 10);
+        double multiplier = 1 + experience * 0.02;
+        return (int) Math.floor(rawPoints * multiplier);
+    }
+
+    private int calculateBonusPoints() {
+        if (rawPoints < 0) {
+            throw new IllegalStateException("Error: Bonus point cannot be calculated because the raw point is negative.");
+        }
+        if (rawPoints >= 600) return 100;
+        else if (rawPoints >= 400) return 50;
+        else if (rawPoints >= 200) return 25;
+        else return 10;
+    }
+
+    private int calculateMatchPoints() {
+        return skillPoints + bonusPoints;
+    }
+
+    public int getMatchID() { return matchID; }
+    public int getRawPoints() { return rawPoints; }
+    public int getSkillPoints() { return skillPoints; }
+    public int getBonusPoints() { return bonusPoints; }
+    public int getMatchPoints() { return matchPoints; }
+    public Gamer getGamer() { return new Gamer(gamer); }
+    public Game[] getGames() { return copyGames(games); }
+    public int[] getRounds() { return rounds.clone(); }
+
+    public void setGames(Game[] games) {
+        if (games == null || games.length != NUM_GAMES)
+            throw new IllegalArgumentException("Games array must contain exactly 3 elements.");
+        this.games = copyGames(games);
+    }
+
+    public void setRounds(int[] rounds) {
+        if (rounds == null || rounds.length != NUM_GAMES)
+            throw new IllegalArgumentException("Rounds array must contain exactly 3 values.");
+        this.rounds = rounds.clone();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Match ID: %d, Total Match Points: %d", matchID, matchPoints));
+        sb.append("\nGamer Information:\n").append(gamer.toString());
+
+        for (int i = 0; i < NUM_GAMES; i++) {
+            sb.append(games[i].toString())
+                    .append(String.format("\nNumber of rounds for this game: %d\n", rounds[i]));
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Match)) return false;
+        Match other = (Match) obj;
+        return matchID == other.matchID &&
+                matchPoints == other.matchPoints &&
+                Arrays.equals(rounds, other.rounds) &&
+                Objects.equals(gamer, other.gamer) &&
+                Arrays.equals(games, other.games);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(matchID, matchPoints, Arrays.hashCode(rounds), gamer, Arrays.hashCode(games));
+    }
+}
