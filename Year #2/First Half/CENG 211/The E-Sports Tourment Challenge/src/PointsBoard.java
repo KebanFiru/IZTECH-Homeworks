@@ -87,13 +87,13 @@ public class PointsBoard {
     }
 
     private String calculateMedal(int total) {
-        if (total >= 2000) {
+        if (total >= 4400) {
             return "GOLD";
         }
-        if (total >= 1200) {
+        if (total >= 3800) {
             return "SILVER";
         }
-        if (total >= 700){
+        if (total >= 3500){
             return "BRONZE";
         }
         return "NONE";
@@ -105,7 +105,7 @@ public class PointsBoard {
                 int sum = 0;
                 for(int match = 0; match<matches[gamer].length;match++){
                     Match currentMatch = matches[gamer][match];
-                    sum = sum + currentMatch.getMatchPoint();
+                    sum = sum + currentMatch.getMatchPoints();
                 }
                 totalPoints[gamer] = sum;
                 averagePointPerMatch[gamer] = (double)sum / matches[gamer].length;
