@@ -215,7 +215,7 @@ public class Query {
         }
 
         return String.format("""
-                             Match with Lowest Bonus Points:\n 
+                             Match with Lowest Bonus Points:
                              Match ID: %d 
                              Games: %s 
                              Rounds: %s 
