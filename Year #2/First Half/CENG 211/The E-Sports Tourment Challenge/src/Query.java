@@ -95,7 +95,7 @@ public class Query {
 
         this.pointsBoard = new PointsBoard(another.pointsBoard);
 
-        this.highestScoringGamer = new Gamer(another.players[0]);
+        this.highestScoringGamer = new Gamer(another.gamers[0]);
 
         this.highestScoringGamerMedal = another.highestScoringGamerMedal;
         this.highestScoringGamerAverage = another.highestScoringGamerAverage;
