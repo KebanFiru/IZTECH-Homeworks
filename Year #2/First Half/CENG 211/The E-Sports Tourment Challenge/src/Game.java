@@ -90,6 +90,7 @@ public class Game {
      * 
      * @return String containing game details
      */
+    @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
@@ -99,14 +100,18 @@ public class Game {
     }
 
     /**
-     * Compares this game with another for equality.
+     * Checks if two Game objects are equal based on their attributes.
      * 
-     * @param other The other Game object to compare with
-     * @return true if both games are equal, false otherwise
+     * @param obj The object to compare with
+     * @return true if equal, false otherwise
      */
-    public boolean equals(Game other) {
-        return this.id == other.id &&
-               this.gameName.equals(other.gameName) &&
-               this.basePointPerRound == other.basePointPerRound;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Game game = (Game) obj;
+        return id == game.id &&
+               basePointPerRound == game.basePointPerRound &&
+               (gameName != null ? gameName.equals(game.gameName) : game.gameName == null);
     }
 }
