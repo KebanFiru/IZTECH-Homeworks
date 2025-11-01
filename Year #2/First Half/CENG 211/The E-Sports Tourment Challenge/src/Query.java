@@ -264,10 +264,10 @@ public class Query {
                             SILVER: %d gamers(%.1f %)
                             BRONZE: %d gamers(%.1f %)
                             NONE: %d gamers(%.1f %)
-                            """, goldMedalCount, (double)goldMedalCount/100,
-                                 silverMedalCount, (double)silverMedalCount/100,
-                                 bronzeMedalCount, (double)bronzeMedalCount/100,
-                                 noneMedalCount, (double)noneMedalCount/100);
+                            """, goldMedalCount, (double)goldMedalCount/gamers.length*100,
+                                 silverMedalCount, (double)silverMedalCount/gamers.length*100,
+                                 bronzeMedalCount, (double)bronzeMedalCount/gamers.length*100,
+                                 noneMedalCount, (double)noneMedalCount/gamers.length*100);
     }
 
 
