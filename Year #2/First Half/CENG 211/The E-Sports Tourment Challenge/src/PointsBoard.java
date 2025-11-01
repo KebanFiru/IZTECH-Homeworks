@@ -87,13 +87,13 @@ public class PointsBoard {
     }
 
     private String calculateMedal(int total) {
-        if (total >= 2000) {
+        if (total >= 4400) {
             return "GOLD";
         }
-        if (total >= 1200) {
+        if (total >= 3800) {
             return "SILVER";
         }
-        if (total >= 700){
+        if (total >= 3500){
             return "BRONZE";
         }
         return "NONE";

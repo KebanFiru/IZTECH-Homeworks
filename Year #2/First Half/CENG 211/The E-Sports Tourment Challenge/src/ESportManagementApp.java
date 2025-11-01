@@ -19,11 +19,11 @@ public class ESportManagementApp {
         Query query = new Query(matchManagement.getAllMatches(), gamers, pointsBoard);
         Query copyQuery = new Query(query);
 
-        copyQuery.getHighestScoringMatch();
-        copyQuery.getLowestScoringMatch();
-        copyQuery.getMatchWithTheLowestBonusPoints();
-        copyQuery.getHighestScoringGamer();
-        copyQuery.getMedalDistribution();
+        System.out.println(copyQuery.getHighestScoringMatch());
+        System.out.println(copyQuery.getLowestScoringMatch());
+        System.out.println(copyQuery.getMatchWithTheLowestBonusPoints());
+        System.out.println(copyQuery.getHighestScoringGamer());
+        System.out.println(copyQuery.getMedalDistribution());
 
 
     }

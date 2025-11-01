@@ -247,14 +247,14 @@ public class Query {
 
         return String.format("""
                             Medal Distribution:
-                            GOLD: %d gamers(%.1f %)
-                            SILVER: %d gamers(%.1f %)
-                            BRONZE: %d gamers(%.1f %)
-                            NONE: %d gamers(%.1f %)
-                            """, goldMedalCount, goldMedalCount/gamers.length*100,
-                                 silverMedalCount, silverMedalCount/gamers.length*100,
-                                 bronzeMedalCount, bronzeMedalCount/gamers.length*100,
-                                 noneMedalCount, noneMedalCount/gamers.length*100);
+                            GOLD: %f gamers(%f)
+                            SILVER: %f gamers(%f)
+                            BRONZE: %f gamers(%f)
+                            NONE: %f gamers(%f)
+                            """, goldMedalCount, goldMedalCount*gamers.length/100,
+                                 silverMedalCount, silverMedalCount*gamers.length/100,
+                                 bronzeMedalCount, bronzeMedalCount*gamers.length/100,
+                                 noneMedalCount, noneMedalCount*gamers.length/100);
     }
 
 
