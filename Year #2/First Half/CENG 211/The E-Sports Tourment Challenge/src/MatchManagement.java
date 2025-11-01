@@ -29,7 +29,7 @@ public class MatchManagement {
 
     private Game[] selectRandomGames(Game[] games) {
         Game[] chosen = new Game[3];
-        boolean[] used = new boolean[3];
+        boolean[] used = new boolean[games.length];
 
         for (int i = 0; i < 3; i++) {
             int index;

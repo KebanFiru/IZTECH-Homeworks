@@ -65,7 +65,7 @@ public class FileIO {
         // First pass: count the number of gamers
         int count = 0;
         try (BufferedReader inputStream = new BufferedReader(new FileReader(filename))) {
-            br.readLine(); // Skip header
+            inputStream.readLine(); // Skip header
             String line;
             while ((line = inputStream.readLine()) != null) {
                 count++;
