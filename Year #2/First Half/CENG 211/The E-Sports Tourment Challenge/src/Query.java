@@ -22,8 +22,6 @@ public class Query {
     private double bronzeMedalCount;
     private double noneMedalCount;
 
-    private int totalTournamentPoint;
-
     public Query( Match[][] playedMatches, Gamer[] players, PointsBoard pointBoard){
 
         if(playedMatches == null) {
@@ -60,8 +58,6 @@ public class Query {
         this.silverMedalCount = 0;
         this.bronzeMedalCount = 0;
         this.noneMedalCount = 0;
-
-        this.totalTournamentPoint = 0;
 
         this.highestScoringMatch = new Match (playedMatches[0][0]);
         this.lowestScoringMatch = new Match (playedMatches[0][0]);
@@ -105,8 +101,6 @@ public class Query {
         this.silverMedalCount = another.silverMedalCount;
         this.bronzeMedalCount = another.bronzeMedalCount;
         this.noneMedalCount = another.noneMedalCount;
-
-        this.totalTournamentPoint = another.totalTournamentPoint;
 
         this.highestScoringMatch = new Match (matches[0][0]);
         this.lowestScoringMatch = new Match (matches[0][0]);
@@ -238,9 +232,8 @@ public class Query {
     }
 
     public String getTotalTournamentPoints(){
-        findTotalTournamentPoint();
 
-        return String.format("Total Tournament Points across 1500 matches:%d", totalTournamentPoint);
+        return String.format("Total Tournament Points across 1500 matches:%d", pointsBoard.calculateTournamentPoints());
     }
     public String getMedalDistribution(){
         findMedalDistribution();
@@ -308,12 +301,6 @@ public class Query {
             }
         }
 
-    }
-    private void findTotalTournamentPoint(){
-
-        for(int i=0; i<gamers.length; i++){
-            totalTournamentPoint = totalTournamentPoint+pointsBoard.getTotalPoints(i);
-        }
     }
     private void findMedalDistribution(){
         for(int i=0; i<gamers.length; i++){

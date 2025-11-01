@@ -92,21 +92,8 @@ public class Match {
     public int getSkillPoints() { return skillPoints; }
     public int getBonusPoints() { return bonusPoints; }
     public int getMatchPoints() { return matchPoints; }
-    public Gamer getGamer() { return new Gamer(gamer); }
     public Game[] getGames() { return copyGames(games); }
     public int[] getRounds() { return rounds.clone(); }
-
-    public void setGames(Game[] games) {
-        if (games == null || games.length != NUM_GAMES)
-            throw new IllegalArgumentException("Games array must contain exactly 3 elements.");
-        this.games = copyGames(games);
-    }
-
-    public void setRounds(int[] rounds) {
-        if (rounds == null || rounds.length != NUM_GAMES)
-            throw new IllegalArgumentException("Rounds array must contain exactly 3 values.");
-        this.rounds = rounds.clone();
-    }
 
     @Override
     public String toString() {

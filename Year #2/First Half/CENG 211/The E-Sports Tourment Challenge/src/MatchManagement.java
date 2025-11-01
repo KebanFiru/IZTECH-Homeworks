@@ -50,9 +50,6 @@ public class MatchManagement {
         return matches;
     }
 
-    public Match[] getMatchesOfGamer(int gamerIndex) {
-        return matches[gamerIndex];
-    }
 }
 
 
