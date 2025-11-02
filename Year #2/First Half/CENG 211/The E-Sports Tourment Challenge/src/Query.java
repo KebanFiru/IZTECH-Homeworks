@@ -197,7 +197,7 @@ public class Query {
 
         for(int i =0; i<lowestScoringMatchGames.length; i++){
             int tempGameContrubition =  lowestScoringMatchGamesRounds[i] * lowestScoringMatchGames[i].getBasePointPerRound();
-            if(tempGameContrubition<lowestScoringMatchMostContributedGameRounds*lowestScoringMatchMostContributedGamePoints){
+            if(tempGameContrubition>lowestScoringMatchMostContributedGameRounds*lowestScoringMatchMostContributedGamePoints){
                 lowestScoringMatchMostContributedGameRounds = lowestScoringMatchGamesRounds[i];
                 lowestScoringMatchMostContributedGamePoints = lowestScoringMatchGames[i].getBasePointPerRound();
                 lowestScoringMatchMostContributedGame = lowestScoringMatchGames[i].getGameName();
