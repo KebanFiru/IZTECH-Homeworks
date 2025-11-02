@@ -62,28 +62,6 @@ public class Gamer {
     }
 
     /**
-     * Gets the gamer ID.
-     * 
-     * @return The gamer's unique identifier
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Sets the gamer ID.
-     * 
-     * @param id The unique identifier to set
-     * @throws IllegalArgumentException if id is not positive
-     */
-    public void setId(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Gamer ID must be positive");
-        }
-        this.id = id;
-    }
-
-    /**
      * Gets the gamer's nickname.
      * 
      * @return The nickname
@@ -92,18 +70,6 @@ public class Gamer {
         return nickname;
     }
 
-    /**
-     * Sets the gamer's nickname.
-     * 
-     * @param nickname The nickname to set
-     * @throws IllegalArgumentException if nickname is null or empty
-     */
-    public void setNickname(String nickname) {
-        if (nickname == null || nickname.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nickname cannot be null or empty");
-        }
-        this.nickname = nickname.trim();
-    }
 
     /**
      * Gets the gamer's real name.
@@ -115,60 +81,12 @@ public class Gamer {
     }
 
     /**
-     * Sets the gamer's real name.
-     * 
-     * @param name The real name to set
-     * @throws IllegalArgumentException if name is null or empty
-     */
-    public void setName(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
-        }
-        this.name = name.trim();
-    }
-
-    /**
-     * Gets the gamer's phone number.
-     * 
-     * @return The phone number
-     */
-    public String getPhone() {
-        return phone;
-    }
-
-    /**
-     * Sets the gamer's phone number.
-     * 
-     * @param phone The phone number to set
-     * @throws IllegalArgumentException if phone is null or empty
-     */
-    public void setPhone(String phone) {
-        if (phone == null || phone.trim().isEmpty()) {
-            throw new IllegalArgumentException("Phone cannot be null or empty");
-        }
-        this.phone = phone.trim();
-    }
-
-    /**
      * Gets the gamer's years of experience.
      * 
      * @return Years of experience
      */
     public int getExperienceYears() {
         return experienceYears;
-    }
-
-    /**
-     * Sets the gamer's years of experience.
-     * 
-     * @param experienceYears Years of experience to set
-     * @throws IllegalArgumentException if experienceYears is negative
-     */
-    public void setExperienceYears(int experienceYears) {
-        if (experienceYears < 0) {
-            throw new IllegalArgumentException("Experience years cannot be negative");
-        }
-        this.experienceYears = experienceYears;
     }
 
     /**
