@@ -4,7 +4,10 @@
  */
 public class ESportManagementApp {
 
+    /** Path to the games CSV file. */
     private static final String GAMES_CSV = "files/games.csv";
+    
+    /** Path to the gamers CSV file. */
     private static final String GAMERS_CSV = "files/gamers.csv";
 
     /**

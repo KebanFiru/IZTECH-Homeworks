@@ -16,6 +16,9 @@ public class Match {
     private int bonusPoints;
     private int matchPoints;
 
+    /**
+     * Number of games played in each match.
+     */
     public static final int NUM_GAMES = 3;
     private static final Random RANDOM = new Random();
 

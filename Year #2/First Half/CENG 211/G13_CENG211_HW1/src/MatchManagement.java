@@ -9,9 +9,16 @@ public class MatchManagement {
     private Gamer[] gamers;
     private Game[] games;
 
+    /** Counter for generating unique match IDs. */
     private static int matchIDCounter = 0;
+    
+    /** Number of matches each gamer plays in the tournament. */
     private static final int MATCHES_PER_GAMER = 15;
+    
+    /** Minimum number of games required for match generation. */
     private static final int MIN_GAMES_REQUIRED = 3;
+    
+    /** Random number generator for match creation. */
     private static final Random RANDOM = new Random();
 
 
