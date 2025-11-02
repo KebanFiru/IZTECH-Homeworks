@@ -6,21 +6,21 @@ public class PointsBoard {
     private final double[] averagePointPerMatch;
     private final String[] gamerMedal;
 
-    public PointsBoard(Gamer[] players, Match[][] playedMatches) {
-        if(players == null){
-            throw new IllegalArgumentException("Players array cannot be null");
+    public PointsBoard(Gamer[] gamers, Match[][] playedMatches) {
+        if(gamers == null){
+            throw new IllegalArgumentException("Gamers array cannot be null");
         }
-        if(players.length == 0){
-            throw new IllegalArgumentException("Players array cannot be empty");
+        if(gamers.length == 0){
+            throw new IllegalArgumentException("Gamers array cannot be empty");
         }
         
-        this.gamers = new Gamer[players.length];
-        for(int i=0; i<players.length; i++){
-            if(players[i] == null) {
-                throw new IllegalArgumentException("Player at index " + i + " cannot be null");
+        this.gamers = new Gamer[gamers.length];
+        for(int i=0; i<gamers.length; i++){
+            if(gamers[i] == null) {
+                throw new IllegalArgumentException("Gamer at index " + i + " cannot be null");
             }
-            Gamer player = new Gamer(players[i]);
-            this.gamers[i] = player;
+            Gamer gamer = new Gamer(gamers[i]);
+            this.gamers[i] = gamer;
         }
         
         if(playedMatches == null){
@@ -29,8 +29,8 @@ public class PointsBoard {
         if(playedMatches.length == 0){
             throw new IllegalArgumentException("Played matches array cannot be empty");
         }
-        if(playedMatches.length != players.length){
-            throw new IllegalArgumentException("Number of match rows must equal number of players");
+        if(playedMatches.length != gamers.length){
+            throw new IllegalArgumentException("Number of match rows must equal number of gamers");
         }
         
         this.matches = new Match[playedMatches.length][playedMatches[0].length];
@@ -68,8 +68,8 @@ public class PointsBoard {
             if(another.gamers[i] == null){
                 throw new IllegalArgumentException("Gamer at index " + i + " cannot be null");
             }
-            Gamer player = new Gamer(another.gamers[i]);
-            this.gamers[i] = player;
+            Gamer gamer = new Gamer(another.gamers[i]);
+            this.gamers[i] = gamer;
         }
 
         if(another.matches == null){
@@ -158,7 +158,6 @@ public class PointsBoard {
     public int calculateTournamentPoints() {
         int sum = 0;
         if(gamers.length != 0) {
-
             for (int t : totalPoints) {
                 sum += t;
             }

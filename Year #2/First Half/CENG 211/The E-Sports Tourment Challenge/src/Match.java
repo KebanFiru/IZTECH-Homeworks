@@ -12,7 +12,7 @@ public class Match {
     private int bonusPoints;
     private int matchPoints;
 
-    private static final int NUM_GAMES = 3;
+    public static final int NUM_GAMES = 3;
     private static final Random RANDOM = new Random();
 
     public Match(int matchID, Gamer gamer, Game[] games) {
