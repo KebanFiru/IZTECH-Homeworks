@@ -190,19 +190,17 @@ public class Query {
         int lowestScoringMatchRawPoints = lowestScoringMatch.getRawPoints();
         int lowestScoringMatchBonusPoints = lowestScoringMatch.getBonusPoints();
         int lowestScoringMatchMatchPoints = lowestScoringMatch.getMatchPoints();
-        String lowestScoringMatchMostContributedGame = "";
+        String lowestScoringMatchMostContributedGame = lowestScoringMatchGames[0].getGameName();
         int lowestScoringMatchMostContributedGameRounds = lowestScoringMatchGamesRounds[0];
         int lowestScoringMatchMostContributedGamePoints = lowestScoringMatchGames[0].getBasePointPerRound();
 
-        int tempGameContrubition =  lowestScoringMatchGamesRounds[0] * lowestScoringMatchGames[0].getBasePointPerRound();
 
         for(int i =0; i<lowestScoringMatchGames.length; i++){
-            if(tempGameContrubition>lowestScoringMatchMostContributedGameRounds*lowestScoringMatchMostContributedGamePoints){
+            int tempGameContrubition =  lowestScoringMatchGamesRounds[i] * lowestScoringMatchGames[i].getBasePointPerRound();
+            if(tempGameContrubition<lowestScoringMatchMostContributedGameRounds*lowestScoringMatchMostContributedGamePoints){
                 lowestScoringMatchMostContributedGameRounds = lowestScoringMatchGamesRounds[i];
                 lowestScoringMatchMostContributedGamePoints = lowestScoringMatchGames[i].getBasePointPerRound();
                 lowestScoringMatchMostContributedGame = lowestScoringMatchGames[i].getGameName();
-                tempGameContrubition = lowestScoringMatchGamesRounds[i] * lowestScoringMatchGames[i].getBasePointPerRound();
-
             }
         }
 
@@ -219,6 +217,7 @@ public class Query {
                              Skill Points: %d 
                              Bonus Points: %d 
                              Match Points: %d
+                         
                              Most Contributing Game in this Match:
                              Game: %s
                              Contribution: %d rounds, %d points = %d
@@ -290,17 +289,17 @@ public class Query {
     public String getTotalTournamentPoints(){
         findTotalTournamentPoint();
 
-        return String.format("Total Tournament Points across 1500 matches:%d", totalTournamentPoint);
+        return String.format("Total Tournament Points across 1500 matches:%d \n", totalTournamentPoint);
     }
     public String getMedalDistribution(){
         findMedalDistribution();
 
         return String.format("""
                             Medal Distribution:
-                            GOLD: %.0f gamers(%.1f)
-                            SILVER: %.0f gamers(%.1f)
-                            BRONZE: %.0f gamers(%.1f)
-                            NONE: %.0f gamers(%.1f)
+                            GOLD: %.0f gamers(%.1f%%)
+                            SILVER: %.0f gamers(%.1f%%)
+                            BRONZE: %.0f gamers(%.1f%%)
+                            NONE: %.0f gamers(%.1f%%)
                             """, goldMedalCount, goldMedalCount*gamers.length/100,
                                  silverMedalCount, silverMedalCount*gamers.length/100,
                                  bronzeMedalCount, bronzeMedalCount*gamers.length/100,
