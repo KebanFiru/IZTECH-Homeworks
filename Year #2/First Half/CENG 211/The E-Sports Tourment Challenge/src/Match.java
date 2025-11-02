@@ -16,9 +16,24 @@ public class Match {
     private static final Random RANDOM = new Random();
 
     public Match(int matchID, Gamer gamer, Game[] games) {
-        if (gamer == null || games == null || games.length != NUM_GAMES) {
-            throw new IllegalArgumentException("Invalid match data.");
+        if (matchID <= 0) {
+            throw new IllegalArgumentException("Match ID must be positive");
         }
+        if (gamer == null) {
+            throw new IllegalArgumentException("Gamer cannot be null");
+        }
+        if (games == null) {
+            throw new IllegalArgumentException("Games array cannot be null");
+        }
+        if (games.length != NUM_GAMES) {
+            throw new IllegalArgumentException("Games array must contain exactly " + NUM_GAMES + " games");
+        }
+        for (int i = 0; i < games.length; i++) {
+            if (games[i] == null) {
+                throw new IllegalArgumentException("Game at index " + i + " cannot be null");
+            }
+        }
+        
         this.matchID = matchID;
         this.gamer = new Gamer(gamer);
         this.games = copyGames(games);
@@ -30,9 +45,19 @@ public class Match {
     }
 
     public Match(Match another) {
-        if (another.gamer == null || another.games == null || another.games.length != NUM_GAMES) {
-            throw new IllegalArgumentException("Invalid match data.");
+        if (another == null) {
+            throw new IllegalArgumentException("Cannot copy from null Match object");
         }
+        if (another.gamer == null) {
+            throw new IllegalArgumentException("Gamer in source match cannot be null");
+        }
+        if (another.games == null) {
+            throw new IllegalArgumentException("Games in source match cannot be null");
+        }
+        if (another.games.length != NUM_GAMES) {
+            throw new IllegalArgumentException("Games array must contain exactly " + NUM_GAMES + " games");
+        }
+        
         this.matchID = another.matchID;
         this.gamer = another.gamer;
         this.games = another.games;
@@ -88,6 +113,14 @@ public class Match {
     }
 
     public int getMatchID() { return matchID; }
+    
+    public void setMatchID(int matchID) {
+        if (matchID <= 0) {
+            throw new IllegalArgumentException("Match ID must be positive");
+        }
+        this.matchID = matchID;
+    }
+    
     public int getRawPoints() { return rawPoints; }
     public int getSkillPoints() { return skillPoints; }
     public int getBonusPoints() { return bonusPoints; }

@@ -14,8 +14,13 @@ public class FileIO {
      * 
      * @param filename Path to the games CSV file
      * @return Array of Game objects
+     * @throws IllegalArgumentException if filename is null or empty
      */
     public static Game[] readGames(String filename) {
+        if (filename == null || filename.trim().isEmpty()) {
+            throw new IllegalArgumentException("Filename cannot be null or empty");
+        }
+        
         // First pass: count the number of games
         int count = 0;
         try (BufferedReader inputStream = new BufferedReader(new FileReader(filename))) {
@@ -60,8 +65,13 @@ public class FileIO {
      * 
      * @param filename Path to the gamers CSV file
      * @return Array of Gamer objects
+     * @throws IllegalArgumentException if filename is null or empty
      */
     public static Gamer[] readGamers(String filename) {
+        if (filename == null || filename.trim().isEmpty()) {
+            throw new IllegalArgumentException("Filename cannot be null or empty");
+        }
+        
         // First pass: count the number of gamers
         int count = 0;
         try (BufferedReader inputStream = new BufferedReader(new FileReader(filename))) {
