@@ -33,7 +33,7 @@ public class Match {
                 throw new IllegalArgumentException("Game at index " + i + " cannot be null");
             }
         }
-        
+
         this.matchID = matchID;
         this.gamer = new Gamer(gamer);
         this.games = copyGames(games);
@@ -57,11 +57,11 @@ public class Match {
         if (another.games.length != NUM_GAMES) {
             throw new IllegalArgumentException("Games array must contain exactly " + NUM_GAMES + " games");
         }
-        
+
         this.matchID = another.matchID;
-        this.gamer = another.gamer;
-        this.games = another.games;
-        this.rounds = another.rounds;
+        this.gamer = new Gamer(another.gamer);
+        this.games = copyGames(another.games);
+        this.rounds = another.rounds.clone();
         this.rawPoints = another.rawPoints;
         this.skillPoints = another.skillPoints;
         this.bonusPoints = another.bonusPoints;
@@ -119,12 +119,12 @@ public class Match {
     }
 
     public int getMatchID() { return matchID; }
-    
+
     public int getRawPoints() { return rawPoints; }
     public int getSkillPoints() { return skillPoints; }
     public int getBonusPoints() { return bonusPoints; }
     public int getMatchPoints() { return matchPoints; }
-    
+
     public Game[] getGames() { return copyGames(games); }
     public int[] getRounds() { return rounds.clone(); }
     public Gamer getGamer() { return new Gamer(gamer); }
