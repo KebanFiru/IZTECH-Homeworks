@@ -7,7 +7,16 @@ public class ESportManagementApp {
     public static void main(String[] args) {
 
         Game[] games = FileIO.readGames(GAMES_CSV);
+        if (games == null || games.length == 0) {
+            System.err.println("Error: Could not load games from " + GAMES_CSV);
+            return;
+        }
+        
         Gamer[] gamers = FileIO.readGamers(GAMERS_CSV);
+        if (gamers == null || gamers.length == 0) {
+            System.err.println("Error: Could not load gamers from " + GAMERS_CSV);
+            return;
+        }
 
         System.out.println(GAMERS_CSV);
 
