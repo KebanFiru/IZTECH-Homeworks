@@ -161,14 +161,15 @@ public class Query {
         }
 
         return String.format("""
-                             Highest-Scoring Match: +
+                             Highest-Scoring Match: 
                              Match ID: %d 
                              Games: %s 
                              Rounds: %s 
                              Raw Points: %d 
                              Skill Points: %d 
                              Bonus Points: %d 
-                             Match Points: %d""", highestScoringMatchID,
+                             Match Points: %d
+                             """, highestScoringMatchID,
                                                   Arrays.toString(highestScoringMatchGamesNames),
                                                   Arrays.toString(highestScoringMatchGamesRounds),
                                                   highestScoringMatchRawPoints,
@@ -193,12 +194,15 @@ public class Query {
         int lowestScoringMatchMostContributedGameRounds = lowestScoringMatchGamesRounds[0];
         int lowestScoringMatchMostContributedGamePoints = lowestScoringMatchGames[0].getBasePointPerRound();
 
+        int tempGameContrubition =  lowestScoringMatchGamesRounds[0] * lowestScoringMatchGames[0].getBasePointPerRound();
+
         for(int i =0; i<lowestScoringMatchGames.length; i++){
-            int tempGameContrubition =  lowestScoringMatchGamesRounds[i] * lowestScoringMatchGames[i].getBasePointPerRound();
             if(tempGameContrubition>lowestScoringMatchMostContributedGameRounds*lowestScoringMatchMostContributedGamePoints){
                 lowestScoringMatchMostContributedGameRounds = lowestScoringMatchGamesRounds[i];
                 lowestScoringMatchMostContributedGamePoints = lowestScoringMatchGames[i].getBasePointPerRound();
                 lowestScoringMatchMostContributedGame = lowestScoringMatchGames[i].getGameName();
+                tempGameContrubition = lowestScoringMatchGamesRounds[i] * lowestScoringMatchGames[i].getBasePointPerRound();
+
             }
         }
 
@@ -217,7 +221,8 @@ public class Query {
                              Match Points: %d
                              Most Contributing Game in this Match:
                              Game: %s
-                             Contribution: %d rounds, %d points = %d""",lowestScoringMatchID ,
+                             Contribution: %d rounds, %d points = %d
+                             """,lowestScoringMatchID ,
                                                   Arrays.toString(lowestScoringMatchGamesNames),
                                                   Arrays.toString(lowestScoringMatchGamesRounds),
                                                   lowestScoringMatchRawPoints,

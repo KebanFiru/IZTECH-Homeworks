@@ -32,6 +32,7 @@ public class ESportManagementApp {
         System.out.println(copyQuery.getLowestScoringMatch());
         System.out.println(copyQuery.getMatchWithTheLowestBonusPoints());
         System.out.println(copyQuery.getHighestScoringGamer());
+        System.out.println(copyQuery.getTotalTournamentPoints());
         System.out.println(copyQuery.getMedalDistribution());
 
 
