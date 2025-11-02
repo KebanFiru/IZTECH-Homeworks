@@ -9,6 +9,12 @@ public class MatchManagement {
     private static final int MIN_GAMES_REQUIRED = 3;
     private static final Random RANDOM = new Random();
 
+    private static int matchIDCounter = 0;
+    private static final int MATCHES_PER_GAMER = 15;
+    private static final int MIN_GAMES_REQUIRED = 3;
+    private static final Random RANDOM = new Random();
+
+
     public MatchManagement(Gamer[] gamers, Game[] games) {
         if (gamers == null) {
             throw new IllegalArgumentException("Gamers array cannot be null");
@@ -35,11 +41,28 @@ public class MatchManagement {
                 throw new IllegalArgumentException("Game at index " + i + " cannot be null");
             }
         }
-        
-        this.gamers = gamers;
-        this.games = games;
+
+        this.gamers = copyGamers(gamers);
+        this.games = copyGames(games);
         this.matches = new Match[gamers.length][MATCHES_PER_GAMER];
     }
+
+    private static Game[] copyGames(Game[] games) {
+        Game[] copy = new Game[games.length];
+        for (int i = 0; i < games.length; i++) {
+            copy[i] = new Game(games[i]);
+        }
+        return copy;
+    }
+
+    private static Gamer[] copyGamers(Gamer[] gamers) {
+        Gamer[] copy = new Gamer[gamers.length];
+        for (int i = 0; i < gamers.length; i++) {
+            copy[i] = new Gamer(gamers[i]);
+        }
+        return copy;
+    }
+
 
     public void generateMatches() {
         for (int i = 0; i < gamers.length; i++) {
@@ -59,7 +82,7 @@ public class MatchManagement {
         if (matchIndex < 0) {
             throw new IllegalArgumentException("Match index cannot be negative");
         }
-        
+
         Game[] selectedGames = selectRandomGames(games);
         int matchID = generateMatchID(gamerIndex, matchIndex);
         return new Match(matchID, gamer, selectedGames);
@@ -72,7 +95,7 @@ public class MatchManagement {
         if (games.length < MIN_GAMES_REQUIRED) {
             throw new IllegalArgumentException("Games array must contain at least " + MIN_GAMES_REQUIRED + " games");
         }
-        
+
         Game[] chosen = new Game[MIN_GAMES_REQUIRED];
         boolean[] used = new boolean[games.length];
 
@@ -88,7 +111,7 @@ public class MatchManagement {
     }
 
     private int generateMatchID(int gamerIndex, int matchIndex) {
-        return (gamerIndex) * MATCHES_PER_GAMER + matchIndex + 1;
+        return matchIDCounter++;
     }
     public Match[] getMatchesOfGamer(int gamerIndex) {
         if (gamerIndex < 0) {
@@ -97,11 +120,31 @@ public class MatchManagement {
         if (gamerIndex >= matches.length) {
             throw new IllegalArgumentException("Gamer index out of bounds");
         }
-        return matches[gamerIndex];
-    } 
+
+        Match[] originalMatches = this.matches[gamerIndex];
+
+        Match[] copy = new Match[originalMatches.length];
+
+        for (int i = 0; i < originalMatches.length; i++){
+            if(originalMatches[i] != null){
+                copy[i] = new Match(originalMatches[i]);
+            }
+
+        }
+        return copy;
+    }
 
     public Match[][] getAllMatches() {
-        return matches;
+        Match[][] copy = new Match[this.matches.length][];
+        for (int i = 0; i < this.matches.length; i++) {
+            copy[i] = new Match[this.matches[i].length];
+            for (int j = 0; j < this.matches[i].length; j++) {
+                if (this.matches[i][j] != null) {
+                    copy[i][j] = new Match(this.matches[i][j]);
+                }
+            }
+        }
+        return copy;
     }
 
 }
