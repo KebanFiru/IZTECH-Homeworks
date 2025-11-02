@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Query {
 
@@ -24,7 +25,7 @@ public class Query {
 
     private int totalTournamentPoint;
 
-    public Query( Match[][] playedMatches, Gamer[] players, PointsBoard pointBoard){
+    public Query( Match[][] playedMatches, Gamer[] gamers, PointsBoard pointBoard){
 
         if(playedMatches == null) {
             throw new IllegalArgumentException("Played matches array cannot be null");
@@ -47,20 +48,20 @@ public class Query {
             }
         }
         
-        if(players == null){
-            throw new IllegalArgumentException("Players array cannot be null");
+        if(gamers == null){
+            throw new IllegalArgumentException("Gamers array cannot be null");
         }
-        if(players.length == 0){
-            throw new IllegalArgumentException("Players array cannot be empty");
+        if(gamers.length == 0){
+            throw new IllegalArgumentException("Gamers array cannot be empty");
         }
         
-        this.gamers = new Gamer[players.length];
-        for(int i =0; i<players.length; i++){
-            if(players[i] == null){
-                throw new IllegalArgumentException("Player at index " + i + " cannot be null");
+        this.gamers = new Gamer[gamers.length];
+        for(int i =0; i<gamers.length; i++){
+            if(gamers[i] == null){
+                throw new IllegalArgumentException("Gamer at index " + i + " cannot be null");
             }
-            Gamer player = new Gamer(players[i]);
-            this.gamers[i] = player;
+            Gamer gamer = new Gamer(gamers[i]);
+            this.gamers[i] = gamer;
         }
         
         if(pointBoard == null){
@@ -68,7 +69,7 @@ public class Query {
         }
         this.pointsBoard = new PointsBoard(pointBoard);
 
-        this.highestScoringGamer = new Gamer(players[0]);
+        this.highestScoringGamer = new Gamer(gamers[0]);
 
         this.highestScoringGamerMedal = "";
         this.highestScoringGamerAverage = 0.0;
@@ -149,7 +150,7 @@ public class Query {
 
         int highestScoringMatchID = highestScoringMatch.getMatchID();
         Game[] highestScoringMatchGames = highestScoringMatch.getGames();
-        String[] highestScoringMatchGamesNames = new String[3];
+        String[] highestScoringMatchGamesNames = new String[Match.NUM_GAMES];
         int[] highestScoringMatchGamesRounds = highestScoringMatch.getRounds();
         int highestScoringMatchSkillPoints = highestScoringMatch.getSkillPoints();
         int highestScoringMatchRawPoints = highestScoringMatch.getRawPoints();
@@ -184,7 +185,7 @@ public class Query {
 
         int lowestScoringMatchID = lowestScoringMatch.getMatchID();
         Game[] lowestScoringMatchGames = lowestScoringMatch.getGames();
-        String[] lowestScoringMatchGamesNames = new String[3];
+        String[] lowestScoringMatchGamesNames = new String[Match.NUM_GAMES];
         int[] lowestScoringMatchGamesRounds = lowestScoringMatch.getRounds();
         int lowestScoringMatchSkillPoints = lowestScoringMatch.getSkillPoints();
         int lowestScoringMatchRawPoints = lowestScoringMatch.getRawPoints();
@@ -220,7 +221,7 @@ public class Query {
                          
                              Most Contributing Game in this Match:
                              Game: %s
-                             Contribution: %d rounds, %d points = %d
+                             Contribution: %d rounds × %d points = %d
                              """,lowestScoringMatchID ,
                                                   Arrays.toString(lowestScoringMatchGamesNames),
                                                   Arrays.toString(lowestScoringMatchGamesRounds),
@@ -240,7 +241,7 @@ public class Query {
 
         int lowestBonusPointMatchID = lowestBonusPointMatch.getMatchID();
         Game[] lowestBonusPointMatchGames = lowestBonusPointMatch.getGames();
-        String[] lowestBonusPointMatchGamesNames = new String[3];
+        String[] lowestBonusPointMatchGamesNames = new String[Match.NUM_GAMES];
         int[] lowestBonusPointMatchGamesRounds = lowestBonusPointMatch.getRounds();
         int lowestBonusPointMatchSkillPoints = lowestBonusPointMatch.getSkillPoints();
         int lowestBonusPointMatchBonusPoints = lowestBonusPointMatch.getBonusPoints();
@@ -272,7 +273,7 @@ public class Query {
         String highestScoringGamerNickname = highestScoringGamer.getNickname();
         String highestScoringGamerName = highestScoringGamer.getName();
 
-        return String.format("""
+        return String.format(Locale.US, """
                             Highest-Scoring Gamer
                             Nickname: %s
                             Name: %s
@@ -289,21 +290,21 @@ public class Query {
     public String getTotalTournamentPoints(){
         findTotalTournamentPoint();
 
-        return String.format("Total Tournament Points across 1500 matches:%d \n", totalTournamentPoint);
+        return String.format(Locale.US, "Total Tournament Points across 1500 matches: %,d\n", totalTournamentPoint);
     }
     public String getMedalDistribution(){
         findMedalDistribution();
 
-        return String.format("""
+        return String.format(Locale.US, """
                             Medal Distribution:
-                            GOLD: %.0f gamers(%.1f%%)
-                            SILVER: %.0f gamers(%.1f%%)
-                            BRONZE: %.0f gamers(%.1f%%)
-                            NONE: %.0f gamers(%.1f%%)
-                            """, goldMedalCount, goldMedalCount*gamers.length/100,
-                                 silverMedalCount, silverMedalCount*gamers.length/100,
-                                 bronzeMedalCount, bronzeMedalCount*gamers.length/100,
-                                 noneMedalCount, noneMedalCount*gamers.length/100);
+                            GOLD:   %.0f gamers (%.1f%%)
+                            SILVER: %.0f gamers (%.1f%%)
+                            BRONZE: %.0f gamers (%.1f%%)
+                            NONE:   %.0f gamers (%.1f%%)
+                            """, goldMedalCount, (goldMedalCount / gamers.length) * 100,
+                                 silverMedalCount, (silverMedalCount / gamers.length) * 100,
+                                 bronzeMedalCount, (bronzeMedalCount / gamers.length) * 100,
+                                 noneMedalCount, (noneMedalCount / gamers.length) * 100);
     }
 
 
