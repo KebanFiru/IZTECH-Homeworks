@@ -54,8 +54,7 @@ G13_CENG211_HW1/
 
 ### Running the Application
 ```bash
-# Navigate to project directory
-cd "Year #2/First Half/CENG 211/The E-Sports Tourment Challenge"
+# Make sure you are in the G13_CENG211_HW1 directory
 
 # Run directly (Java 11+)
 java src/ESportManagementApp.java
@@ -162,19 +161,30 @@ NONE:   11 gamers (11.0%)
 
 This project was developed collaboratively by Group 13 for CENG211 course. While all team members contributed to the entire codebase through code reviews, testing, and refinements, primary responsibilities were distributed as follows:
 
-| Team Member | Primary Contributions |
-|------------|----------------------|
-| Member 1 | **Match Logic & Management**<br>- Match.java (point calculation algorithms)<br>- MatchManagement.java (match generation system) |
-| Member 2 | **Statistics & Application**<br>- Query.java (tournament queries and statistics)<br>- PointsBoard.java (points calculation and medals)<br>- ESportManagementApp.java (main application) |
-| Member 3 | **Data Models & I/O**<br>- FileIO.java (CSV file operations)<br>- Game.java (game entity)<br>- Gamer.java (gamer entity) |
+| Student Number | Team Member | Primary Contributions |
+|---------------|------------|----------------------|
+| 320201048 | Mert Türkilli | **Match Logic & Management**<br>- Match.java (point calculation algorithms)<br>- MatchManagement.java (match generation system) |
+| 320201066 | Hakan Bağıç | **Statistics & Application**<br>- Query.java (tournament queries and statistics)<br>- PointsBoard.java (points calculation and medals)<br>- ESportManagementApp.java (main application) |
+| 320201027 | Talha Karakaya | **Data Models & I/O**<br>- FileIO.java (CSV file operations)<br>- Game.java (game entity)<br>- Gamer.java (gamer entity) |
 
-Note: All team members participated in design decisions, code reviews, testing, validation implementation, and JavaDoc documentation.
+**Note**: All team members participated in design decisions, code reviews, testing, validation implementation, and JavaDoc documentation.
+
+### Development Tools & AI Assistance
+
+This project utilized AI tools (GitHub Copilot) to enhance code quality and development efficiency:
+- **Code Review**: AI-assisted review for identifying potential bugs, code smells, and improvement opportunities
+- **JavaDoc Documentation**: AI assistance in creating comprehensive, consistent JavaDoc comments across all classes and methods
+- **Git Repository Management**: AI-guided best practices for commit messages, branch management, and repository organization
+- **Defensive Programming**: AI suggestions for validation patterns, null checks, and error handling strategies
+- **Code Refactoring**: AI recommendations for eliminating magic numbers, improving naming conventions, and maintaining consistency
+
+All AI-generated suggestions were thoroughly reviewed, tested, and validated by the team members before implementation.
 
 ## Course Information
-- **Course**: CENG211 - Introduction to Computer Engineering
+- **Course**: CENG211 - Programming Fundamentals
 - **Assignment**: Homework #1
 - **Group**: Group 13
-- **Semester**: Fall 2024-2025
+- **Semester**: Fall 2025-2026
 
 ## License
 This project is developed for educational purposes as part of CENG211 course requirements.
