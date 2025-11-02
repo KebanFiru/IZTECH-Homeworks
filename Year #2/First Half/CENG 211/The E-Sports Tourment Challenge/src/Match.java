@@ -114,72 +114,13 @@ public class Match {
 
     public int getMatchID() { return matchID; }
     
-    public void setMatchID(int matchID) {
-        if (matchID <= 0) {
-            throw new IllegalArgumentException("Match ID must be positive");
-        }
-        this.matchID = matchID;
-    }
-    
     public int getRawPoints() { return rawPoints; }
     public int getSkillPoints() { return skillPoints; }
     public int getBonusPoints() { return bonusPoints; }
     public int getMatchPoints() { return matchPoints; }
-    public Gamer getGamer() { return new Gamer(gamer); }
-    
-    public void setGamer(Gamer gamer) {
-        if (gamer == null) {
-            throw new IllegalArgumentException("Gamer cannot be null");
-        }
-        this.gamer = new Gamer(gamer);
-        this.skillPoints = calculateSkillPoints();
-        this.bonusPoints = calculateBonusPoints();
-        this.matchPoints = calculateMatchPoints();
-    }
     
     public Game[] getGames() { return copyGames(games); }
     public int[] getRounds() { return rounds.clone(); }
-
-    public void setGames(Game[] games) {
-        if (games == null) {
-            throw new IllegalArgumentException("Games array cannot be null");
-        }
-        if (games.length != NUM_GAMES) {
-            throw new IllegalArgumentException("Games array must contain exactly " + NUM_GAMES + " elements");
-        }
-        for (int i = 0; i < games.length; i++) {
-            if (games[i] == null) {
-                throw new IllegalArgumentException("Game at index " + i + " cannot be null");
-            }
-        }
-        this.games = copyGames(games);
-        this.rawPoints = calculateRawPoints();
-        this.skillPoints = calculateSkillPoints();
-        this.bonusPoints = calculateBonusPoints();
-        this.matchPoints = calculateMatchPoints();
-    }
-
-    public void setRounds(int[] rounds) {
-        if (rounds == null) {
-            throw new IllegalArgumentException("Rounds array cannot be null");
-        }
-        if (rounds.length != NUM_GAMES) {
-            throw new IllegalArgumentException("Rounds array must contain exactly " + NUM_GAMES + " values");
-        }
-        for (int i = 0; i < rounds.length; i++) {
-            if (rounds[i] < 1) {
-                throw new IllegalArgumentException("Round value at index " + i + " must be at least 1");
-            }
-            if (rounds[i] > 10) {
-                throw new IllegalArgumentException("Round value at index " + i + " cannot exceed 10");
-            }
-        }
-        this.rounds = rounds.clone();
-        this.rawPoints = calculateRawPoints();
-        this.skillPoints = calculateSkillPoints();
-        this.bonusPoints = calculateBonusPoints();
-        this.matchPoints = calculateMatchPoints();
-    }
 
     @Override
     public String toString() {

@@ -95,15 +95,6 @@ public class MatchManagement {
         return matches;
     }
 
-    public Match[] getMatchesOfGamer(int gamerIndex) {
-        if (gamerIndex < 0) {
-            throw new IllegalArgumentException("Gamer index cannot be negative");
-        }
-        if (gamerIndex >= matches.length) {
-            throw new IllegalArgumentException("Gamer index out of bounds");
-        }
-        return matches[gamerIndex];
-    }
 }
 
 
