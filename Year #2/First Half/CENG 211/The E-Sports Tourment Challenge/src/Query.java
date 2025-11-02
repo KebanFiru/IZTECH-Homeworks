@@ -27,26 +27,44 @@ public class Query {
     public Query( Match[][] playedMatches, Gamer[] players, PointsBoard pointBoard){
 
         if(playedMatches == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Played matches array cannot be null");
         }
-        else{
-            this.matches = new Match[playedMatches.length][playedMatches[0].length];
-            for(int i=0; i<playedMatches.length; i++){
-                for(int j=0; j<playedMatches[i].length; j++){
-                    Match match = new Match(playedMatches[i][j]);
-                    this.matches[i][j] = match;
+        if(playedMatches.length == 0) {
+            throw new IllegalArgumentException("Played matches array cannot be empty");
+        }
+        
+        this.matches = new Match[playedMatches.length][playedMatches[0].length];
+        for(int i=0; i<playedMatches.length; i++){
+            if(playedMatches[i] == null){
+                throw new IllegalArgumentException("Match row at index " + i + " cannot be null");
+            }
+            for(int j=0; j<playedMatches[i].length; j++){
+                if(playedMatches[i][j] == null){
+                    throw new IllegalArgumentException("Match at [" + i + "][" + j + "] cannot be null");
                 }
+                Match match = new Match(playedMatches[i][j]);
+                this.matches[i][j] = match;
             }
         }
+        
         if(players == null){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Players array cannot be null");
         }
-        else{
-            this.gamers = new Gamer[players.length];
-            for(int i =0; i<players.length; i++){
-                Gamer player = new Gamer(players[i]);
-                this.gamers[i] = player;
+        if(players.length == 0){
+            throw new IllegalArgumentException("Players array cannot be empty");
+        }
+        
+        this.gamers = new Gamer[players.length];
+        for(int i =0; i<players.length; i++){
+            if(players[i] == null){
+                throw new IllegalArgumentException("Player at index " + i + " cannot be null");
             }
+            Gamer player = new Gamer(players[i]);
+            this.gamers[i] = player;
+        }
+        
+        if(pointBoard == null){
+            throw new IllegalArgumentException("PointsBoard cannot be null");
         }
         this.pointsBoard = new PointsBoard(pointBoard);
 
@@ -69,30 +87,43 @@ public class Query {
     }
 
     public Query(Query another){
-        if(another.matches == null) {
-            throw new IllegalArgumentException();
+        if(another == null){
+            throw new IllegalArgumentException("Cannot copy from null Query object");
         }
-        else{
-            this.matches = new Match[another.matches.length][another.matches[0].length];
-            for(int i=0; i<another.matches.length; i++){
-                for(int j=0; j<another.matches[i].length; j++){
-                    Match match = new Match(another.matches[i][j]);
-                    this.matches[i][j] = match;
+        if(another.matches == null) {
+            throw new IllegalArgumentException("Matches in source Query cannot be null");
+        }
+        
+        this.matches = new Match[another.matches.length][another.matches[0].length];
+        for(int i=0; i<another.matches.length; i++){
+            if(another.matches[i] == null){
+                throw new IllegalArgumentException("Match row at index " + i + " cannot be null");
+            }
+            for(int j=0; j<another.matches[i].length; j++){
+                if(another.matches[i][j] == null){
+                    throw new IllegalArgumentException("Match at [" + i + "][" + j + "] cannot be null");
                 }
+                Match match = new Match(another.matches[i][j]);
+                this.matches[i][j] = match;
             }
         }
 
         if(another.gamers == null){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Gamers in source Query cannot be null");
         }
-        else{
-            this.gamers = new Gamer[another.gamers.length];
-            for(int i =0; i<another.gamers.length; i++){
-                Gamer player = new Gamer(another.gamers[i]);
-                this.gamers[i] = player;
+        
+        this.gamers = new Gamer[another.gamers.length];
+        for(int i =0; i<another.gamers.length; i++){
+            if(another.gamers[i] == null){
+                throw new IllegalArgumentException("Gamer at index " + i + " cannot be null");
             }
+            Gamer player = new Gamer(another.gamers[i]);
+            this.gamers[i] = player;
         }
 
+        if(another.pointsBoard == null){
+            throw new IllegalArgumentException("PointsBoard in source Query cannot be null");
+        }
         this.pointsBoard = new PointsBoard(another.pointsBoard);
 
         this.highestScoringGamer = new Gamer(another.gamers[0]);

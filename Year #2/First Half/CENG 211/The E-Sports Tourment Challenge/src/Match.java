@@ -16,9 +16,24 @@ public class Match {
     private static final Random RANDOM = new Random();
 
     public Match(int matchID, Gamer gamer, Game[] games) {
-        if (gamer == null || games == null || games.length != NUM_GAMES) {
-            throw new IllegalArgumentException("Invalid match data.");
+        if (matchID <= 0) {
+            throw new IllegalArgumentException("Match ID must be positive");
         }
+        if (gamer == null) {
+            throw new IllegalArgumentException("Gamer cannot be null");
+        }
+        if (games == null) {
+            throw new IllegalArgumentException("Games array cannot be null");
+        }
+        if (games.length != NUM_GAMES) {
+            throw new IllegalArgumentException("Games array must contain exactly " + NUM_GAMES + " games");
+        }
+        for (int i = 0; i < games.length; i++) {
+            if (games[i] == null) {
+                throw new IllegalArgumentException("Game at index " + i + " cannot be null");
+            }
+        }
+        
         this.matchID = matchID;
         this.gamer = new Gamer(gamer);
         this.games = copyGames(games);
@@ -30,9 +45,19 @@ public class Match {
     }
 
     public Match(Match another) {
-        if (another.gamer == null || another.games == null || another.games.length != NUM_GAMES) {
-            throw new IllegalArgumentException("Invalid match data.");
+        if (another == null) {
+            throw new IllegalArgumentException("Cannot copy from null Match object");
         }
+        if (another.gamer == null) {
+            throw new IllegalArgumentException("Gamer in source match cannot be null");
+        }
+        if (another.games == null) {
+            throw new IllegalArgumentException("Games in source match cannot be null");
+        }
+        if (another.games.length != NUM_GAMES) {
+            throw new IllegalArgumentException("Games array must contain exactly " + NUM_GAMES + " games");
+        }
+        
         this.matchID = another.matchID;
         this.gamer = another.gamer;
         this.games = another.games;
@@ -88,24 +113,72 @@ public class Match {
     }
 
     public int getMatchID() { return matchID; }
+    
+    public void setMatchID(int matchID) {
+        if (matchID <= 0) {
+            throw new IllegalArgumentException("Match ID must be positive");
+        }
+        this.matchID = matchID;
+    }
+    
     public int getRawPoints() { return rawPoints; }
     public int getSkillPoints() { return skillPoints; }
     public int getBonusPoints() { return bonusPoints; }
     public int getMatchPoints() { return matchPoints; }
     public Gamer getGamer() { return new Gamer(gamer); }
+    
+    public void setGamer(Gamer gamer) {
+        if (gamer == null) {
+            throw new IllegalArgumentException("Gamer cannot be null");
+        }
+        this.gamer = new Gamer(gamer);
+        this.skillPoints = calculateSkillPoints();
+        this.bonusPoints = calculateBonusPoints();
+        this.matchPoints = calculateMatchPoints();
+    }
+    
     public Game[] getGames() { return copyGames(games); }
     public int[] getRounds() { return rounds.clone(); }
 
     public void setGames(Game[] games) {
-        if (games == null || games.length != NUM_GAMES)
-            throw new IllegalArgumentException("Games array must contain exactly 3 elements.");
+        if (games == null) {
+            throw new IllegalArgumentException("Games array cannot be null");
+        }
+        if (games.length != NUM_GAMES) {
+            throw new IllegalArgumentException("Games array must contain exactly " + NUM_GAMES + " elements");
+        }
+        for (int i = 0; i < games.length; i++) {
+            if (games[i] == null) {
+                throw new IllegalArgumentException("Game at index " + i + " cannot be null");
+            }
+        }
         this.games = copyGames(games);
+        this.rawPoints = calculateRawPoints();
+        this.skillPoints = calculateSkillPoints();
+        this.bonusPoints = calculateBonusPoints();
+        this.matchPoints = calculateMatchPoints();
     }
 
     public void setRounds(int[] rounds) {
-        if (rounds == null || rounds.length != NUM_GAMES)
-            throw new IllegalArgumentException("Rounds array must contain exactly 3 values.");
+        if (rounds == null) {
+            throw new IllegalArgumentException("Rounds array cannot be null");
+        }
+        if (rounds.length != NUM_GAMES) {
+            throw new IllegalArgumentException("Rounds array must contain exactly " + NUM_GAMES + " values");
+        }
+        for (int i = 0; i < rounds.length; i++) {
+            if (rounds[i] < 1) {
+                throw new IllegalArgumentException("Round value at index " + i + " must be at least 1");
+            }
+            if (rounds[i] > 10) {
+                throw new IllegalArgumentException("Round value at index " + i + " cannot exceed 10");
+            }
+        }
         this.rounds = rounds.clone();
+        this.rawPoints = calculateRawPoints();
+        this.skillPoints = calculateSkillPoints();
+        this.bonusPoints = calculateBonusPoints();
+        this.matchPoints = calculateMatchPoints();
     }
 
     @Override
