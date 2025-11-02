@@ -88,8 +88,17 @@ public class MatchManagement {
     }
 
     private int generateMatchID(int gamerIndex, int matchIndex) {
-        return gamerIndex * 1000 + matchIndex + 1;
+        return (gamerIndex) * MATCHES_PER_GAMER + matchIndex + 1;
     }
+    public Match[] getMatchesOfGamer(int gamerIndex) {
+        if (gamerIndex < 0) {
+            throw new IllegalArgumentException("Gamer index cannot be negative");
+        }
+        if (gamerIndex >= matches.length) {
+            throw new IllegalArgumentException("Gamer index out of bounds");
+        }
+        return matches[gamerIndex];
+    } 
 
     public Match[][] getAllMatches() {
         return matches;

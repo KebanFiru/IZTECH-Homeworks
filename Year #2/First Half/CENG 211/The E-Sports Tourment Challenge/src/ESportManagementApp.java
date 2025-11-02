@@ -1,7 +1,7 @@
 public class ESportManagementApp {
 
-    private static final String GAMES_CSV = "games.csv";
-    private static final String GAMERS_CSV = "gamers.csv";
+    private static final String GAMES_CSV = "files/games.csv";
+    private static final String GAMERS_CSV = "files/gamers.csv";
     private static final int MATCHES_PER_GAMER = 15;
 
     public static void main(String[] args) {
@@ -18,8 +18,6 @@ public class ESportManagementApp {
             return;
         }
 
-        System.out.println(GAMERS_CSV);
-
         MatchManagement matchManagement = new MatchManagement(gamers,games);
 
         matchManagement.generateMatches();
@@ -32,6 +30,7 @@ public class ESportManagementApp {
         System.out.println(copyQuery.getLowestScoringMatch());
         System.out.println(copyQuery.getMatchWithTheLowestBonusPoints());
         System.out.println(copyQuery.getHighestScoringGamer());
+        System.out.println(copyQuery.getTotalTournamentPoints());
         System.out.println(copyQuery.getMedalDistribution());
 
 

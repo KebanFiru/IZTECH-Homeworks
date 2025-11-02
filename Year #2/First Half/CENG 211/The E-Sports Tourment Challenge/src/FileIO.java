@@ -48,7 +48,8 @@ public class FileIO {
                     String gameName = parts[1].trim(); // Get the string
                     int basePointPerRound = Integer.parseInt(parts[2].trim()); // Parse the string to integer
                     
-                    games[index] = new Game(id, gameName, basePointPerRound); // Create a game object for each valid line
+                    Game game = new Game(id, gameName, basePointPerRound); // Create a game object for each valid line
+                    games[index]= game;
                     index++;
                 }
             }

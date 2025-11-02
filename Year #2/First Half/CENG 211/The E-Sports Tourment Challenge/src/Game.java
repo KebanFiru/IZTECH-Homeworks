@@ -46,6 +46,20 @@ public class Game {
         this.gameName = other.gameName;
         this.basePointPerRound = other.basePointPerRound;
     }
+
+    /**
+     * Sets the game name.
+     *
+     * @param gameName The name to set
+     * @throws IllegalArgumentException if gameName is null or empty
+     */
+    public void setGameName(String gameName) {
+        if (gameName == null || gameName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Game name cannot be null or empty");
+        }
+        this.gameName = gameName.trim();
+    }
+
     /**
      * Gets the game name.
      * 
@@ -53,6 +67,41 @@ public class Game {
      */
     public String getGameName() {
         return gameName;
+    }
+
+    /**
+     * Sets the game ID.
+     *
+     * @param id The unique identifier to set
+     * @throws IllegalArgumentException if id is not positive
+     */
+    public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Game ID must be positive");
+        }
+        this.id = id;
+    }
+
+    /**
+     * Gets the game ID.
+     *
+     * @return The game's unique identifier
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Sets the base points per round.
+     *
+     * @param basePointPerRound Points to award per round
+     * @throws IllegalArgumentException if basePointPerRound is not positive
+     */
+    public void setBasePointPerRound(int basePointPerRound) {
+        if (basePointPerRound <= 0) {
+            throw new IllegalArgumentException("Base point per round must be positive");
+        }
+        this.basePointPerRound = basePointPerRound;
     }
 
     /**
