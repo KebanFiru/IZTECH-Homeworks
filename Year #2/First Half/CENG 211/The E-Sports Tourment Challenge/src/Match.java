@@ -33,7 +33,7 @@ public class Match {
                 throw new IllegalArgumentException("Game at index " + i + " cannot be null");
             }
         }
-        
+
         this.matchID = matchID;
         this.gamer = new Gamer(gamer);
         this.games = copyGames(games);
@@ -119,12 +119,12 @@ public class Match {
     }
 
     public int getMatchID() { return matchID; }
-    
+
     public int getRawPoints() { return rawPoints; }
     public int getSkillPoints() { return skillPoints; }
     public int getBonusPoints() { return bonusPoints; }
     public int getMatchPoints() { return matchPoints; }
-    
+
     public Game[] getGames() { return copyGames(games); }
     public int[] getRounds() { return rounds.clone(); }
     public Gamer getGamer() { return new Gamer(gamer); }
