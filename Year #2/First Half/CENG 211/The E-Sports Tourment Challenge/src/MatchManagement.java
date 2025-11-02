@@ -88,7 +88,7 @@ public class MatchManagement {
     }
 
     private int generateMatchID(int gamerIndex, int matchIndex) {
-        return (gamerIndex-1) * 15 + matchIndex;
+        return (gamerIndex) * MATCHES_PER_GAMER + matchIndex + 1;
     }
 
     public Match[][] getAllMatches() {
