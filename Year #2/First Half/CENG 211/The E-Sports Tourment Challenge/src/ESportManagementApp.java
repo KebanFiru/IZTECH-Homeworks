@@ -1,7 +1,7 @@
 public class ESportManagementApp {
 
-    private static final String GAMES_CSV = "games.csv";
-    private static final String GAMERS_CSV = "gamers.csv";
+    private static final String GAMES_CSV = "files/games.csv";
+    private static final String GAMERS_CSV = "files/gamers.csv";
     private static final int MATCHES_PER_GAMER = 15;
 
     public static void main(String[] args) {
@@ -17,8 +17,6 @@ public class ESportManagementApp {
             System.err.println("Error: Could not load gamers from " + GAMERS_CSV);
             return;
         }
-
-        System.out.println(GAMERS_CSV);
 
         MatchManagement matchManagement = new MatchManagement(gamers,games);
 
