@@ -4,6 +4,10 @@ public class MatchManagement {
     private Match[][] matches;
     private Gamer[] gamers;
     private Game[] games;
+    
+    private static final int MATCHES_PER_GAMER = 15;
+    private static final int MIN_GAMES_REQUIRED = 3;
+    private static final Random RANDOM = new Random();
 
     private static int matchIDCounter = 0;
     private static final int MATCHES_PER_GAMER = 15;
