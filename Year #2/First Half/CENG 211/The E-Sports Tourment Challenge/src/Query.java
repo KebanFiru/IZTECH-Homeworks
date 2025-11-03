@@ -158,9 +158,19 @@ public class Query {
 
         this.totalTournamentPoint = another.totalTournamentPoint;
 
-        this.highestScoringMatch = new Match (matches[0][0]);
-        this.lowestScoringMatch = new Match (matches[0][0]);
-        this.lowestBonusPointMatch = new Match (matches[0][0]);
+        if (another.highestScoringMatch == null) {
+            throw new IllegalArgumentException("Highest scoring match in source Query cannot be null");
+        }
+        if (another.lowestScoringMatch == null) {
+            throw new IllegalArgumentException("Lowest scoring match in source Query cannot be null");
+        }
+        if (another.lowestBonusPointMatch == null) {
+            throw new IllegalArgumentException("Lowest bonus point match in source Query cannot be null");
+        }
+
+        this.highestScoringMatch = new Match(another.highestScoringMatch);
+        this.lowestScoringMatch = new Match(another.lowestScoringMatch);
+        this.lowestBonusPointMatch = new Match(another.lowestBonusPointMatch);
     }
 
     /**
