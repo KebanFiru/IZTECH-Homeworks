@@ -1,8 +1,22 @@
+/**
+ * Main application class for the E-Sports Tournament Management System.
+ * Loads data, generates matches, calculates statistics, and displays tournament results.
+ */
 public class ESportManagementApp {
 
+    /** Path to the games CSV file. */
     private static final String GAMES_CSV = "files/games.csv";
+    
+    /** Path to the gamers CSV file. */
     private static final String GAMERS_CSV = "files/gamers.csv";
 
+    /**
+     * Main method to run the E-Sports tournament application.
+     * Loads games and gamers from CSV files, generates matches, calculates points,
+     * and displays various tournament statistics and queries.
+     * 
+     * @param args Command line arguments (not used)
+     */
     public static void main(String[] args) {
 
         Game[] games = FileIO.readGames(GAMES_CSV);

@@ -1,3 +1,7 @@
+/**
+ * Manages points calculation, averages, and medal assignment for all gamers.
+ * Calculates total points, average points per match, and assigns medals based on performance tiers.
+ */
 public class PointsBoard {
 
     private final Gamer[] gamers;
@@ -6,6 +10,14 @@ public class PointsBoard {
     private final double[] averagePointPerMatch;
     private final String[] gamerMedal;
 
+    /**
+     * Constructor to create a PointsBoard object.
+     * Calculates all statistics for each gamer.
+     * 
+     * @param gamers Array of gamers
+     * @param playedMatches 2D array of matches played by each gamer
+     * @throws IllegalArgumentException if validation fails
+     */
     public PointsBoard(Gamer[] gamers, Match[][] playedMatches) {
         if(gamers == null){
             throw new IllegalArgumentException("Gamers array cannot be null");
@@ -54,6 +66,12 @@ public class PointsBoard {
         calculateAll();
     }
 
+    /**
+     * Copy constructor to create a deep copy of a PointsBoard object.
+     * 
+     * @param another The PointsBoard object to copy from
+     * @throws IllegalArgumentException if another is null or contains invalid data
+     */
     public PointsBoard(PointsBoard another){
 
         if(another == null){
@@ -97,6 +115,13 @@ public class PointsBoard {
         calculateAll();
     }
 
+    /**
+     * Gets the total points for a specific gamer.
+     * 
+     * @param index The index of the gamer
+     * @return Total points for the gamer
+     * @throws IllegalArgumentException if index is invalid
+     */
     public int getTotalPoints(int index) {
         if (index < 0) {
             throw new IllegalArgumentException("Index cannot be negative");
@@ -107,6 +132,13 @@ public class PointsBoard {
         return totalPoints[index];
     }
     
+    /**
+     * Gets the average points per match for a specific gamer.
+     * 
+     * @param index The index of the gamer
+     * @return Average points per match for the gamer
+     * @throws IllegalArgumentException if index is invalid
+     */
     public double getAveragePerMatch(int index) {
         if (index < 0) {
             throw new IllegalArgumentException("Index cannot be negative");
@@ -117,6 +149,13 @@ public class PointsBoard {
         return averagePointPerMatch[index];
     }
     
+    /**
+     * Gets the medal for a specific gamer.
+     * 
+     * @param index The index of the gamer
+     * @return Medal string (GOLD, SILVER, BRONZE, or NONE)
+     * @throws IllegalArgumentException if index is invalid
+     */
     public String getMedal(int index) {
         if (index < 0) {
             throw new IllegalArgumentException("Index cannot be negative");
@@ -127,6 +166,13 @@ public class PointsBoard {
         return gamerMedal[index];
     }
 
+    /**
+     * Calculates medal based on total points.
+     * GOLD: ≥4400, SILVER: ≥3800, BRONZE: ≥3500, NONE: <3500
+     * 
+     * @param total Total points
+     * @return Medal string
+     */
     private String calculateMedal(int total) {
         if (total >= 4400) {
             return "GOLD";
@@ -140,6 +186,10 @@ public class PointsBoard {
         return "NONE";
     }
 
+    /**
+     * Calculates total points, average per match, and medals for all gamers.
+     * Iterates through all gamers and their matches to compute statistics.
+     */
     public void calculateAll() {
         if(gamers.length != 0) {
             for (int gamer = 0; gamer<gamers.length; gamer++){
@@ -155,6 +205,11 @@ public class PointsBoard {
         }
     }
 
+    /**
+     * Calculates the total tournament points across all gamers.
+     * 
+     * @return Sum of all gamers' total points
+     */
     public int calculateTournamentPoints() {
         int sum = 0;
         if(gamers.length != 0) {

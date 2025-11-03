@@ -1,6 +1,10 @@
 import java.util.Arrays;
 import java.util.Locale;
 
+/**
+ * Handles all query operations for tournament statistics.
+ * Provides methods to find highest/lowest scoring matches, gamers, and calculate medal distributions.
+ */
 public class Query {
 
     private Match[][] matches;
@@ -25,6 +29,14 @@ public class Query {
 
     private int totalTournamentPoint;
 
+    /**
+     * Constructor to create a Query object.
+     * 
+     * @param playedMatches 2D array of all matches played
+     * @param gamers Array of all gamers
+     * @param pointBoard PointsBoard containing calculated statistics
+     * @throws IllegalArgumentException if validation fails
+     */
     public Query( Match[][] playedMatches, Gamer[] gamers, PointsBoard pointBoard){
 
         if(playedMatches == null) {
@@ -87,6 +99,12 @@ public class Query {
         this.lowestBonusPointMatch = new Match (playedMatches[0][0]);
     }
 
+    /**
+     * Copy constructor to create a deep copy of a Query object.
+     * 
+     * @param another The Query object to copy from
+     * @throws IllegalArgumentException if another is null or contains invalid data
+     */
     public Query(Query another){
         if(another == null){
             throw new IllegalArgumentException("Cannot copy from null Query object");
@@ -145,6 +163,11 @@ public class Query {
         this.lowestBonusPointMatch = new Match (matches[0][0]);
     }
 
+    /**
+     * Finds and returns formatted information about the highest scoring match.
+     * 
+     * @return Formatted string containing match details
+     */
     public String getHighestScoringMatch(){
         findHighestScoringMatch();
 
@@ -180,6 +203,12 @@ public class Query {
 
     }
 
+    /**
+     * Finds and returns formatted information about the lowest scoring match.
+     * Also includes the most contributing game in that match.
+     * 
+     * @return Formatted string containing match details and most contributing game
+     */
     public String getLowestScoringMatch(){
         findLowestScoringMatch();
 
@@ -236,6 +265,11 @@ public class Query {
 
     }
 
+    /**
+     * Finds and returns formatted information about the match with the lowest bonus points.
+     * 
+     * @return Formatted string containing match details
+     */
     public String getMatchWithTheLowestBonusPoints(){
         findMatchWithTheLowestBonusPoints();
 
@@ -267,6 +301,11 @@ public class Query {
                                   lowestBonusPointMatchPoints);
     }
 
+    /**
+     * Finds and returns formatted information about the highest scoring gamer.
+     * 
+     * @return Formatted string containing gamer details, total points, average, and medal
+     */
     public String getHighestScoringGamer(){
         findHighestScoringGamer();
 
@@ -287,11 +326,23 @@ public class Query {
                                 highestScoringGamerMedal);
     }
 
+    /**
+     * Calculates and returns the total tournament points across all matches.
+     * 
+     * @return Formatted string with total tournament points
+     */
     public String getTotalTournamentPoints(){
         findTotalTournamentPoint();
 
         return String.format(Locale.US, "Total Tournament Points across 1500 matches: %,d\n", totalTournamentPoint);
     }
+    
+    /**
+     * Calculates and returns medal distribution among all gamers.
+     * Shows count and percentage for each medal type (GOLD, SILVER, BRONZE, NONE).
+     * 
+     * @return Formatted string with medal distribution statistics
+     */
     public String getMedalDistribution(){
         findMedalDistribution();
 
@@ -308,6 +359,9 @@ public class Query {
     }
 
 
+    /**
+     * Finds the match with the highest match points.
+     */
     private void findHighestScoringMatch() {
         int highestScoringMatchPoint = matches[0][0].getMatchPoints();
 
@@ -320,6 +374,10 @@ public class Query {
             }
         }
     }
+    
+    /**
+     * Finds the match with the lowest match points.
+     */
     private void findLowestScoringMatch(){
         int lowestScoringMatchPoint = matches[0][0].getMatchPoints();
 
@@ -332,6 +390,10 @@ public class Query {
             }
         }
     }
+    
+    /**
+     * Finds the match with the lowest bonus points.
+     */
     private void findMatchWithTheLowestBonusPoints(){
         int lowestBonusPoint = matches[0][0].getBonusPoints();
 
@@ -345,6 +407,10 @@ public class Query {
             }
         }
     }
+    
+    /**
+     * Finds the gamer with the highest total points.
+     */
     private void findHighestScoringGamer(){
         int totalPoint = 0;
         for(int i =0; i<gamers.length; i++){
@@ -359,12 +425,20 @@ public class Query {
         }
 
     }
+    
+    /**
+     * Calculates the total tournament points from the PointsBoard.
+     */
     private void findTotalTournamentPoint(){
 
         for(int i=0; i<gamers.length; i++){
             totalTournamentPoint = totalTournamentPoint+pointsBoard.getTotalPoints(i);
         }
     }
+    
+    /**
+     * Counts the number of gamers in each medal category.
+     */
     private void findMedalDistribution(){
         for(int i=0; i<gamers.length; i++){
             if( "GOLD".equals(pointsBoard.getMedal(i))){

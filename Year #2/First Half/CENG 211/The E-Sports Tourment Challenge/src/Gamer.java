@@ -62,15 +62,6 @@ public class Gamer {
     }
 
     /**
-     * Gets the gamer's nickname.
-     * 
-     * @return The nickname
-     */
-    public String getNickname() {
-        return nickname;
-    }
-
-    /**
      * Gets the gamer ID.
      *
      * @return The gamer's unique identifier
@@ -95,14 +86,16 @@ public class Gamer {
     /**
      * Gets the gamer's nickname.
      *
-     @@ -92,18 +70,6 @@ public String getNickname() {
-     return nickname;
-     }
+     * @return The nickname
+     */
+    public String getNickname() {
+        return nickname;
+    }
 
-     /**
-      * Sets the gamer's nickname.
-      *
-      * @param nickname The nickname to set
+    /**
+     * Sets the gamer's nickname.
+     *
+     * @param nickname The nickname to set
      * @throws IllegalArgumentException if nickname is null or empty
      */
     public void setNickname(String nickname) {
@@ -114,14 +107,17 @@ public class Gamer {
 
     /**
      * Gets the gamer's real name.
-     @@ -114,41 +80,6 @@ public String getName() {
-     return name;
-     }
+     *
+     * @return The real name
+     */
+    public String getName() {
+        return name;
+    }
 
-     /**
-      * Sets the gamer's real name.
-      *
-      * @param name The real name to set
+    /**
+     * Sets the gamer's real name.
+     *
+     * @param name The real name to set
      * @throws IllegalArgumentException if name is null or empty
      */
     public void setName(String name) {
@@ -156,14 +152,16 @@ public class Gamer {
     /**
      * Gets the gamer's years of experience.
      *
-     @@ -158,19 +89,6 @@ public int getExperienceYears() {
-     return experienceYears;
-     }
+     * @return Years of experience
+     */
+    public int getExperienceYears() {
+        return experienceYears;
+    }
 
-     /**
-      * Sets the gamer's years of experience.
-      *
-      * @param experienceYears Years of experience to set
+    /**
+     * Sets the gamer's years of experience.
+     *
+     * @param experienceYears Years of experience to set
      * @throws IllegalArgumentException if experienceYears is negative
      */
     public void setExperienceYears(int experienceYears) {
@@ -171,24 +169,6 @@ public class Gamer {
             throw new IllegalArgumentException("Experience years cannot be negative");
         }
         this.experienceYears = experienceYears;
-    }
-
-    /**
-     * Gets the gamer's real name.
-     * 
-     * @return The real name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Gets the gamer's years of experience.
-     * 
-     * @return Years of experience
-     */
-    public int getExperienceYears() {
-        return experienceYears;
     }
 
     /**
