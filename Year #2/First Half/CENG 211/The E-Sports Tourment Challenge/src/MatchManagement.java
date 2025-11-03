@@ -97,7 +97,7 @@ public class MatchManagement {
     public void generateMatches() {
         for (int i = 0; i < gamers.length; i++) {
             for (int j = 0; j < MATCHES_PER_GAMER; j++) {
-                matches[i][j] = createMatchFor(gamers[i], i, j);
+                matches[i][j] = createMatchFor(gamers[i]);
             }
         }
     }
@@ -106,24 +106,16 @@ public class MatchManagement {
      * Creates a match for a specific gamer with randomly selected games.
      * 
      * @param gamer The gamer for this match
-     * @param gamerIndex The index of the gamer in the gamers array
-     * @param matchIndex The match number for this gamer (0-14)
      * @return The created Match object
-     * @throws IllegalArgumentException if parameters are invalid
+     * @throws IllegalArgumentException if gamer is null
      */
-    private Match createMatchFor(Gamer gamer, int gamerIndex, int matchIndex){
+    private Match createMatchFor(Gamer gamer){
         if (gamer == null) {
             throw new IllegalArgumentException("Gamer cannot be null");
         }
-        if (gamerIndex < 0) {
-            throw new IllegalArgumentException("Gamer index cannot be negative");
-        }
-        if (matchIndex < 0) {
-            throw new IllegalArgumentException("Match index cannot be negative");
-        }
 
         Game[] selectedGames = selectRandomGames(games);
-        int matchID = generateMatchID(gamerIndex, matchIndex);
+        int matchID = generateMatchID();
         return new Match(matchID, gamer, selectedGames);
     }
 
@@ -157,13 +149,11 @@ public class MatchManagement {
     }
 
     /**
-     * Generates a unique match ID based on gamer and match indices.
+     * Generates a unique match ID.
      * 
-     * @param gamerIndex The index of the gamer
-     * @param matchIndex The match number for this gamer
      * @return Unique match ID
      */
-    private int generateMatchID(int gamerIndex, int matchIndex) {
+    private int generateMatchID() {
         return ++matchIDCounter;
     }
     
