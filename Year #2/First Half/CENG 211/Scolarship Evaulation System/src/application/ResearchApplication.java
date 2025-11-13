@@ -12,48 +12,6 @@ public class ResearchApplication extends Application {
     }
 
     @Override
-    public void evaluate() {
-        if (!passesGeneralChecks()) {
-            return;
-        }
-
-        if (publications.isEmpty() && !hasDocument("GRP")) {
-            status = "Rejected";
-            rejectionReason = "Missing publication or proposal";
-            return;
-        }
-
-        double avgImpactFactor = 0.0;
-        if (!publications.isEmpty()) {
-            double totalImpact = 0.0;
-            for (Publication pub : publications) {
-                totalImpact += pub.getImpactFactor();
-            }
-            avgImpactFactor = totalImpact / publications.size();
-        }
-
-        if (avgImpactFactor >= 1.50) {
-            status = "Accepted";
-            scholarshipType = "Full";
-            durationInYears = 1;
-        }
-        else if (avgImpactFactor >= 1.00) {
-            status = "Accepted";
-            scholarshipType = "Half";
-            durationInYears = 0;
-        }
-        else {
-            status = "Rejected";
-            rejectionReason = "Publication impact too low";
-            return;
-        }
-
-        if (hasDocument("RSV")) {
-            durationInYears += 1;
-        }
-    }
-
-    @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append("Applicant ID: ").append(applicantID)
