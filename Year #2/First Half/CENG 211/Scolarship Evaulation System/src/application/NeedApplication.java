@@ -20,38 +20,4 @@ public class NeedApplication extends Application {
         return "Need";
     }
 
-    @Override
-    public void evaluate() {
-        if (!passesGeneralChecks()) {
-            return;
-        }
-
-        // Calculate adjusted thresholds
-        double fullThreshold = 10000;
-        double halfThreshold = 15000;
-
-        if (hasDocument("SAV")) {
-            fullThreshold *= 1.20;
-            halfThreshold *= 1.20;
-        }
-
-        if (dependents >= 3) {
-            fullThreshold *= 1.10;
-            halfThreshold *= 1.10;
-        }
-
-        if (familyIncome <= fullThreshold) {
-            status = "Accepted";
-            scholarshipType = "Full";
-        } else if (familyIncome <= halfThreshold) {
-            status = "Accepted";
-            scholarshipType = "Half";
-        } else {
-            status = "Rejected";
-            rejectionReason = "Financial status unstable";
-            return;
-        }
-
-        durationInYears = 1;
-    }
 }
