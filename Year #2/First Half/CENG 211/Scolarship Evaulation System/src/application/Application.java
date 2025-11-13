@@ -16,7 +16,7 @@ public abstract class Application {
     protected int durationInYears;
     protected String rejectionReason;
 
-    public Application(String applicantID, String name, double gpa, double income) {
+    public Application(String applicantID, String name, double gpa, double income,String status,String scholarshipType,int durationInYears,String rejectionReason) {
         this.applicantID = applicantID;
         this.name = name;
         this.gpa = gpa;
@@ -24,6 +24,11 @@ public abstract class Application {
         this.documents = new ArrayList<>();
         this.publications = new ArrayList<>();
         this.transcriptStatus = "N";
+
+        this.status = status;
+        this.scholarshipType = scholarshipType;
+        this.durationInYears = durationInYears;
+        this.rejectionReason = rejectionReason;
     }
 
     public String getApplicantID() {
@@ -46,13 +51,14 @@ public abstract class Application {
         return scholarshipType;
     }
 
-    public int getDurationInYears() {
+    public int getdDrationInYears() {
         return durationInYears;
     }
 
-    public String getRejectionReason() {
+    public String getrejectionReason() {
         return rejectionReason;
     }
+
 
     public void setTranscriptStatus(String status) {
         this.transcriptStatus = status;
@@ -74,42 +80,6 @@ public abstract class Application {
         }
         return false;
     }
-
-    protected int getDocumentDuration(String documentType) {
-        for (Document doc : documents) {
-            if (doc.getDocumentType().equals(documentType)) {
-                return doc.getDurationInMonths();
-            }
-        }
-        return 0;
-    }
-
-    protected boolean passesGeneralChecks() {
-        // Check 1: Must have Enrollment Certificate
-        if (!hasDocument("ENR")) {
-            status = "Rejected";
-            rejectionReason = "Missing Enrollment Certificate";
-            return false;
-        }
-
-        // Check 2: Transcript must be valid
-        if (!transcriptStatus.equals("Y")) {
-            status = "Rejected";
-            rejectionReason = "Missing Transcript";
-            return false;
-        }
-
-        // Check 3: GPA must be >= 2.50
-        if (gpa < 2.50) {
-            status = "Rejected";
-            rejectionReason = "GPA below 2.5";
-            return false;
-        }
-
-        return true;
-    }
-
-    public abstract void evaluate();
 
     public abstract String getScholarshipCategory();
 
