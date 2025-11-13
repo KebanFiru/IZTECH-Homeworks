@@ -11,12 +11,7 @@ public abstract class Application {
     protected ArrayList<Document> documents;
     protected ArrayList<Publication> publications;
 
-    protected String status;
-    protected String scholarshipType;
-    protected int durationInYears;
-    protected String rejectionReason;
-
-    public Application(String applicantID, String name, double gpa, double income,String status,String scholarshipType,int durationInYears,String rejectionReason) {
+    public Application(String applicantID, String name, double gpa, double income) {
         this.applicantID = applicantID;
         this.name = name;
         this.gpa = gpa;
@@ -25,10 +20,6 @@ public abstract class Application {
         this.publications = new ArrayList<>();
         this.transcriptStatus = "N";
 
-        this.status = status;
-        this.scholarshipType = scholarshipType;
-        this.durationInYears = durationInYears;
-        this.rejectionReason = rejectionReason;
     }
 
     public String getApplicantID() {
@@ -42,23 +33,6 @@ public abstract class Application {
     public double getGpa() {
         return gpa;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getScholarshipType() {
-        return scholarshipType;
-    }
-
-    public int getdDrationInYears() {
-        return durationInYears;
-    }
-
-    public String getrejectionReason() {
-        return rejectionReason;
-    }
-
 
     public void setTranscriptStatus(String status) {
         this.transcriptStatus = status;
@@ -88,16 +62,7 @@ public abstract class Application {
         StringBuilder result = new StringBuilder();
         result.append("Applicant ID: ").append(applicantID)
                 .append(", Name: ").append(name)
-                .append(", Scholarship: ").append(getScholarshipCategory())
-                .append(", Status: ").append(status);
-
-        if (status.equals("Accepted")) {
-            result.append(", Type: ").append(scholarshipType)
-                    .append(", Duration: ").append(durationInYears)
-                    .append(durationInYears == 1 ? " year" : " years");
-        } else {
-            result.append(", Reason: ").append(rejectionReason);
-        }
+                .append(", Scholarship: ").append(getScholarshipCategory());
 
         return result.toString();
     }
