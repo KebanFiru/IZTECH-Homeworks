@@ -7,7 +7,6 @@ public abstract class Application {
     protected String name;
     protected double gpa;
     protected double income;
-    protected String transcriptStatus;
     protected ArrayList<Document> documents;
     protected ArrayList<Publication> publications;
 
@@ -18,7 +17,6 @@ public abstract class Application {
         this.income = income;
         this.documents = new ArrayList<>();
         this.publications = new ArrayList<>();
-        this.transcriptStatus = "N";
 
     }
 
@@ -34,9 +32,6 @@ public abstract class Application {
         return gpa;
     }
 
-    public void setTranscriptStatus(String status) {
-        this.transcriptStatus = status;
-    }
 
     public void addDocument(Document doc) {
         this.documents.add(doc);
