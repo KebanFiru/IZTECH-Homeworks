@@ -32,7 +32,6 @@ public abstract class Application {
         return gpa;
     }
 
-
     public void addDocument(Document doc) {
         this.documents.add(doc);
     }

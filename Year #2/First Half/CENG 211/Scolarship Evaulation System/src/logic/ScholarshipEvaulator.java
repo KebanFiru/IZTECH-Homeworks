@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import application.Application;
 
-public class ScholarshipEvaulator {
+public abstract class ScholarshipEvaulator {
 
     ArrayList<Application> applications = new ArrayList<>();
 
@@ -13,45 +13,24 @@ public class ScholarshipEvaulator {
 
     public ScholarshipEvaulator(ArrayList<Application> allApplications){
 
-
+        this.applications = allApplications;
     }
 
     public ScholarshipEvaulator(ScholarshipEvaulator another){
 
     }
 
-    public String getApplicationStatus(Application application){
-        calculateApplicationStatus(application);
-        return;
-    }
+    public abstract String getApplicationStatus(Application application);
 
-    public String getApplicationDuration(Application application){
-        calculateApplicationDuration(application);
-        return;
-    }
+    public abstract String getApplicationDuration(Application application);
 
-    public void getApplicants(){
+    public abstract String getScholarshipType(Application application);
 
-        sortApplicants();
-        for(Application applicant: applications){
-            String applicentData = String.format("Applicant ID: %d, Name; %s, Scholarship:%s, Status: %s, Type:%s,Duration: %s",
-                                        applicant.getApplicantID(),
-                                        applicant.getName(),
-                                        applicant.getScholarshipCategory(),
-                                        getApplicationStatus(applicant),
-                                        applicant.getType(),
-                                        getApplicationDuration(applicant));
-            System.out.println(applicentData);
-        }
-    }
+    protected abstract void calculateApplicationStatus(Application application);
 
-    private void calculateApplicationStatus(Application application){
+    protected abstract void calculateApplicationDuration(Application application);
 
-    }
-
-    private void calculateApplicationDuration(Application application){
-
-    }
+    protected abstract void calculateScholarshipType(Application application);
 
     private void sortApplicants(){
         for(int i = 0; i<applications.size(); i++){
@@ -66,6 +45,20 @@ public class ScholarshipEvaulator {
                 }
             }
 
+        }
+    }
+    public void getApplicants(){
+
+        sortApplicants();
+        for(Application applicant: applications){
+            String applicentData = String.format("Applicant ID: %d, Name; %s, Scholarship:%s, Status: %s, Type:%s,Duration: %s",
+                    applicant.getApplicantID(),
+                    applicant.getName(),
+                    applicant.getScholarshipCategory(),
+                    getApplicationStatus(applicant),
+                    getScholarshipType(applicant),
+                    getApplicationDuration(applicant));
+            System.out.println(applicentData);
         }
     }
 }
