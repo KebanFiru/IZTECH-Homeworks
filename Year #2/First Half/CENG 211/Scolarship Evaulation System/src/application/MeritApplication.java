@@ -2,8 +2,8 @@ package application;
 
 public class MeritApplication extends Application {
 
-    public MeritApplication(String applicantID, String name, double gpa, double income) {
-        super(applicantID, name, gpa, income);
+    public MeritApplication(Applicant applicant) {
+        super(applicant);
     }
 
     @Override

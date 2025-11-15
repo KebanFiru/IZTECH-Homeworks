@@ -1,64 +1,34 @@
 package application;
 
-import java.util.ArrayList;
-
+/**
+ * Bir burs başvurusunun temelini temsil eden soyut (abstract) sınıf.
+ * "Composition" ilkesini kullanarak bir 'Applicant' nesnesi içerir ve
+ * bu veriyi alt sınıfların (Merit, Need, Research) kullanması için
+ * ortak bir çatı sağlar.
+ * * Bu versiyonda değerlendirme mantığı veya sonuç alanları bulunmamaktadır.
+ */
 public abstract class Application {
-    protected String applicantID;
-    protected String name;
-    protected double gpa;
-    protected double income;
-    protected ArrayList<Document> documents;
-    protected ArrayList<Publication> publications;
 
-    public Application(String applicantID, String name, double gpa, double income) {
-        this.applicantID = applicantID;
-        this.name = name;
-        this.gpa = gpa;
-        this.income = income;
-        this.documents = new ArrayList<>();
-        this.publications = new ArrayList<>();
+    protected Applicant applicant;
 
-    }
-
-    public String getApplicantID() {
-        return applicantID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getGpa() {
-        return gpa;
-    }
-
-
-    public void addDocument(Document doc) {
-        this.documents.add(doc);
-    }
-
-    public void addPublication(Publication pub) {
-        this.publications.add(pub);
-    }
-
-    protected boolean hasDocument(String documentType) {
-        for (Document doc : documents) {
-            if (doc.getDocumentType().equals(documentType)) {
-                return true;
-            }
+    public Application(Applicant applicant) {
+        if (applicant == null) {
+            throw new IllegalArgumentException("Applicant cannot be null.");
         }
-        return false;
+
+        this.applicant = new Applicant(applicant);
+    }
+
+    public Applicant getApplicant() {
+        return new Applicant(applicant);
     }
 
     public abstract String getScholarshipCategory();
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append("Applicant ID: ").append(applicantID)
-                .append(", Name: ").append(name)
-                .append(", Scholarship: ").append(getScholarshipCategory());
-
-        return result.toString();
+        return String.format("Application: " + applicant.toString());
     }
+
+
 }
