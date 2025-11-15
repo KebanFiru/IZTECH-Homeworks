@@ -22,7 +22,6 @@ public class ApplicationParser {
     
     /**
      * Parses scholarship applications from CSV file and creates Application objects.
-     * Returns ArrayList of Application objects demonstrating POLYMORPHISM.
      * 
      * CSV Format:
      * - A,ID,Name,GPA,Income (Applicant basic info)
@@ -31,17 +30,12 @@ public class ApplicationParser {
      * - D,ID,DocType,Duration (Supporting documents)
      * - P,ID,Title,ImpactFactor (Research publications)
      * 
-     * Error Handling:
-     * - Returns empty list if file not found
-     * - Skips malformed lines with warning message
-     * - Validates all numeric conversions
-     * 
      * @param filename path to the CSV file
      * @return ArrayList of Application objects, empty if file cannot be read
      * @throws IllegalArgumentException if filename is null or empty
      */
     public static ArrayList<Application> parse(String filename) {
-        // Input validation - defensive programming
+        // Input validation
         if (filename == null || filename.trim().isEmpty()) {
             throw new IllegalArgumentException("Filename cannot be null or empty");
         }
@@ -63,7 +57,7 @@ public class ApplicationParser {
                 lineNumber++;
                 line = line.trim();
                 
-                // Skip empty lines (defensive programming)
+                // Skip empty lines
                 if (line.isEmpty()) {
                     continue;
                 }
@@ -87,8 +81,7 @@ public class ApplicationParser {
                                 int income = Integer.parseInt(tokenizer.nextToken().trim());
                                 
                                 applicantDataList.add(new ApplicantData(id, name, gpa, income));
-                            } 
-                            else {
+                            } else {
                                 System.err.println("Warning: Line " + lineNumber + " - Incomplete applicant data, skipping");
                             }
                             break;
@@ -98,8 +91,7 @@ public class ApplicationParser {
                                 int id = Integer.parseInt(tokenizer.nextToken().trim());
                                 String status = tokenizer.nextToken().trim();
                                 transcriptList.add(new TranscriptData(id, status));
-                            } 
-                            else {
+                            } else {
                                 System.err.println("Warning: Line " + lineNumber + " - Incomplete transcript data, skipping");
                             }
                             break;
@@ -111,8 +103,7 @@ public class ApplicationParser {
                                 int dependents = Integer.parseInt(tokenizer.nextToken().trim());
                                 
                                 familyInfoList.add(new FamilyInfoData(id, familyIncome, dependents));
-                            } 
-                            else {
+                            } else {
                                 System.err.println("Warning: Line " + lineNumber + " - Incomplete family info data, skipping");
                             }
                             break;
@@ -127,12 +118,10 @@ public class ApplicationParser {
                                 try {
                                     DocumentType docType = DocumentType.valueOf(docTypeStr);
                                     documentsList.add(new Document(id, docType, duration));
-                                } 
-                                catch (IllegalArgumentException e) {
+                                } catch (IllegalArgumentException e) {
                                     System.err.println("Warning: Line " + lineNumber + " - Invalid document type: " + docTypeStr);
                                 }
-                            } 
-                            else {
+                            } else {
                                 System.err.println("Warning: Line " + lineNumber + " - Incomplete document data, skipping");
                             }
                             break;
@@ -144,8 +133,7 @@ public class ApplicationParser {
                                 double impact = Double.parseDouble(tokenizer.nextToken().trim());
                                 
                                 publicationsList.add(new Publication(id, title, impact));
-                            } 
-                            else {
+                            } else {
                                 System.err.println("Warning: Line " + lineNumber + " - Incomplete publication data, skipping");
                             }
                             break;
@@ -155,17 +143,14 @@ public class ApplicationParser {
                             break;
                     }
                     
-                } 
-                catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     System.err.println("Warning: Line " + lineNumber + " - Number format error: " + e.getMessage());
-                } 
-                catch (Exception e) {
+                } catch (Exception e) {
                     System.err.println("Warning: Line " + lineNumber + " - Error parsing: " + e.getMessage());
                 }
             }
             
-        } 
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
             return new ArrayList<>(); // Return empty list on file error
         }
@@ -209,8 +194,7 @@ public class ApplicationParser {
                 
                 applicants.add(applicant);
                 
-            } 
-            catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 System.err.println("Warning: Invalid applicant data for ID " + appData.id + ": " + e.getMessage());
             }
         }
@@ -229,13 +213,12 @@ public class ApplicationParser {
     }
     
     /**
-     * Factory Method Pattern - creates appropriate Application subclass based on ID prefix.
-     * Demonstrates POLYMORPHISM and Factory Pattern for object creation.
+     * Creates appropriate Application subclass based on applicant ID prefix.
      * 
      * ID Prefix mapping:
-     * - 11xxx -> MeritApplication (GPA-based)
-     * - 22xxx -> NeedApplication (income-based)
-     * - 33xxx -> ResearchApplication (publication-based)
+     * - 11xxx -> MeritApplication
+     * - 22xxx -> NeedApplication
+     * - 33xxx -> ResearchApplication
      * 
      * @param applicant the Applicant object
      * @return appropriate Application subclass, or null if ID format unknown
@@ -250,11 +233,9 @@ public class ApplicationParser {
             
             if (prefix.equals("11")) {
                 return new MeritApplication(applicant);
-            } 
-            else if (prefix.equals("22")) {
+            } else if (prefix.equals("22")) {
                 return new NeedApplication(applicant);
-            } 
-            else if (prefix.equals("33")) {
+            } else if (prefix.equals("33")) {
                 return new ResearchApplication(applicant);
             }
         }
