@@ -3,13 +3,12 @@ package logic;
 import java.util.ArrayList;
 
 import application.Application;
+import application.Publication;
 
 public abstract class ScholarshipEvaulator {
 
-    ArrayList<Application> applications = new ArrayList<>();
+    protected ArrayList<Application> applications = new ArrayList<>();
 
-    private String applicationStatus;
-    private String applicationDuration;
 
     public ScholarshipEvaulator(ArrayList<Application> allApplications){
 
@@ -18,19 +17,35 @@ public abstract class ScholarshipEvaulator {
 
     public ScholarshipEvaulator(ScholarshipEvaulator another){
 
+        this.applications = new ArrayList<>(another.applications);
     }
 
-    public abstract String getApplicationStatus(Application application);
+    protected String getApplicationStatus(Application application){
 
-    public abstract String getApplicationDuration(Application application);
+        if (!application.hasDocument("ENR"))
+            return "Rejected";
+        if (!application.getTranscriptValidation())
+            return "Rejected";
+        if (application.getGpa() < 2.5)
+            return "Rejected";
 
-    public abstract String getScholarshipType(Application application);
+        return "Accepted";
+    }
 
-    protected abstract void calculateApplicationStatus(Application application);
+    protected double getAvarageImpact(Application application){
+        if (application.getPublications().size() == 0) {
+            return 0.0;
+        }
+        double totalImpact = 0.0;
+        for (Publication publication : application.getPublications()) {
+            totalImpact += publication.getImpactFactor();
+        }
+        return totalImpact / application.getPublications().size();
+    }
 
-    protected abstract void calculateApplicationDuration(Application application);
+    protected abstract String getApplicationDuration(Application application);
 
-    protected abstract void calculateScholarshipType(Application application);
+    protected abstract String getScholarshipType(Application application);
 
     private void sortApplicants(){
         for(int i = 0; i<applications.size(); i++){

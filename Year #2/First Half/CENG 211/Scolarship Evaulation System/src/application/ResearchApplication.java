@@ -2,14 +2,15 @@ package application;
 
 public class ResearchApplication extends Application {
 
-    public ResearchApplication(String applicantID, String name, double gpa, double income) {
-        super(applicantID, name, gpa, income);
+    public ResearchApplication(String applicantID, String name, double gpa, double income,String transcriptStatus) {
+        super(applicantID, name, gpa, income,transcriptStatus);
     }
 
     @Override
     public String getScholarshipCategory() {
         return "Research";
     }
+
 
     @Override
     public String toString() {

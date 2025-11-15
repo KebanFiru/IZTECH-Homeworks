@@ -9,15 +9,16 @@ public abstract class Application {
     protected double income;
     protected ArrayList<Document> documents;
     protected ArrayList<Publication> publications;
+    protected String transcriptStatus;
 
-    public Application(String applicantID, String name, double gpa, double income) {
+    public Application(String applicantID, String name, double gpa, double income, String transcriptStatus) {
         this.applicantID = applicantID;
         this.name = name;
         this.gpa = gpa;
         this.income = income;
         this.documents = new ArrayList<>();
         this.publications = new ArrayList<>();
-
+        this.transcriptStatus = transcriptStatus.toUpperCase();
     }
 
     public String getApplicantID() {
@@ -32,6 +33,25 @@ public abstract class Application {
         return gpa;
     }
 
+    public boolean getTranscriptValidation(){
+
+        if(transcriptStatus.equals("Y")){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hasPublicationOrGRP(){
+        if(publications.size() != 0 || documents.contains("GRP")){
+            return true;
+        }
+        return false;
+    }
+
+    public ArrayList<Publication> getPublications(){
+
+        return publications;
+    }
 
     public void addDocument(Document doc) {
         this.documents.add(doc);
@@ -41,7 +61,7 @@ public abstract class Application {
         this.publications.add(pub);
     }
 
-    protected boolean hasDocument(String documentType) {
+    public boolean hasDocument(String documentType) {
         for (Document doc : documents) {
             if (doc.getDocumentType().equals(documentType)) {
                 return true;
