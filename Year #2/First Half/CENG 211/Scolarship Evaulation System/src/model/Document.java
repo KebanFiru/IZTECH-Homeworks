@@ -1,4 +1,4 @@
-package application;
+package model;
 
 public class Document {
     private final String applicantID;
