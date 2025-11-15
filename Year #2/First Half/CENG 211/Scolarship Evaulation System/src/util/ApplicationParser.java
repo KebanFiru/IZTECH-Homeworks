@@ -180,7 +180,7 @@ public class ApplicationParser {
                 
                 // Add documents
                 for (Document doc : documentsList) {
-                    if (doc.getApplicantId() == appData.id) {
+                    if (doc.getApplicantID() == appData.id) {
                         applicant.addDocument(doc);
                     }
                 }

@@ -1,4 +1,6 @@
-package application;
+package types;
+
+import model.Applicant;
 
 public class MeritApplication extends Application {
 

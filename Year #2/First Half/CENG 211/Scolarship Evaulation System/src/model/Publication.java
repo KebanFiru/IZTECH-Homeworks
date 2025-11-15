@@ -1,4 +1,4 @@
-package application;
+package model;
 
 public class Publication {
     private final String applicantID;

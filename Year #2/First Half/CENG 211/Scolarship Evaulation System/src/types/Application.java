@@ -1,4 +1,6 @@
-package application;
+package types;
+
+import model.Applicant;
 
 /**
  * Bir burs başvurusunun temelini temsil eden soyut (abstract) sınıf.
