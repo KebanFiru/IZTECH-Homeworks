@@ -86,6 +86,12 @@ public class Applicant {
 
     }
 
+    /**
+     * Creates a defensive copy of the document list.
+     * 
+     * @param documentArrayList the list to copy
+     * @return a new ArrayList with copied Document objects
+     */
     public ArrayList<Document> documentsCopy(ArrayList<Document> documentArrayList){
         ArrayList<Document> copy = new ArrayList<Document>();
         for(Document doc : documentArrayList){
@@ -94,6 +100,12 @@ public class Applicant {
         return copy;
     }
 
+    /**
+     * Creates a defensive copy of the publication list.
+     * 
+     * @param publicationArrayList the list to copy
+     * @return a new ArrayList with copied Publication objects
+     */
     public ArrayList<Publication> publicationsCopy(ArrayList<Publication> publicationArrayList){
         ArrayList<Publication> copy = new ArrayList<Publication>();
         for (Publication pub : publicationArrayList) {

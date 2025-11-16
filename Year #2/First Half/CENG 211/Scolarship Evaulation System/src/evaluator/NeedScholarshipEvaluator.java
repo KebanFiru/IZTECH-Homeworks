@@ -36,7 +36,17 @@ public class NeedScholarshipEvaluator extends ScholarshipEvaluator {
      * This evaluator is stateless and can be instantiated as needed.
      */
     public NeedScholarshipEvaluator() {
-        // Default constructor
+        super();
+    }
+
+    /**
+     * Copy constructor for defensive programming.
+     * Since evaluators are stateless, this simply creates a new instance.
+     * 
+     * @param other the evaluator to copy (not used, included for consistency)
+     */
+    public NeedScholarshipEvaluator(NeedScholarshipEvaluator other) {
+        super();
     }
 
     /**
@@ -65,6 +75,10 @@ public class NeedScholarshipEvaluator extends ScholarshipEvaluator {
         return new double[] { fullThreshold, halfThreshold };
     }
 
+    /**
+     * Checks need-specific rejection criteria.
+     * Rejects if income exceeds adjusted threshold.
+     */
     @Override
     protected RejectionReason getSpecificRejectionReason(Application application) {
         Applicant applicant = application.getApplicant();
@@ -80,6 +94,10 @@ public class NeedScholarshipEvaluator extends ScholarshipEvaluator {
         return RejectionReason.NONE;
     }
 
+    /**
+     * Determines scholarship type based on adjusted income thresholds.
+     * Full if income <= 10k (adjusted), Half if income <= 15k (adjusted).
+     */
     @Override
     public ScholarshipResultType getScholarshipType(Application application) {
         Applicant applicant = application.getApplicant();
@@ -98,6 +116,10 @@ public class NeedScholarshipEvaluator extends ScholarshipEvaluator {
         return ScholarshipResultType.NONE;
     }
 
+    /**
+     * Returns fixed duration for need-based scholarships.
+     * Always 1 year.
+     */
     @Override
     protected String getApplicationDuration(Application application) {
         // Need-based scholarships always have 1 year duration

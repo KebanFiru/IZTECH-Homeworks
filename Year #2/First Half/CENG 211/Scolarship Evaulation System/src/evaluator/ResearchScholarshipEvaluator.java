@@ -6,39 +6,73 @@ import types.RejectionReason;
 import types.ScholarshipResultType;
 
 /**
- * Evaluator for Research Grant applications (ID prefix: 33).
- * Implements the common evaluation framework for research-based criteria.
+ * Evaluator for research grant applications.
+ * <p>
+ * <b>Evaluation Criteria:</b>
+ * <ul>
+ *   <li>Must have at least one publication (P) or grant proposal (GRP)</li>
+ *   <li>Average Impact Factor ≥ 1.50: Full Scholarship</li>
+ *   <li>1.00 ≤ Impact Factor &lt; 1.50: Half Scholarship</li>
+ *   <li>Impact Factor &lt; 1.00: Rejected</li>
+ * </ul>
+ * <p>
+ * <b>Base Duration Rules:</b>
+ * <ul>
+ *   <li>Full Scholarship: 12 months (1 year)</li>
+ *   <li>Half Scholarship: 6 months</li>
+ * </ul>
+ * <p>
+ * <b>Duration Extensions:</b>
+ * <ul>
+ *   <li>Research Supervisor Approval (RSV): +12 months extension</li>
+ * </ul>
+ * <p>
+ * This evaluator is stateless and thread-safe.
  * 
- * This class follows the Single Responsibility Principle (SRP):
- * - Application classes handle data (applicant info, publications, state)
- * - Evaluator classes handle business logic (impact factor calculations, duration logic)
- * 
- * Evaluation Rules:
- * - At least one Publication (P) or Grant Proposal (GRP) required
- * - Average impact factor ≥ 1.50 → Full Scholarship
- * - 1.00 ≤ avg impact < 1.50 → Half Scholarship
- * - avg impact < 1.00 → Rejected
- * - Research Supervisor Approval (RSV) → +1 year extension
- * - Base duration: Full → 1 year, Half → 6 months
+ * @see types.ResearchApplication
  */
 public class ResearchScholarshipEvaluator extends ScholarshipEvaluator {
 
-    // Constants for impact factor thresholds (avoiding magic numbers)
+    /** Minimum average impact factor for full scholarship */
     private static final double FULL_SCHOLARSHIP_IMPACT = 1.50;
+    
+    /** Minimum average impact factor for half scholarship */
     private static final double HALF_SCHOLARSHIP_IMPACT = 1.00;
-    private static final int FULL_SCHOLARSHIP_BASE_MONTHS = 12;  // 1 year
-    private static final int HALF_SCHOLARSHIP_BASE_MONTHS = 6;   // 6 months
-    private static final int SUPERVISOR_APPROVAL_EXTENSION_MONTHS = 12;  // +1 year
+    
+    /** Base duration for full scholarship (in months) */
+    private static final int FULL_SCHOLARSHIP_BASE_MONTHS = 12;
+    
+    /** Base duration for half scholarship (in months) */
+    private static final int HALF_SCHOLARSHIP_BASE_MONTHS = 6;
+    
+    /** Extension duration for research supervisor approval (in months) */
+    private static final int SUPERVISOR_APPROVAL_EXTENSION_MONTHS = 12;
+    
+    /** Conversion factor for months to years */
     private static final int MONTHS_PER_YEAR = 12;
 
     /**
-     * Creates a new ResearchScholarshipEvaluator instance.
-     * This evaluator is stateless and can be instantiated as needed.
+     * Constructs a research scholarship evaluator.
      */
     public ResearchScholarshipEvaluator() {
-        // Default constructor
+        super();
     }
 
+    /**
+     * Copy constructor (for API consistency).
+     * <p>
+     * Since evaluators are stateless, this simply creates a new instance.
+     * 
+     * @param other the evaluator to copy (unused)
+     */
+    public ResearchScholarshipEvaluator(ResearchScholarshipEvaluator other) {
+        super();
+    }
+
+    /**
+     * Checks research-specific rejection criteria.
+     * Requires at least one publication or GRP, and minimum impact factor of 1.0.
+     */
     @Override
     protected RejectionReason getSpecificRejectionReason(Application application) {
         Applicant applicant = application.getApplicant();
@@ -57,6 +91,10 @@ public class ResearchScholarshipEvaluator extends ScholarshipEvaluator {
         return RejectionReason.NONE;
     }
 
+    /**
+     * Determines scholarship type based on average publication impact factor.
+     * Full if impact >= 1.50, Half if impact >= 1.00.
+     */
     @Override
     public ScholarshipResultType getScholarshipType(Application application) {
         Applicant applicant = application.getApplicant();
@@ -72,6 +110,10 @@ public class ResearchScholarshipEvaluator extends ScholarshipEvaluator {
         return ScholarshipResultType.NONE;
     }
 
+    /**
+     * Calculates duration based on scholarship type and RSV document.
+     * Base: Full = 12 months, Half = 6 months. RSV adds +12 months.
+     */
     @Override
     protected String getApplicationDuration(Application application) {
         Applicant applicant = application.getApplicant();
@@ -95,11 +137,17 @@ public class ResearchScholarshipEvaluator extends ScholarshipEvaluator {
     }
 
     /**
-     * Helper method to format duration in months to readable string.
-     * Converts months to "X year(s) Y months" format.
+     * Formats duration from months to human-readable string.
+     * <p>
+     * Conversion rules:
+     * <ul>
+     *   <li>Exact years: "X year" or "X years"</li>
+     *   <li>Mixed: "X year Y months" or "X years Y months"</li>
+     *   <li>Months only: "Y months"</li>
+     * </ul>
      * 
-     * @param months Total duration in months
-     * @return Formatted duration string
+     * @param months total duration in months
+     * @return formatted duration string
      */
     private String formatDuration(int months) {
         if (months >= MONTHS_PER_YEAR) {

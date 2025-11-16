@@ -39,6 +39,21 @@ public abstract class Application {
     }
 
     /**
+     * Copy constructor - creates a defensive copy of another Application.
+     * Note: Subclasses must override if they need specific copy logic.
+     * 
+     * @param other the application to copy from
+     * @throws IllegalArgumentException if other is null
+     */
+    protected Application(Application other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Application to copy cannot be null.");
+        }
+        this.applicant = new Applicant(other.applicant);
+        // evaluator is set by subclass constructors
+    }
+
+    /**
      * Returns a copy of the applicant associated with this application.
      * Uses defensive copying to protect internal state.
      * 

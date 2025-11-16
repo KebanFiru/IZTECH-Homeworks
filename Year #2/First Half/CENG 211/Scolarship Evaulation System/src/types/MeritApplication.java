@@ -9,8 +9,25 @@ import model.Applicant;
  */
 public class MeritApplication extends Application {
 
+    /**
+     * Constructs a MeritApplication with the given applicant.
+     * 
+     * @param applicant the applicant for this merit scholarship
+     * @throws IllegalArgumentException if applicant is null
+     */
     public MeritApplication(Applicant applicant) {
         super(applicant);
+        this.evaluator = new MeritScholarshipEvaluator();
+    }
+
+    /**
+     * Copy constructor - creates a defensive copy of another MeritApplication.
+     * 
+     * @param other the merit application to copy from
+     * @throws IllegalArgumentException if other is null
+     */
+    public MeritApplication(MeritApplication other) {
+        super(other);
         this.evaluator = new MeritScholarshipEvaluator();
     }
 

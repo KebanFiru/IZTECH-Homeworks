@@ -32,9 +32,23 @@ public class MeritScholarshipEvaluator extends ScholarshipEvaluator {
      * This evaluator is stateless and can be instantiated as needed.
      */
     public MeritScholarshipEvaluator() {
-        // Default constructor
+        super();
     }
 
+    /**
+     * Copy constructor for defensive programming.
+     * Since evaluators are stateless, this simply creates a new instance.
+     * 
+     * @param other the evaluator to copy (not used, included for consistency)
+     */
+    public MeritScholarshipEvaluator(MeritScholarshipEvaluator other) {
+        super();
+    }
+
+    /**
+     * Checks merit-specific rejection criteria.
+     * Rejects if GPA is below 3.0 threshold.
+     */
     @Override
     protected RejectionReason getSpecificRejectionReason(Application application) {
         Applicant applicant = application.getApplicant();
@@ -47,6 +61,10 @@ public class MeritScholarshipEvaluator extends ScholarshipEvaluator {
         return RejectionReason.NONE;
     }
 
+    /**
+     * Determines scholarship type based on GPA.
+     * Full if GPA >= 3.20, Half if GPA >= 3.00.
+     */
     @Override
     public ScholarshipResultType getScholarshipType(Application application) {
         Applicant applicant = application.getApplicant();
@@ -62,6 +80,10 @@ public class MeritScholarshipEvaluator extends ScholarshipEvaluator {
         return ScholarshipResultType.NONE;
     }
 
+    /**
+     * Calculates duration based on REC document.
+     * 2 years with REC, 1 year without.
+     */
     @Override
     protected String getApplicationDuration(Application application) {
         Applicant applicant = application.getApplicant();

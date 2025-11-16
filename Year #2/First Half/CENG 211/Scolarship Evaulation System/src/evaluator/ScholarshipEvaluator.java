@@ -16,6 +16,14 @@ import types.ScholarshipResultType;
 public abstract class ScholarshipEvaluator {
 
     /**
+     * Protected constructor for subclasses.
+     * Evaluators are stateless and require no initialization.
+     */
+    protected ScholarshipEvaluator() {
+        // Default constructor for subclasses
+    }
+
+    /**
      * Evaluates an application and returns a formatted result string.
      * This is the main method called by Application objects.
      * 
