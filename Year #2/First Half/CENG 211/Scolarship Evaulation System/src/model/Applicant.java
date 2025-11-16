@@ -2,6 +2,20 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * Represents an applicant for a scholarship program.
+ * Contains all personal information, documents, and publications
+ * associated with the applicant.
+ * 
+ * This class is immutable for core fields (id, name, gpa, income)
+ * and uses defensive copying for collections to ensure data integrity.
+ * 
+ * Key Features:
+ * - Immutable core data (final fields)
+ * - Defensive copying for ArrayList collections
+ * - Input validation in constructors and setters
+ * - Support for copy construction (deep copy)
+ */
 public class Applicant {
     private final int id;
     private final String name;
@@ -14,6 +28,15 @@ public class Applicant {
     private ArrayList<Document> documents;
     private ArrayList<Publication> publications;
 
+    /**
+     * Constructs an Applicant with basic information.
+     * 
+     * @param id the applicant's unique identifier (must be positive)
+     * @param name the applicant's full name (cannot be null or empty)
+     * @param gpa the applicant's grade point average (must be between 0.0 and 4.0)
+     * @param income the applicant's monthly income (must be non-negative)
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
     public Applicant(int id, String name , double gpa, int income){
 
         if (id <= 0) {
@@ -39,6 +62,13 @@ public class Applicant {
         hasFamilyInfo = false;
     }
 
+    /**
+     * Copy constructor - creates a deep copy of another Applicant.
+     * All collections (documents, publications) are copied defensively.
+     * 
+     * @param other the applicant to copy from
+     * @throws IllegalArgumentException if other is null
+     */
     public Applicant(Applicant other){
         if (other == null) {
             throw new IllegalArgumentException("Cannot copy from null Applicant");
@@ -56,6 +86,12 @@ public class Applicant {
 
     }
 
+    /**
+     * Creates a defensive copy of the document list.
+     * 
+     * @param documentArrayList the list to copy
+     * @return a new ArrayList with copied Document objects
+     */
     public ArrayList<Document> documentsCopy(ArrayList<Document> documentArrayList){
         ArrayList<Document> copy = new ArrayList<Document>();
         for(Document doc : documentArrayList){
@@ -64,6 +100,12 @@ public class Applicant {
         return copy;
     }
 
+    /**
+     * Creates a defensive copy of the publication list.
+     * 
+     * @param publicationArrayList the list to copy
+     * @return a new ArrayList with copied Publication objects
+     */
     public ArrayList<Publication> publicationsCopy(ArrayList<Publication> publicationArrayList){
         ArrayList<Publication> copy = new ArrayList<Publication>();
         for (Publication pub : publicationArrayList) {
@@ -166,6 +208,21 @@ public class Applicant {
             }
         }
         return null;
+    }
+
+    public String getApplicantID() {
+        return String.valueOf(id);
+    }
+
+    public boolean getTranscriptValidation() {
+        return "Y".equals(transcriptStatus);
+    }
+
+    public boolean hasPublicationOrGRP() {
+        if (!publications.isEmpty()) {
+            return true;
+        }
+        return hasDocument("GRP");
     }
 
     @Override

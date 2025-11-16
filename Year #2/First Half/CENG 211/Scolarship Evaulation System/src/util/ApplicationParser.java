@@ -12,7 +12,6 @@ import types.Application;
 import types.MeritApplication;
 import types.NeedApplication;
 import types.ResearchApplication;
-import types.DocumentType;
 
 /**
  * Parser class for reading CSV files and creating Application objects.
@@ -110,17 +109,11 @@ public class ApplicationParser {
                             
                         case "D": // Document: D,ID,DocType,Duration
                             if (tokenizer.countTokens() >= 3) {
-                                int id = Integer.parseInt(tokenizer.nextToken().trim());
-                                String docTypeStr = tokenizer.nextToken().trim();
+                                String applicantId = tokenizer.nextToken().trim();
+                                String docType = tokenizer.nextToken().trim();
                                 int duration = Integer.parseInt(tokenizer.nextToken().trim());
                                 
-                                // Convert string to DocumentType enum
-                                try {
-                                    DocumentType docType = DocumentType.valueOf(docTypeStr);
-                                    documentsList.add(new Document(id, docType, duration));
-                                } catch (IllegalArgumentException e) {
-                                    System.err.println("Warning: Line " + lineNumber + " - Invalid document type: " + docTypeStr);
-                                }
+                                documentsList.add(new Document(applicantId, docType, duration));
                             } else {
                                 System.err.println("Warning: Line " + lineNumber + " - Incomplete document data, skipping");
                             }
@@ -128,11 +121,11 @@ public class ApplicationParser {
                             
                         case "P": // Publication: P,ID,Title,ImpactFactor
                             if (tokenizer.countTokens() >= 3) {
-                                int id = Integer.parseInt(tokenizer.nextToken().trim());
+                                String applicantId = tokenizer.nextToken().trim();
                                 String title = tokenizer.nextToken().trim();
                                 double impact = Double.parseDouble(tokenizer.nextToken().trim());
                                 
-                                publicationsList.add(new Publication(id, title, impact));
+                                publicationsList.add(new Publication(applicantId, title, impact));
                             } else {
                                 System.err.println("Warning: Line " + lineNumber + " - Incomplete publication data, skipping");
                             }
@@ -180,14 +173,14 @@ public class ApplicationParser {
                 
                 // Add documents
                 for (Document doc : documentsList) {
-                    if (doc.getApplicantID() == appData.id) {
+                    if (doc.getApplicantID().equals(String.valueOf(appData.id))) {
                         applicant.addDocument(doc);
                     }
                 }
                 
                 // Add publications
                 for (Publication pub : publicationsList) {
-                    if (pub.getApplicantId() == appData.id) {
+                    if (pub.getApplicantID().equals(String.valueOf(appData.id))) {
                         applicant.addPublication(pub);
                     }
                 }
