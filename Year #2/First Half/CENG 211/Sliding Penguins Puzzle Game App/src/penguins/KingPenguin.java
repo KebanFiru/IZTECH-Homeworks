@@ -2,7 +2,7 @@ public class KingPenguin extends Penguin{
 
     public KingPenguin(String name){
 
-        super(name,PenguinType.EMPEROR);
+        super(name,PenguinType.KING);
     }
 
     @Override
