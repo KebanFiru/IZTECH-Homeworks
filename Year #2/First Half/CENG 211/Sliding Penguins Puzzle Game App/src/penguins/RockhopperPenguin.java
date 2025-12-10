@@ -14,7 +14,7 @@ public class RockhopperPenguin extends Penguin{
 
     @Override
     public void useSpecialAbility(Direction dir, IcyTerrain terrain) {
-        terrain.slidePenguin(this, dir, -1, true); 
+        terrain.slidePenguin(this, dir, -1, true);
         setSpecialEffectUsed(true);
     }
 }
