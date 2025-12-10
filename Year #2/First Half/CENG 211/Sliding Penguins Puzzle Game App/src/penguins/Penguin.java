@@ -1,89 +1,111 @@
 package penguins;
 
 import food.FoodType;
-import java.util.ArrayList;
-import java.util.List;
+import util.ExtendedArrayList;
 
 public abstract class Penguin {
+
     private PenguinType type;
-    private final String name;
     private int x;
     private int y;
-    private List<FoodType> collectedFoods;
+    private ExtendedArrayList<FoodType> collectedFoods;
     private int movesLeft;
     private boolean specialEffectUsed;
     private boolean stunned;
+    private int totalWeight;
     private boolean inGame;
 
-    public Penguin(String name, PenguinType type) {
+    public Penguin(String name, PenguinType type){
 
-        this.name = name;
         this.type = type;
-        this.x = 0;
-        this.y = 0;
-        this.collectedFoods = new ArrayList<>();
+        this.collectedFoods = new ExtendedArrayList<FoodType>(0,FoodType);
         this.movesLeft = 4;
         this.specialEffectUsed = false;
         this.stunned = false;
+        this.totalWeight = 0;
         this.inGame = true;
     }
 
-    public PenguinType getType() {
-        return type;
-    }
-    public String getName() {
-        return name;
+    public abstract PenguinType getType();
+
+    public int[] getPosition(){
+        int[] position = new int[2];
+        position[0] = x;
+        position[1] = y;
+
+        return position;
     }
 
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
-    public void setPosition(int x, int y) {
-        this.x = x; this.y = y;
-    }
-    public List<FoodType> getCollectedFoods() {
-        return collectedFoods;
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
     }
 
-    public void collectFood(FoodType food) {
+    public abstract void useSpecialAbility(Direction dir, IcyTerrain terrain);
+
+    public void addFood(FoodType food){
+
         collectedFoods.add(food);
     }
-    public int getTotalFoodWeight() {
-        int totalWeight = 0;
-        for (FoodType food : collectedFoods) {
-            totalWeight += food.getWeight();
+
+    public int getTotalWeight(){
+
+        for(FoodType food: collectedFoods){
+            totalWeight = totalWeight+food.getWeight();
         }
+
         return totalWeight;
     }
-    public boolean isStunned() {
-        return stunned;
+
+    public boolean isStunned(){
+
+        return this.stunned;
     }
-    public void setStunned(boolean value) {
+
+    public void setStun(boolean value){
         this.stunned = value;
     }
 
-    public boolean isInGame() {
-        return inGame;
-    }
-    public void setInGame(boolean value) {
-        this.inGame = value;
-    }
-    public boolean hasUsedSpecialEffect() {
-        return specialEffectUsed;
-    }
-    public void setSpecialEffectUsed(boolean value) {
-        this.specialEffectUsed = value;
-    }
-
-    public int getMovesLeft() {
-        return movesLeft;
-    }
-    public void decrementMoves() {
-        if (movesLeft > 0){
-            movesLeft--;
+    public void move(Direction direction, IcyTerrain terrain) {
+        if(this.movesLeft > 0){
+            terrain.slidePenguin(this, direction, -1, false);
+            movesLeft = movesLeft - 1;
         }
     }
+
+    public boolean isIngGame(){
+
+        return inGame;
+    }
+
+    public void setInGame(boolean value){
+
+        this.inGame = value;
+    }
+    public void setSpecialEffectUsed(boolean value){
+
+        this.specialEffectUsed = value;
+    }
+    public boolean getSpecialEffectUsed(){
+
+        return specialEffectUsed;
+    }
+    public ExtendedArrayList<FoodType> getCollectedFoods() {
+
+        return collectedFoods;
+    }
+
+    public FoodType removeLightestFood() {
+        if (collectedFoods.isEmpty()) return null;
+        FoodType lightest = collectedFoods.get(0);
+        for (FoodType food : collectedFoods) {
+            if (food.getWeight() < lightest.getWeight()) {
+                lightest = food;
+            }
+        }
+        collectedFoods.remove(lightest);
+        return lightest;
+    }
+
+
 }
