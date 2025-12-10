@@ -1,23 +1,21 @@
 package penguins;
 
-public class EmperorPenguin extends Penguin{
+import terrain.Direction;
+import terrain.IcyTerrain;
 
-    public EmperorPenguin(String name){
-
-        super(name,PenguinType.EMPEROR);
+public class EmperorPenguin extends Penguin {
+    public EmperorPenguin(String name) {
+        super(name, PenguinType.EMPEROR);
     }
 
     @Override
-    public PenguinType getType() {
-
-        return PenguinType.EMPEROR;
+    public void move(Direction dir, IcyTerrain terrain) {
+        terrain.slidePenguin(this, dir, -1, false);
     }
 
     @Override
     public void useSpecialAbility(Direction dir, IcyTerrain terrain) {
-        
-        terrain.slidePenguin(this, dir, 3, false);
-        setSpecialEffectUsed(true);
+        terrain.slidePenguin(this, dir, 3, false); // stops on 3rd square
+        setSpecialActionUsed(true);
     }
-
 }
