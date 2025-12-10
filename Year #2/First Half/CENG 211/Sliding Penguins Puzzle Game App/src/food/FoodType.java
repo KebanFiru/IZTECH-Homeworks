@@ -1,4 +1,9 @@
 package food;
 
-public class FoodType {
+public enum FoodType {
+    KRILL,
+    CRUSTACEAN,
+    ANCHOVY,
+    SQUID,
+    MACKEREL
 }
