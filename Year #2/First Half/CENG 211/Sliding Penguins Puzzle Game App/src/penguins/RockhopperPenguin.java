@@ -1,20 +1,21 @@
 package penguins;
 
-public class RockhopperPenguin extends Penguin{
+import terrain.Direction;
+import terrain.IcyTerrain;
 
-    public RockhopperPenguin(String name){
-
-        super(name,PenguinType.ROCKCHOPPER);
+public class RockhopperPenguin extends Penguin {
+    public RockhopperPenguin(String name) {
+        super(name, PenguinType.ROCKHOPPER);
     }
 
     @Override
-    public PenguinType getType() {
-        return PenguinType.ROCKCHOPPER;
+    public void move(Direction dir, IcyTerrain terrain) {
+        terrain.slidePenguin(this, dir, -1, false);
     }
 
     @Override
     public void useSpecialAbility(Direction dir, IcyTerrain terrain) {
-        terrain.slidePenguin(this, dir, -1, true); 
-        setSpecialEffectUsed(true);
+        terrain.slidePenguin(this, dir, -1, true); // canJump = true
+        setSpecialActionUsed(true);
     }
 }
