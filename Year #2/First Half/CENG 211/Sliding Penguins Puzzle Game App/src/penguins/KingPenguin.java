@@ -9,4 +9,9 @@ public class KingPenguin extends Penguin{
     public PenguinType getType() {
         return PenguinType.KING;
     }
+    @Override
+    public void useSpecialAbility(Direction dir, IcyTerrain terrain) {
+        terrain.slidePenguin(this, dir, 5, false); 
+        setSpecialEffectUsed(true);
+    }
 }
