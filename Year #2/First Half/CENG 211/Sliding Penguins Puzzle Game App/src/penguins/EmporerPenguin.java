@@ -10,11 +10,6 @@ public class EmporerPenguin extends Penguin{
     }
 
     @Override
-    public void slide(direction Direction){
-
-    }
-
-    @Override
     public void useSpecialAbility(String direction) throws Exception{
 
         Scanner input = new Scanner(System.in);
@@ -52,5 +47,4 @@ public class EmporerPenguin extends Penguin{
 
 
     }
-
 }
