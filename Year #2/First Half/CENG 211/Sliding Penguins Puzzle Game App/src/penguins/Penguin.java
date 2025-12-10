@@ -106,9 +106,7 @@ public abstract class Penguin implements ITerrainObject {
         collectedFoods.remove(lightest);
         return lightest;
     }
-
-    @Override
-    public abstract String getNotation();
+    
     public abstract void move(Direction dir, IcyTerrain terrain);
     public abstract void useSpecialAbility(Direction dir, IcyTerrain terrain);
 }
