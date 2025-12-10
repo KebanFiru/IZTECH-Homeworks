@@ -1,4 +1,8 @@
 package penguins;
 
-public class PenguinType {
+public enum PenguinType {
+    KING,
+    EMPEROR,
+    ROYAL,
+    ROCKHOPPER
 }
