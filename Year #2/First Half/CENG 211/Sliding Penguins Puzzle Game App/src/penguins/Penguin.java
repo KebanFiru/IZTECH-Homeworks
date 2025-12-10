@@ -6,6 +6,7 @@ import util.ExtendedArrayList;
 public abstract class Penguin {
 
     private String type;
+    private String name;
     private int x;
     private int y;
     private ExtendedArrayList<FoodType> collectedFoods;
@@ -17,10 +18,10 @@ public abstract class Penguin {
     private int totalWeight;
     private boolean inGame;
 
-    public Penguin(int startingX, int startingY){
+    public Penguin(String name){
 
-        this.x = startingX;
-        this.y = startingY;
+        this.x = 0;
+        this.y = 0;
         this.collectedFoods = new ExtendedArrayList<FoodType>(0,FoodType);
         this.moves = new String[4];
         this.wichMove = 0;
