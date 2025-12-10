@@ -11,4 +11,10 @@ public class RockhopperPenguin extends Penguin{
     public PenguinType getType() {
         return PenguinType.ROCKCHOPPER;
     }
+
+    @Override
+    public void useSpecialAbility(Direction dir, IcyTerrain terrain) {
+        terrain.slidePenguin(this, dir, -1, true); 
+        setSpecialEffectUsed(true);
+    }
 }
