@@ -1,104 +1,104 @@
 package penguins;
 
-import food.FoodType;
-import util.ExtendedArrayList;
+import model.ITerrainObject;
+import food.FoodItem;
+import terrain.Direction;
+import terrain.IcyTerrain;
 
-public abstract class Penguin {
+import java.util.ArrayList;
+import java.util.List;
 
-    private PenguinType type;
-    private int x;
-    private int y;
-    private ExtendedArrayList<FoodType> collectedFoods;
+public abstract class Penguin implements ITerrainObject {
+    private final String name;
+    private final PenguinType type;
+    private int row, column;
+    private List<FoodItem> collectedFoods;
     private int movesLeft;
     private boolean specialEffectUsed;
     private boolean stunned;
-    private int totalWeight;
-    private boolean inGame;
+    private boolean removed;
 
-    public Penguin(String name, PenguinType type){
-
+    public Penguin(String name, PenguinType type) {
+        this.name = name;
         this.type = type;
-        this.collectedFoods = new ExtendedArrayList<FoodType>(0,FoodType);
+        this.row = 0;
+        this.column = 0;
+        this.collectedFoods = new ArrayList<>();
         this.movesLeft = 4;
         this.specialEffectUsed = false;
         this.stunned = false;
-        this.totalWeight = 0;
-        this.inGame = true;
+        this.removed = false;
     }
 
-    public abstract PenguinType getType();
-
-    public int[] getPosition(){
-        int[] position = new int[2];
-        position[0] = x;
-        position[1] = y;
-
-        return position;
+    public String getName() {
+        return name;
+    }
+    public PenguinType getType() {
+        return type;
     }
 
-    public void setPosition(int x, int y){
-        this.x = x;
-        this.y = y;
+    @Override
+    public int getRow() {
+        return row;
+    }
+    @Override
+    public int getColumn() {
+        return column;
+    }
+    @Override
+    public void setPosition(int row, int column) {
+        this.row = row;
+        this.column = column;
+    }
+    public int[] getPosition() {
+        return new int[] { row, column };
     }
 
-    public abstract void useSpecialAbility(Direction dir, IcyTerrain terrain);
-
-    public void addFood(FoodType food){
-
-        collectedFoods.add(food);
+    public boolean isStunned() {
+        return stunned;
+    }
+    public void setStunned(boolean value) {
+        stunned = value;
     }
 
-    public int getTotalWeight(){
-
-        for(FoodType food: collectedFoods){
-            totalWeight = totalWeight+food.getWeight();
-        }
-
-        return totalWeight;
+    public boolean isRemoved() {
+        return removed;
+    }
+    public void setRemoved(boolean value) {
+        removed = value;
     }
 
-    public boolean isStunned(){
-
-        return this.stunned;
-    }
-
-    public void setStun(boolean value){
-        this.stunned = value;
-    }
-
-    public void move(Direction direction, IcyTerrain terrain) {
-        if(this.movesLeft > 0){
-            terrain.slidePenguin(this, direction, -1, false);
-            movesLeft = movesLeft - 1;
-        }
-    }
-
-    public boolean isIngGame(){
-
-        return inGame;
-    }
-
-    public void setInGame(boolean value){
-
-        this.inGame = value;
-    }
-    public void setSpecialEffectUsed(boolean value){
-
-        this.specialEffectUsed = value;
-    }
-    public boolean getSpecialEffectUsed(){
-
+    public boolean hasUsedSpecialAction() {
         return specialEffectUsed;
     }
-    public ExtendedArrayList<FoodType> getCollectedFoods() {
-
-        return collectedFoods;
+    public void setSpecialActionUsed(boolean value) {
+        specialEffectUsed = value;
     }
 
-    public FoodType removeLightestFood() {
+    public int getMovesLeft() {
+        return movesLeft;
+    }
+    public void decrementMoves() {
+        if (movesLeft > 0) movesLeft--;
+    }
+
+    public void collectFood(FoodItem food) {
+        collectedFoods.add(food);
+    }
+    public List<FoodItem> getCollectedFoods() {
+        return collectedFoods;
+    }
+    public int getTotalFoodWeight() {
+        int total = 0;
+        for (FoodItem food : collectedFoods) {
+            total += food.getWeight();
+        }
+        return total;
+    }
+    public FoodItem removeLightestFood() {
         if (collectedFoods.isEmpty()) return null;
-        FoodType lightest = collectedFoods.get(0);
-        for (FoodType food : collectedFoods) {
+        FoodItem lightest = collectedFoods.get(0);
+        for (FoodItem food : collectedFoods) {
             if (food.getWeight() < lightest.getWeight()) {
                 lightest = food;
             }
@@ -107,5 +107,8 @@ public abstract class Penguin {
         return lightest;
     }
 
-
+    @Override
+    public abstract String getNotation();
+    public abstract void move(Direction dir, IcyTerrain terrain);
+    public abstract void useSpecialAbility(Direction dir, IcyTerrain terrain);
 }
