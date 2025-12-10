@@ -1,17 +1,21 @@
-public class KingPenguin extends Penguin{
+package penguins;
 
-    public KingPenguin(String name){
+import terrain.Direction;
+import terrain.IcyTerrain;
 
-        super(name,PenguinType.KING);
+public class KingPenguin extends Penguin {
+    public KingPenguin(String name) {
+        super(name, PenguinType.KING);
     }
 
     @Override
-    public PenguinType getType() {
-        return PenguinType.KING;
+    public void move(Direction dir, IcyTerrain terrain) {
+        terrain.slidePenguin(this, dir, -1, false);
     }
+
     @Override
     public void useSpecialAbility(Direction dir, IcyTerrain terrain) {
-        terrain.slidePenguin(this, dir, 5, false); 
-        setSpecialEffectUsed(true);
+        terrain.slidePenguin(this, dir, 5, false); // stops on 5th square
+        setSpecialActionUsed(true);
     }
 }
