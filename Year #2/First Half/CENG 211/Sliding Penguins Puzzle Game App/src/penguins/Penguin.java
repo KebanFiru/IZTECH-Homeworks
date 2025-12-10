@@ -95,5 +95,10 @@ public abstract class Penguin {
 
         this.inGame = value;
     }
+
+    public void setSpecialEffectUsed(boolean value){
+
+        this.specialEffectUsed = value;
+    }
     
 }
