@@ -2,7 +2,7 @@ package penguins;
 
 public class RockhopperPenguin extends Penguin{
 
-    public EmperorPenguin(String name){
+    public RockhopperPenguin(String name){
 
         super(name,PenguinType.ROCKCHOPPER);
     }
