@@ -1,6 +1,5 @@
 package penguins;
 
-
 public class EmperorPenguin extends Penguin{
 
     public EmperorPenguin(String name){
