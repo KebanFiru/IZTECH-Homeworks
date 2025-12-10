@@ -1,4 +1,7 @@
 package penguins;
 
-public class EmporerPenguin {
+public class EmporerPenguin extends Penguin{
+
+
+
 }
