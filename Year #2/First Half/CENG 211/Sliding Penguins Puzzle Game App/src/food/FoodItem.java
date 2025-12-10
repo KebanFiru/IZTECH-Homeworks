@@ -5,29 +5,21 @@ import model.ITerrainObject;
 public class FoodItem implements ITerrainObject {
     private FoodType type;
     private int weight;
-    private int x, y;   // optional, for grid location
+    private int row, column;  // Grid location
 
-    /**
-     * Constructor using random type and random weight (for terrain generation).
-     */
     public FoodItem() {
-        // Random type:
         FoodType[] types = FoodType.values();
         this.type = types[(int)(Math.random() * types.length)];
-        // Random weight: 1 to 5
         this.weight = 1 + (int)(Math.random() * 5);
-        this.x = 0;
-        this.y = 0;
+        this.row = 0;
+        this.column = 0;
     }
 
-    /**
-     * Explicit constructor (for testing/etc.)
-     */
     public FoodItem(FoodType type, int weight) {
         this.type = type;
         this.weight = weight;
-        this.x = 0;
-        this.y = 0;
+        this.row = 0;
+        this.column = 0;
     }
 
     public FoodType getType() {
@@ -38,18 +30,25 @@ public class FoodItem implements ITerrainObject {
         return weight;
     }
 
-    // Optional notation: derive from enum name if needed
+    @Override
     public String getNotation() {
-        return type.name().substring(0, 1); // "K" for KRILL, etc.
+        // Single letter notation from type name (take the first character)
+        return type.name().substring(0, 1);
     }
 
-    // Optional position methods
-    public int[] getPosition() {
-        return new int[]{x, y};
+    @Override
+    public int getRow() {
+        return row;
     }
 
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+    @Override
+    public int getColumn() {
+        return column;
+    }
+
+    @Override
+    public void setPosition(int row, int column) {
+        this.row = row;
+        this.column = column;
     }
 }
