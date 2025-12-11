@@ -66,10 +66,10 @@ public class IcyTerrain {
      */
     public int[] getNextPosition(int row, int column, Direction dir) {
         switch (dir) {
-            case UP: return new int[]{row, column - 1};
-            case DOWN: return new int[]{row, column + 1};
-            case LEFT: return new int[]{row - 1, column};
-            case RIGHT: return new int[]{row + 1, column};
+            case UP: return new int[]{row - 1, column};
+            case DOWN: return new int[]{row + 1, column};
+            case LEFT: return new int[]{row, column - 1};
+            case RIGHT: return new int[]{row, column + 1};
             default: return new int[]{row, column};
         }
     }
@@ -83,7 +83,7 @@ public class IcyTerrain {
      */
     public ITerrainObject getObjectAt(int row, int column) {
         if (!isValidPosition(row, column)) return null;
-        return grid.get(column).get(row);
+        return grid.get(row).get(column);
     }
 
     /**
@@ -95,7 +95,7 @@ public class IcyTerrain {
      */
     public void placeObject(ITerrainObject obj, int row, int column) {
         if (isValidPosition(row, column)) {
-            grid.get(column).set(row, obj);
+            grid.get(row).set(column, obj);
         }
     }
 
@@ -107,7 +107,7 @@ public class IcyTerrain {
      */
     public void removeObject(int row, int column) {
         if (isValidPosition(row, column)) {
-            grid.get(column).set(row, null);
+            grid.get(row).set(column, null);
         }
     }
 
@@ -189,6 +189,7 @@ public class IcyTerrain {
         int squareCount = 0;
         int currentRow = penguin.getRow();
         int currentColumn = penguin.getColumn();
+        boolean hasJumped = false;
 
         while (true) {
             int[] next = getNextPosition(currentRow, currentColumn, dir);
@@ -196,6 +197,8 @@ public class IcyTerrain {
 
             if (!isValidPosition(next[0], next[1])) {
                 penguin.setRemoved(true);
+                System.out.println(penguin.getName() + " falls into the water!");
+                System.out.println("*** " + penguin.getName() + " IS REMOVED FROM THE GAME!");
                 return;
             }
 
@@ -206,6 +209,8 @@ public class IcyTerrain {
                 currentColumn = next[1];
                 if (obj instanceof FoodItem) {
                     penguin.collectFood((FoodItem) obj);
+                    System.out.println(penguin.getName() + " takes the " + ((FoodItem)obj).getType() +
+                            " on the ground. (Weight=" + ((FoodItem)obj).getWeight() + " units)");
                     foodItems.remove(obj);
                 }
                 penguin.setPosition(currentRow, currentColumn);
@@ -216,16 +221,35 @@ public class IcyTerrain {
             if (obj != null) {
                 if (obj instanceof FoodItem) {
                     penguin.collectFood((FoodItem) obj);
+                    System.out.println(penguin.getName() + " takes the " + ((FoodItem)obj).getType() +
+                        " on the ground. (Weight=" + ((FoodItem)obj).getWeight() + " units)");
                     foodItems.remove(obj);
                     penguin.setPosition(next[0], next[1]);
                     placeObject(penguin, next[0], next[1]);
                     return;
                 } else if (obj instanceof Hazard) {
-                    ((Hazard)obj).onPenguinLand(penguin, this, dir);
-                    return;
+                    // Check if penguin can jump over this hazard
+                    if (canJump && !hasJumped) {
+                        System.out.println(penguin.getName() + " jumps over " + ((Hazard)obj).getHazardType() + " in its path.");
+                        hasJumped = true;
+                        // Continue sliding past the hazard
+                        currentRow = next[0];
+                        currentColumn = next[1];
+                        continue;
+                    } else {
+                        ((Hazard)obj).onPenguinLand(penguin, this, dir);
+                        return;
+                    }
                 } else if (obj instanceof Penguin) {
+                    // Penguin collision: one stops, other starts sliding
                     penguin.setPosition(currentRow, currentColumn);
                     placeObject(penguin, currentRow, currentColumn);
+                    System.out.println(penguin.getName() + " collides with " + ((Penguin)obj).getName() + ".");
+                    System.out.println("Movement is transferred to " + ((Penguin)obj).getName() + ".");
+                    // Transfer movement to the other penguin
+                    Penguin otherPenguin = (Penguin)obj;
+                    removeObject(otherPenguin.getRow(), otherPenguin.getColumn());
+                    slidePenguin(otherPenguin, dir, -1, false);
                     return;
                 }
             }
@@ -281,11 +305,11 @@ public class IcyTerrain {
      */
     public int[] findEmptyPosition(boolean avoidPenguins) {
         List<int[]> emptyPositions = new ArrayList<>();
-        for (int y = 0; y < GRID_SIZE; y++) {
-            for (int x = 0; x < GRID_SIZE; x++) {
-                ITerrainObject obj = getObjectAt(x, y);
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                ITerrainObject obj = getObjectAt(row, col);
                 if (obj == null || (!avoidPenguins && obj instanceof FoodItem)) {
-                    emptyPositions.add(new int[]{x, y});
+                    emptyPositions.add(new int[]{row, col});
                 } else if (avoidPenguins && obj instanceof Penguin) {
                     continue;
                 }

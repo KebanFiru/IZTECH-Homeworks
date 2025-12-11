@@ -40,13 +40,11 @@ public abstract class Hazard implements IHazard {
     
     /**
      * Called when a penguin lands on this hazard.
-     * Default implementation prints a message; subclasses can override for specific behavior.
+     * Each hazard type must implement its specific behavior.
      * 
      * @param penguin The penguin that landed on the hazard
      * @param terrain The terrain where the interaction occurs
      * @param dir The direction the penguin was moving
      */
-    public void onPenguinLand(Penguin penguin, IcyTerrain terrain, Direction dir) {
-        System.out.println(penguin.getName() + " lands on a " + getHazardType() + ".");
-    }
+    public abstract void onPenguinLand(Penguin penguin, IcyTerrain terrain, Direction dir);
 }

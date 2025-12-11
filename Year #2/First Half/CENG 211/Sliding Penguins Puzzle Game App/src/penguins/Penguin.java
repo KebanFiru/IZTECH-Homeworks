@@ -165,7 +165,9 @@ public abstract class Penguin implements ITerrainObject, ISlidable {
      * @param food The food item to collect
      */
     public void collectFood(FoodItem food) {
-        collectedFoods.add(food);
+        if (food != null) {
+            collectedFoods.add(food);
+        }
     }
     
     /**

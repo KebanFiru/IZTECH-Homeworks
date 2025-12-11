@@ -3,6 +3,8 @@ package hazards;
 import terrain.Direction;
 import terrain.IcyTerrain;
 import model.ISlidable;
+import penguins.Penguin;
+import food.FoodItem;
 
 /**
  * Heavy Ice Block hazard - a heavy slidable obstacle.
@@ -10,6 +12,13 @@ import model.ISlidable;
  */
 public class HeavyIceBlock extends Hazard implements ISlidable {
     private boolean sliding = false;
+
+    /**
+     * Constructs a new HeavyIceBlock hazard.
+     */
+    public HeavyIceBlock() {
+        super();
+    }
 
     @Override
     public String getNotation() {
@@ -24,6 +33,23 @@ public class HeavyIceBlock extends Hazard implements ISlidable {
     @Override
     public String getHazardType() {
         return HazardType.HEAVY_ICE_BLOCK.name();
+    }
+    
+    @Override
+    public void onPenguinLand(Penguin penguin, IcyTerrain terrain, Direction dir) {
+        if (penguin == null || terrain == null) {
+            return;
+        }
+        System.out.println(penguin.getName() + " collides with a " + getHazardType() + ".");
+        // Penguin stops at current position before collision
+        terrain.placeObject(penguin, penguin.getRow(), penguin.getColumn());
+        // Remove lightest food as penalty
+        FoodItem lightest = penguin.removeLightestFood();
+        if (lightest != null) {
+            System.out.println(penguin.getName() + " loses the lightest food item (" + 
+                    lightest.getNotation() + ", " + lightest.getWeight() + " units).");
+        }
+        // Heavy ice block cannot be moved
     }
 
     /**
@@ -42,7 +68,8 @@ public class HeavyIceBlock extends Hazard implements ISlidable {
             setPosition(next[0], next[1]);
             terrain.placeObject(this, next[0], next[1]);
             setSliding(true);
-        } else {
+        } 
+        else {
             setSliding(false);
         }
     }
