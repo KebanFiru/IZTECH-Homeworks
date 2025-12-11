@@ -1,4 +1,4 @@
-package controller;
+package src.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,22 +6,22 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-import food.FoodItem;
-import hazards.HazardType;
-import hazards.HoleInIce;
-import hazards.IHazard;
-import hazards.LightIceBlock;
-import hazards.SeaLion;
-import model.IMovable;
-import model.ITerrainObject;
-import penguins.EmperorPenguin;
-import penguins.KingPenguin;
-import penguins.Penguin;
-import penguins.RockhopperPenguin;
-import penguins.RoyalPenguin;
-import terrain.Direction;
-import terrain.IcyTerrain;
-import util.InputHelper;
+import src.food.FoodItem;
+import src.hazards.HazardType;
+import src.hazards.HoleInIce;
+import src.hazards.IHazard;
+import src.hazards.LightIceBlock;
+import src.hazards.SeaLion;
+import src.model.IMovable;
+import src.model.ITerrainObject;
+import src.penguins.EmperorPenguin;
+import src.penguins.KingPenguin;
+import src.penguins.Penguin;
+import src.penguins.RockhopperPenguin;
+import src.penguins.RoyalPenguin;
+import src.terrain.Direction;
+import src.terrain.IcyTerrain;
+import src.util.InputHelper;
 
 /**
  * GameController Class
