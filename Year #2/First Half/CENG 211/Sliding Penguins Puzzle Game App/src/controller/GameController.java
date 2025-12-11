@@ -80,7 +80,7 @@ public class GameController {
                 }
             }
 
-            view.displayGameOver(terrain.getPenguins());
+            view.displayGameOver(terrain.getPenguins(), playerPenguin);
         } catch (Exception e) {
             view.displayError("An error occurred during the game: " + e.getMessage());
             e.printStackTrace();
@@ -175,27 +175,70 @@ public class GameController {
 
         boolean useSpecial = false;
         Direction moveDir;
+        Direction specialDir = null;
+        boolean isAutomatic = false; // For RockhopperPenguin auto-trigger
 
         if (penguin == playerPenguin) {
             if (!penguin.hasUsedSpecialAction()) {
                 useSpecial = askPlayerSpecialAction();
             }
+            
+            // RoyalPenguin needs TWO directions when using special ability
+            if (useSpecial && penguin instanceof penguins.RoyalPenguin) {
+                specialDir = askPlayerDirection("Which direction will " + penguin.getName() + " move one square (special action)?  ");
+            }
+            
             moveDir = askPlayerDirection("Which direction will " + penguin.getName() + " move?  ");
         } else {
-            if (!penguin.hasUsedSpecialAction()) {
-                useSpecial = Math.random() < AI_SPECIAL_ACTION_PROBABILITY;
-            }
+            // AI decision logic
             moveDir = chooseAIDirection(penguin);
+            
+            if (!penguin.hasUsedSpecialAction()) {
+                // Special case: RockhopperPenguin automatically uses action when moving toward hazard
+                if (penguin instanceof penguins.RockhopperPenguin) {
+                    int[] next = terrain.getNextPosition(penguin.getRow(), penguin.getColumn(), moveDir);
+                    if (terrain.isValidPosition(next[0], next[1])) {
+                        ITerrainObject obj = terrain.getObjectAt(next[0], next[1]);
+                        if (obj instanceof Hazard) {
+                            useSpecial = true; // Automatically use jump ability
+                            isAutomatic = true; // Mark as automatic
+                        } else {
+                            useSpecial = Math.random() < AI_SPECIAL_ACTION_PROBABILITY;
+                        }
+                    } else {
+                        useSpecial = Math.random() < AI_SPECIAL_ACTION_PROBABILITY;
+                    }
+                } else {
+                    useSpecial = Math.random() < AI_SPECIAL_ACTION_PROBABILITY;
+                }
+                
+                // RoyalPenguin AI needs a separate direction for special action
+                if (useSpecial && penguin instanceof penguins.RoyalPenguin) {
+                    // Choose a safe direction for the one-square move
+                    specialDir = chooseRoyalPenguinSpecialDirection(penguin);
+                }
+            }
         }
 
         if (!penguin.hasUsedSpecialAction()) {
-            view.displaySpecialActionChoice(penguin, useSpecial);
+            view.displaySpecialActionChoice(penguin, useSpecial, isAutomatic);
         }
-        view.displayMovementChoice(penguin, getDirectionName(moveDir));
         
         if (useSpecial && !penguin.hasUsedSpecialAction()) {
-            penguin.useSpecialAbility(moveDir, terrain);
+            if (penguin instanceof penguins.RoyalPenguin && specialDir != null) {
+                // RoyalPenguin: move one square first, then slide
+                penguin.useSpecialAbility(specialDir, terrain);
+                // If penguin is still alive after special action, continue with normal move
+                if (!penguin.isRemoved()) {
+                    view.displayMovementChoice(penguin, getDirectionName(moveDir));
+                    penguin.move(moveDir, terrain);
+                }
+            } else {
+                view.displayMovementChoice(penguin, getDirectionName(moveDir));
+                penguin.useSpecialAbility(moveDir, terrain);
+            }
         } else {
+            view.displayMovementChoice(penguin, getDirectionName(moveDir));
             penguin.move(moveDir, terrain);
         }
         
@@ -306,6 +349,52 @@ public class GameController {
             return waterDirs.get((int) (Math.random() * waterDirs.size()));
         }
         // Fallback: return random direction (shouldn't happen but prevents crash)
+        return directions[(int) (Math.random() * directions.length)];
+    }
+    
+    /**
+     * Chooses a safe direction for RoyalPenguin's one-square special move.
+     * Prioritizes directions that don't lead to hazards or water.
+     * 
+     * @param penguin The RoyalPenguin choosing a direction
+     * @return The chosen direction for the special one-square move
+     */
+    private Direction chooseRoyalPenguinSpecialDirection(Penguin penguin) {
+        Direction[] directions = Direction.values();
+        List<Direction> safeDirs = new ArrayList<>();
+        List<Direction> foodDirs = new ArrayList<>();
+        List<Direction> otherDirs = new ArrayList<>();
+
+        for (Direction dir : directions) {
+            int[] next = terrain.getNextPosition(penguin.getRow(), penguin.getColumn(), dir);
+            
+            if (!terrain.isValidPosition(next[0], next[1])) {
+                continue; // Skip water
+            }
+            
+            ITerrainObject obj = terrain.getObjectAt(next[0], next[1]);
+            
+            if (obj == null) {
+                safeDirs.add(dir); // Empty square is safest
+            } else if (obj.getClass() == FoodItem.class) {
+                foodDirs.add(dir); // Food is good
+            } else if (!(obj instanceof Hazard)) {
+                otherDirs.add(dir); // Penguin or other object
+            }
+            // Skip hazards
+        }
+        
+        // Prefer empty squares, then food, then others
+        if (!safeDirs.isEmpty()) {
+            return safeDirs.get((int) (Math.random() * safeDirs.size()));
+        }
+        if (!foodDirs.isEmpty()) {
+            return foodDirs.get((int) (Math.random() * foodDirs.size()));
+        }
+        if (!otherDirs.isEmpty()) {
+            return otherDirs.get((int) (Math.random() * otherDirs.size()));
+        }
+        // Last resort: any random direction
         return directions[(int) (Math.random() * directions.length)];
     }
 

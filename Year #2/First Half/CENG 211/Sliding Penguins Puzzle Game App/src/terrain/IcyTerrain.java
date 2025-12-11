@@ -204,18 +204,42 @@ public class IcyTerrain {
 
             ITerrainObject obj = getObjectAt(next[0], next[1]);
 
-            if (stopSquare > 0 && squareCount == stopSquare && (obj == null || obj.getClass() == FoodItem.class)) {
-                currentRow = next[0];
-                currentColumn = next[1];
-                if (obj != null && obj.getClass() == FoodItem.class) {
+            if (stopSquare > 0 && squareCount == stopSquare) {
+                // Reached target square - check what's there
+                if (obj == null) {
+                    // Empty square - stop here
+                    currentRow = next[0];
+                    currentColumn = next[1];
+                    penguin.setPosition(currentRow, currentColumn);
+                    placeObject(penguin, currentRow, currentColumn);
+                    return;
+                } else if (obj.getClass() == FoodItem.class) {
+                    // Food at target square - collect and stop
+                    currentRow = next[0];
+                    currentColumn = next[1];
                     penguin.collectFood((FoodItem) obj);
                     System.out.println(penguin.getName() + " takes the " + ((FoodItem)obj).getType() +
                             " on the ground. (Weight=" + ((FoodItem)obj).getWeight() + " units)");
                     foodItems.remove(obj);
+                    penguin.setPosition(currentRow, currentColumn);
+                    placeObject(penguin, currentRow, currentColumn);
+                    return;
+                } else if (obj instanceof Penguin) {
+                    // Penguin collision at target square - stop before and transfer movement
+                    penguin.setPosition(currentRow, currentColumn);
+                    placeObject(penguin, currentRow, currentColumn);
+                    System.out.println(penguin.getName() + " collides with " + ((Penguin)obj).getName() + ".");
+                    System.out.println("Movement is transferred to " + ((Penguin)obj).getName() + ".");
+                    Penguin otherPenguin = (Penguin)obj;
+                    removeObject(otherPenguin.getRow(), otherPenguin.getColumn());
+                    slidePenguin(otherPenguin, dir, -1, false);
+                    return;
+                } else if (obj instanceof Hazard) {
+                    // Hazard at target square - set position to last safe square before triggering hazard effect
+                    penguin.setPosition(currentRow, currentColumn);
+                    ((Hazard)obj).onPenguinLand(penguin, this, dir);
+                    return;
                 }
-                penguin.setPosition(currentRow, currentColumn);
-                placeObject(penguin, currentRow, currentColumn);
-                return;
             }
 
             if (obj != null) {
@@ -230,13 +254,39 @@ public class IcyTerrain {
                 } else if (obj instanceof Hazard) {
                     // Check if penguin can jump over this hazard
                     if (canJump && !hasJumped) {
-                        System.out.println(penguin.getName() + " jumps over " + ((Hazard)obj).getHazardType() + " in its path.");
-                        hasJumped = true;
-                        // Continue sliding past the hazard
-                        currentRow = next[0];
-                        currentColumn = next[1];
-                        continue;
+                        // Check if landing square (next square after hazard) is empty or just food
+                        int[] landingPos = getNextPosition(next[0], next[1], dir);
+                        ITerrainObject landingObj = isValidPosition(landingPos[0], landingPos[1]) ? 
+                                                     getObjectAt(landingPos[0], landingPos[1]) : null;
+                        
+                        // Can only jump if landing square is empty or has food (not hazard/penguin)
+                        if (isValidPosition(landingPos[0], landingPos[1]) && 
+                            (landingObj == null || landingObj.getClass() == FoodItem.class)) {
+                            System.out.println(penguin.getName() + " jumps over " + ((Hazard)obj).getHazardType() + " in its path.");
+                            hasJumped = true;
+                            // Land on the square after the hazard
+                            currentRow = landingPos[0];
+                            currentColumn = landingPos[1];
+                            // Check if there's food at landing position
+                            if (landingObj != null && landingObj.getClass() == FoodItem.class) {
+                                penguin.collectFood((FoodItem) landingObj);
+                                System.out.println(penguin.getName() + " takes the " + ((FoodItem)landingObj).getType() +
+                                    " on the ground. (Weight=" + ((FoodItem)landingObj).getWeight() + " units)");
+                                foodItems.remove(landingObj);
+                            }
+                            // Continue sliding from landing position
+                            continue;
+                        } else {
+                            // Can't jump - landing square is not empty
+                            System.out.println(penguin.getName() + " fails to jump - landing square is not empty.");
+                            // Set penguin position to last safe square before calling hazard effect
+                            penguin.setPosition(currentRow, currentColumn);
+                            ((Hazard)obj).onPenguinLand(penguin, this, dir);
+                            return;
+                        }
                     } else {
+                        // Set penguin position to last safe square before calling hazard effect
+                        penguin.setPosition(currentRow, currentColumn);
                         ((Hazard)obj).onPenguinLand(penguin, this, dir);
                         return;
                     }
