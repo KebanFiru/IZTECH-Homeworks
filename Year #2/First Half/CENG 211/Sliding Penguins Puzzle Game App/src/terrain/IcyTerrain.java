@@ -1,7 +1,7 @@
 package terrain;
 
 import penguins.*;
-import food.FoodType;
+import food.FoodItem;
 import hazards.*;
 import model.ITerrainObject;
 
@@ -13,7 +13,7 @@ public class IcyTerrain {
     private static final int GRID_SIZE = 10;
     private List<List<ITerrainObject>> grid;
     private List<Penguin> penguins;
-    private List<FoodType> foodItems;
+    private List<FoodItem> foodItems;
     private List<Hazard> hazards;
     private Penguin playerPenguin;
     private Scanner scanner;
@@ -120,7 +120,7 @@ public class IcyTerrain {
     }
 
     private void placeFood() {
-        FoodType food = new FoodType();
+        FoodItem food = new FoodItem();
         int[] pos = findEmptyPosition(false);
         if (pos != null) {
             food.setPosition(pos[0], pos[1]);
@@ -134,7 +134,7 @@ public class IcyTerrain {
         for (int y = 0; y < GRID_SIZE; y++) {
             for (int x = 0; x < GRID_SIZE; x++) {
                 ITerrainObject obj = getObjectAt(x, y);
-                if (obj == null || (!avoidPenguins && obj instanceof FoodType)) {
+                if (obj == null || (!avoidPenguins && obj instanceof FoodItem)) {
                     emptyPositions.add(new int[]{x, y});
                 } else if (avoidPenguins && obj instanceof Penguin) {
                     continue;
@@ -153,12 +153,12 @@ public class IcyTerrain {
         Direction moveDir;
 
         if (penguin == playerPenguin) {
-            if (!penguin.hasUsedSpecialAbility()) {
+            if (!penguin.hasUsedSpecialAction()) {
                 useSpecial = askPlayerSpecialAction();
             }
             moveDir = askPlayerDirection("Which direction will " + penguin.getName() + " move? ");
         } else {
-            if (!penguin.hasUsedSpecialAbility()) {
+            if (!penguin.hasUsedSpecialAction()) {
                 double rand = Math.random();
                 useSpecial = rand < 0.3;
             }
@@ -202,10 +202,10 @@ public class IcyTerrain {
         List<Direction> safeDirs = new ArrayList<>();
 
         for (Direction dir : directions) {
-            int[] next = getNextPosition(penguin.getX(), penguin.getY(), dir);
+            int[] next = getNextPosition(penguin.getRow(), penguin.getColumn(), dir);
             if (!isValidPosition(next[0], next[1])) continue;
             ITerrainObject obj = getObjectAt(next[0], next[1]);
-            if (obj instanceof FoodType) foodDirs.add(dir);
+            if (obj instanceof FoodItem) foodDirs.add(dir);
             else if (obj instanceof Hazard) hazardDirs.add(dir);
             else safeDirs.add(dir);
         }
@@ -220,10 +220,10 @@ public class IcyTerrain {
      * stopSquare: special ability (e.g. Emperor 3rd square), -1 for default.
      */
     public void slidePenguin(Penguin penguin, Direction dir, int stopSquare, boolean canJump) {
-        removeObject(penguin.getX(), penguin.getY());
+        removeObject(penguin.getRow(), penguin.getColumn());
         int squareCount = 0;
-        int currentX = penguin.getX();
-        int currentY = penguin.getY();
+        int currentX = penguin.getRow();
+        int currentY = penguin.getColumn();
         boolean hasJumped = false;
 
         while (true) {
@@ -240,11 +240,11 @@ public class IcyTerrain {
 
             // Special stop logic (used for special ability)
             if (stopSquare > 0 && squareCount == stopSquare &&
-                    (obj == null || obj instanceof FoodType)) {
+                    (obj == null || obj instanceof FoodItem)) {
                 currentX = next[0];
                 currentY = next[1];
-                if (obj instanceof FoodType) {
-                    penguin.collectFood((FoodType) obj);
+                if (obj instanceof FoodItem) {
+                    penguin.collectFood((FoodItem) obj);
                     foodItems.remove(obj);
                 }
                 penguin.setPosition(currentX, currentY);
@@ -254,8 +254,8 @@ public class IcyTerrain {
             }
 
             if (obj != null) {
-                if (obj instanceof FoodType) {
-                    penguin.collectFood((FoodType) obj);
+                if (obj instanceof FoodItem) {
+                    penguin.collectFood((FoodItem) obj);
                     foodItems.remove(obj);
                     penguin.setPosition(next[0], next[1]);
                     placeObject(penguin, next[0], next[1]);
@@ -277,7 +277,7 @@ public class IcyTerrain {
     }
 
     // Helper methods for board management
-    private int[] getNextPosition(int x, int y, Direction dir) {
+    public int[] getNextPosition(int x, int y, Direction dir) {
         switch (dir) {
             case UP: return new int[]{x, y - 1};
             case DOWN: return new int[]{x, y + 1};
@@ -287,7 +287,7 @@ public class IcyTerrain {
         }
     }
 
-    private boolean isValidPosition(int x, int y) {
+    public boolean isValidPosition(int x, int y) {
         return x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE;
     }
 
@@ -344,9 +344,9 @@ public class IcyTerrain {
             System.out.println("* " + places[i] + " place: " + p.getName() +
                     (p == playerPenguin ? " (Your Penguin)" : ""));
             System.out.print("|---> Food items: ");
-            List<FoodType> foods = p.getCollectedFoods();
+            List<FoodItem> foods = p.getCollectedFoods();
             for (int j = 0; j < foods.size(); j++) {
-                FoodType f = foods.get(j);
+                FoodItem f = foods.get(j);
                 System.out.print(f.getNotation() + " (" + f.getWeight() + " units)");
                 if (j < foods.size() - 1) System.out.print(", ");
             }
@@ -371,4 +371,5 @@ public class IcyTerrain {
         if (num % 10 == 3 && num != 13) return num + "rd";
         return num + "th";
     }
+
 }

@@ -7,7 +7,11 @@ public class RoyalPenguin extends Penguin {
     public RoyalPenguin(String name) {
         super(name, PenguinType.ROYAL);
     }
-    
+
+    @Override
+    public String getNotation() {
+        return "RG";
+    }
 
     @Override
     public void move(Direction dir, IcyTerrain terrain) {
