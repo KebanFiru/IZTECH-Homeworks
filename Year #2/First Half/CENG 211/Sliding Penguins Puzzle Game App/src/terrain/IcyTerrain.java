@@ -264,9 +264,17 @@ public class IcyTerrain {
                             (landingObj == null || landingObj.getClass() == FoodItem.class)) {
                             System.out.println(penguin.getName() + " jumps over " + ((Hazard)obj).getHazardType() + " in its path.");
                             hasJumped = true;
-                            // Continue sliding past the hazard
-                            currentRow = next[0];
-                            currentColumn = next[1];
+                            // Land on the square after the hazard
+                            currentRow = landingPos[0];
+                            currentColumn = landingPos[1];
+                            // Check if there's food at landing position
+                            if (landingObj != null && landingObj.getClass() == FoodItem.class) {
+                                penguin.collectFood((FoodItem) landingObj);
+                                System.out.println(penguin.getName() + " takes the " + ((FoodItem)landingObj).getType() +
+                                    " on the ground. (Weight=" + ((FoodItem)landingObj).getWeight() + " units)");
+                                foodItems.remove(landingObj);
+                            }
+                            // Continue sliding from landing position
                             continue;
                         } else {
                             // Can't jump - landing square is not empty

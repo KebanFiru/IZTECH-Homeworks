@@ -76,7 +76,7 @@ public class SeaLion extends Hazard implements ISlidable {
             int[] next = terrain.getNextPosition(currentRow, currentColumn, direction);
             
             if (!terrain.isValidPosition(next[0], next[1])) {
-                // Falls off edge
+                // Falls off edge - SeaLion is removed
                 setSliding(false);
                 return;
             }
@@ -84,7 +84,7 @@ public class SeaLion extends Hazard implements ISlidable {
             Object obj = terrain.getObjectAt(next[0], next[1]);
             
             if (obj != null && obj.getClass() == food.FoodItem.class) {
-                // Remove food and continue
+                // Remove food and continue sliding
                 terrain.getFoodItems().remove(obj);
                 terrain.removeObject(next[0], next[1]);
                 currentRow = next[0];
@@ -99,14 +99,17 @@ public class SeaLion extends Hazard implements ISlidable {
                 return;
             } 
             else if (obj instanceof Hazard || obj instanceof Penguin) {
-                // Stops before obstacle (Hazard or Penguin)
-                setPosition(currentRow, currentColumn);
-                terrain.placeObject(this, currentRow, currentColumn);
+                // Obstacle ahead - stop at current position (before obstacle)
+                if (currentRow != getRow() || currentColumn != getColumn()) {
+                    // Only place if we've moved from starting position
+                    setPosition(currentRow, currentColumn);
+                    terrain.placeObject(this, currentRow, currentColumn);
+                }
                 setSliding(false);
                 return;
             } 
             else {
-                // Empty square - continue to next position
+                // Empty square - slide to it
                 currentRow = next[0];
                 currentColumn = next[1];
             }
