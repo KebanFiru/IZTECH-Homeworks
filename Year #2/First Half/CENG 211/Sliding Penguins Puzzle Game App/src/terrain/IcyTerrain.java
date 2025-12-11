@@ -204,10 +204,10 @@ public class IcyTerrain {
 
             ITerrainObject obj = getObjectAt(next[0], next[1]);
 
-            if (stopSquare > 0 && squareCount == stopSquare && (obj == null || obj instanceof FoodItem)) {
+            if (stopSquare > 0 && squareCount == stopSquare && (obj == null || obj.getClass() == FoodItem.class)) {
                 currentRow = next[0];
                 currentColumn = next[1];
-                if (obj instanceof FoodItem) {
+                if (obj != null && obj.getClass() == FoodItem.class) {
                     penguin.collectFood((FoodItem) obj);
                     System.out.println(penguin.getName() + " takes the " + ((FoodItem)obj).getType() +
                             " on the ground. (Weight=" + ((FoodItem)obj).getWeight() + " units)");
@@ -219,7 +219,7 @@ public class IcyTerrain {
             }
 
             if (obj != null) {
-                if (obj instanceof FoodItem) {
+                if (obj != null && obj.getClass() == FoodItem.class) {
                     penguin.collectFood((FoodItem) obj);
                     System.out.println(penguin.getName() + " takes the " + ((FoodItem)obj).getType() +
                         " on the ground. (Weight=" + ((FoodItem)obj).getWeight() + " units)");
@@ -308,9 +308,9 @@ public class IcyTerrain {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
                 ITerrainObject obj = getObjectAt(row, col);
-                if (obj == null || (!avoidPenguins && obj instanceof FoodItem)) {
+                if (obj == null || (!avoidPenguins && obj != null && obj.getClass() == FoodItem.class)) {
                     emptyPositions.add(new int[]{row, col});
-                } else if (avoidPenguins && obj instanceof Penguin) {
+                } else if (avoidPenguins && obj != null && obj.getClass() == Penguin.class) {
                     continue;
                 }
             }
