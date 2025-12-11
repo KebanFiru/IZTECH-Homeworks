@@ -1,4 +1,21 @@
 package penguins;
 
-public class KingPenguin {
+import terrain.Direction;
+import terrain.IcyTerrain;
+
+public class KingPenguin extends Penguin {
+    public KingPenguin(String name) {
+        super(name, PenguinType.KING);
+    }
+
+    @Override
+    public void move(Direction dir, IcyTerrain terrain) {
+        terrain.slidePenguin(this, dir, -1, false);
+    }
+
+    @Override
+    public void useSpecialAbility(Direction dir, IcyTerrain terrain) {
+        terrain.slidePenguin(this, dir, 5, false); // stops on 5th square
+        setSpecialActionUsed(true);
+    }
 }
