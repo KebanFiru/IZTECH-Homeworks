@@ -54,8 +54,8 @@ public class GameController {
      */
     public void startGame() {
         try {
-            System.out.println("Welcome to Sliding Penguins Puzzle Game App.  A 10x10 icy terrain grid is being generated.");
-            System.out.println("Penguins, Hazards, and Food items are being generated. The initial icy terrain grid:");
+            System.out.println("Welcome to Sliding Penguins Puzzle Game App. An 10x10 icy terrain grid is being generated.");
+            System.out.println("Penguins, Hazards, and Food items are also being generated. The initial icy terrain grid:");
 
             initializeGame();
             displayGrid();
@@ -204,7 +204,7 @@ public class GameController {
     private boolean askPlayerSpecialAction() {
         while (true) {
             try {
-                System.out.print("Will " + playerPenguin.getName() + " use its special action? Y/N: ");
+                System.out.print("Will " + playerPenguin.getName() + " use its special action? Answer with Y or N --> ");
                 String input = scanner.nextLine().trim().toUpperCase();
                 if (input.equals("Y")) return true;
                 if (input.equals("N")) return false;
@@ -225,7 +225,7 @@ public class GameController {
     private Direction askPlayerDirection(String prompt) {
         while (true) {
             try {
-                System.out.print(prompt + "U (Up), D (Down), L (Left), R (Right): ");
+                System.out.print("Which direction will " + playerPenguin.getName() + " move? Answer with U (Up), D (Down), L (Left), R (Right) --> ");
                 String input = scanner.nextLine().trim().toUpperCase();
                 if (!input.isEmpty()) {
                     Direction dir = Direction.fromChar(input.charAt(0));
@@ -289,10 +289,14 @@ public class GameController {
      */
     private void displayPenguinInfo() {
         System.out.println("These are the penguins on the icy terrain:");
-        for (Penguin penguin : terrain.getPenguins()) {
-            System.out.println("- " + penguin.getName() +
-                    ": " + penguin.getClass().getSimpleName() +
-                    (penguin == playerPenguin ?  " ---> YOUR PENGUIN" : ""));
+        for (int i = 0; i < terrain.getPenguins().size(); i++) {
+            Penguin penguin = terrain.getPenguins().get(i);
+            String penguinTypeName = penguin.getClass().getSimpleName();
+            // Format: "Penguin 1 (P1): King Penguin"
+            String formattedType = penguinTypeName.replace("Penguin", " Penguin");
+            System.out.println("- Penguin " + (i + 1) + " (" + penguin.getName() + "): " + 
+                    formattedType + 
+                    (penguin == playerPenguin ? " ---> YOUR PENGUIN" : ""));
         }
     }
 

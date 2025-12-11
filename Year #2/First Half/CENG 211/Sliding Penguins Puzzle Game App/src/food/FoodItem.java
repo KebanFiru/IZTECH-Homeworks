@@ -56,7 +56,14 @@ public class FoodItem implements ITerrainObject {
 
     @Override
     public String getNotation() {
-        return type.name().substring(0, 1);
+        switch (type) {
+            case KRILL: return "Kr";
+            case CRUSTACEAN: return "Cr";
+            case ANCHOVY: return "An";
+            case SQUID: return "Sq";
+            case MACKEREL: return "Ma";
+            default: return "??";
+        }
     }
 
     @Override

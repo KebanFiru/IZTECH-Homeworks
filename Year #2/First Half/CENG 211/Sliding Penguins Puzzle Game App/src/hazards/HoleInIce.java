@@ -9,7 +9,7 @@ public class HoleInIce extends Hazard {
     
     @Override
     public String getNotation() {
-        return plugged ? "PX" : "HI";
+        return plugged ? "PH" : "HI";
     }
     
     @Override
