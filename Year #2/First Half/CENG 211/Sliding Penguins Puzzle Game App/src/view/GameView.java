@@ -1,10 +1,10 @@
 package view;
 
 import penguins.Penguin;
-import food.FoodItem;
 import model.ITerrainObject;
 import terrain.IcyTerrain;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * View class responsible for all display and output operations.
@@ -84,10 +84,15 @@ public class GameView {
      * 
      * @param penguin The penguin
      * @param uses Whether the penguin uses the special action
+     * @param isAutomatic Whether the special action was automatically triggered (for RockhopperPenguin)
      */
-    public void displaySpecialActionChoice(Penguin penguin, boolean uses) {
+    public void displaySpecialActionChoice(Penguin penguin, boolean uses, boolean isAutomatic) {
         if (uses) {
-            System.out.println(penguin.getName() + " chooses to USE its special action.");
+            if (isAutomatic) {
+                System.out.println(penguin.getName() + " will automatically USE its special action.");
+            } else {
+                System.out.println(penguin.getName() + " chooses to USE its special action.");
+            }
         } else {
             System.out.println(penguin.getName() + " does NOT use its special action.");
         }
@@ -114,39 +119,41 @@ public class GameView {
      * Displays the game over screen with winner information.
      * 
      * @param penguins List of all penguins
+     * @param playerPenguin The player's penguin
      */
-    public void displayGameOver(List<Penguin> penguins) {
-        System.out.println("\n====================================");
-        System.out.println("         GAME OVER");
-        System.out.println("====================================");
+    public void displayGameOver(List<Penguin> penguins, Penguin playerPenguin) {
+        System.out.println("\n***** GAME OVER *****");
+        System.out.println("***** SCOREBOARD FOR THE PENGUINS *****");
         
-        Penguin winner = null;
-        int maxWeight = -1;
+        // Create a sorted list of penguins by weight (including removed ones)
+        List<Penguin> sortedPenguins = new ArrayList<>(penguins);
+        sortedPenguins.sort((p1, p2) -> Integer.compare(p2.getTotalFoodWeight(), p1.getTotalFoodWeight()));
         
-        for (Penguin p : penguins) {
-            // Skip removed penguins
-            if (p.isRemoved()) {
-                System.out.println(p.getName() + " was removed from the game (0 food items)");
-                continue;
+        String[] places = {"1st", "2nd", "3rd"};
+        
+        for (int i = 0; i < sortedPenguins.size(); i++) {
+            Penguin p = sortedPenguins.get(i);
+            String place = i < places.length ? places[i] : (i + 1) + "th";
+            
+            String playerMarker = (p == playerPenguin) ? " (Your Penguin)" : "";
+            System.out.println("* " + place + " place: " + p.getName() + playerMarker + " ");
+            
+            // Display food items
+            if (p.getCollectedFoods().isEmpty()) {
+                System.out.println(" |---> Food items: None");
+            } else {
+                System.out.print(" |---> Food items: ");
+                for (int j = 0; j < p.getCollectedFoods().size(); j++) {
+                    food.FoodItem f = p.getCollectedFoods().get(j);
+                    System.out.print(f.getNotation() + " (" + f.getWeight() + " units)");
+                    if (j < p.getCollectedFoods().size() - 1) {
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println();
             }
             
-            int totalWeight = p.getTotalFoodWeight();
-            
-            System.out.println(p.getName() + " collected " + p.getCollectedFoods().size() + 
-                    " food items (Total weight: " + totalWeight + " units)");
-            
-            if (totalWeight > maxWeight) {
-                maxWeight = totalWeight;
-                winner = p;
-            }
-        }
-        
-        if (winner != null && maxWeight > 0) {
-            System.out.println("\n🏆 Winner: " + winner.getName() + " with " + maxWeight + " units of food!");
-        } else if (maxWeight == 0) {
-            System.out.println("\n🤝 It's a tie! No one collected any food.");
-        } else {
-            System.out.println("\n❌ All penguins were removed! No winner.");
+            System.out.println(" |---> Total weight: " + p.getTotalFoodWeight() + " units");
         }
     }
     

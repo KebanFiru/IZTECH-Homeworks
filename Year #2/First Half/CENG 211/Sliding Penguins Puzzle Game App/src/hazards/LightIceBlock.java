@@ -86,18 +86,17 @@ public class LightIceBlock extends Hazard implements ISlidable {
                 System.out.println("The LightIceBlock falls into a hole and plugs it.");
                 return;
             } 
-            else if (obj == null) {
-                // Continue sliding
-                row = next[0];
-                col = next[1];
-                continue;
-            } 
-            else {
+            else if (obj instanceof Hazard || obj instanceof Penguin) {
                 // Stops before obstacle
                 setPosition(row, col);
                 terrain.placeObject(this, row, col);
                 setSliding(false);
                 return;
+            }
+            else {
+                // Empty square - continue to next position
+                row = next[0];
+                col = next[1];
             }
         }
     }

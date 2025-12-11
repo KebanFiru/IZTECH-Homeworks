@@ -39,26 +39,17 @@ public class HoleInIce extends Hazard {
             return;
         }
         if (plugged) {
-            // Penguin can pass through plugged hole
+            // Penguin can pass through plugged hole - continues sliding
             System.out.println(penguin.getName() + " passes over a plugged hole.");
-            // Continue sliding
-            int[] next = terrain.getNextPosition(penguin.getRow(), penguin.getColumn(), dir);
-            if (terrain.isValidPosition(next[0], next[1])) {
-                penguin.setPosition(next[0], next[1]);
-                terrain.slidePenguin(penguin, dir, -1, false);
-            } 
-            else {
-                penguin.setRemoved(true);
-            }
+            // Penguin was stopped before the hole, now continues sliding through it
+            terrain.slidePenguin(penguin, dir, -1, false);
         } 
         else {
             // Penguin falls into hole
             System.out.println(penguin.getName() + " falls into a " + getHazardType() + "!");
             System.out.println("*** " + penguin.getName() + " IS REMOVED FROM THE GAME!");
             penguin.setRemoved(true);
-            // Plug the hole after penguin falls in
-            plugged = true;
-            System.out.println("The " + getHazardType() + " is now plugged.");
+            // NOTE: Hole is NOT plugged by penguins, only by sliding hazards (LightIceBlock/SeaLion)
         }
     }
     

@@ -3,12 +3,15 @@ package hazards;
 import penguins.Penguin;
 import terrain.Direction;
 import terrain.IcyTerrain;
+import model.ISlidable;
 
 /**
- * Sea Lion hazard - a predator that poses danger to penguins.
- * Cannot be moved or slid.
+ * Sea Lion hazard - a predator that can slide when hit.
+ * When a penguin hits it, the penguin bounces back and the SeaLion starts sliding.
  */
-public class SeaLion extends Hazard {
+public class SeaLion extends Hazard implements ISlidable {
+    private boolean sliding = false;
+    
     /**
      * Constructs a new SeaLion hazard.
      */
@@ -23,7 +26,7 @@ public class SeaLion extends Hazard {
 
     @Override
     public boolean canSlide() {
-        return false;
+        return true;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class SeaLion extends Hazard {
         // Slide penguin in opposite direction
         terrain.slidePenguin(penguin, opposite, -1, false);
         // Slide SeaLion in original direction
-        slideSeaLion(terrain, dir);
+        slide(dir, terrain);
     }
     
     private Direction getOppositeDirection(Direction dir) {
@@ -60,18 +63,21 @@ public class SeaLion extends Hazard {
         }
     }
     
-    private void slideSeaLion(IcyTerrain terrain, Direction dir) {
-        if (terrain == null || dir == null) {
+    @Override
+    public void slide(Direction direction, IcyTerrain terrain) {
+        if (terrain == null || direction == null) {
             return;
         }
+        setSliding(true);
         int currentRow = getRow();
         int currentColumn = getColumn();
         
         while (true) {
-            int[] next = terrain.getNextPosition(currentRow, currentColumn, dir);
+            int[] next = terrain.getNextPosition(currentRow, currentColumn, direction);
             
             if (!terrain.isValidPosition(next[0], next[1])) {
                 // Falls off edge
+                setSliding(false);
                 return;
             }
             
@@ -89,20 +95,31 @@ public class SeaLion extends Hazard {
                 // Falls into hole and plugs it
                 ((HoleInIce)obj).setPlugged(true);
                 System.out.println("The SeaLion falls into a hole and plugs it.");
+                setSliding(false);
                 return;
             } 
             else if (obj instanceof Hazard || obj instanceof Penguin) {
                 // Stops before obstacle (Hazard or Penguin)
                 setPosition(currentRow, currentColumn);
                 terrain.placeObject(this, currentRow, currentColumn);
+                setSliding(false);
                 return;
             } 
-            else if (obj == null) {
-                // Continue sliding
+            else {
+                // Empty square - continue to next position
                 currentRow = next[0];
                 currentColumn = next[1];
-                continue;
             }
         }
+    }
+    
+    @Override
+    public boolean isSliding() {
+        return sliding;
+    }
+    
+    @Override
+    public void setSliding(boolean sliding) {
+        this.sliding = sliding;
     }
 }
