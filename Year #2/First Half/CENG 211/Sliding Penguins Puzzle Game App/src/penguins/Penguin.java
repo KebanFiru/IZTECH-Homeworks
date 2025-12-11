@@ -1,6 +1,7 @@
 package penguins;
 
 import model.ITerrainObject;
+import model.ISlidable;
 import food.FoodItem;
 import terrain.Direction;
 import terrain.IcyTerrain;
@@ -8,7 +9,7 @@ import terrain.IcyTerrain;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Penguin implements ITerrainObject {
+public abstract class Penguin implements ITerrainObject, ISlidable {
     private final String name;
     private final PenguinType type;
     private int row, column;
@@ -17,6 +18,7 @@ public abstract class Penguin implements ITerrainObject {
     private boolean specialEffectUsed;
     private boolean stunned;
     private boolean removed;
+    private boolean sliding;
 
     public Penguin(String name, PenguinType type) {
         this.name = name;
@@ -28,6 +30,7 @@ public abstract class Penguin implements ITerrainObject {
         this.specialEffectUsed = false;
         this.stunned = false;
         this.removed = false;
+        this.sliding = false;
     }
 
     public String getName() {
@@ -106,7 +109,25 @@ public abstract class Penguin implements ITerrainObject {
         collectedFoods.remove(lightest);
         return lightest;
     }
-    
+
+    // Updated ISlidable methods to match the interface
+    @Override
+    public void slide(Direction direction, IcyTerrain terrain) {
+        sliding = true;
+        terrain.slidePenguin(this, direction, -1, false);
+    }
+
+    @Override
+    public boolean isSliding() {
+        return sliding;
+    }
+
+    @Override
+    public void setSliding(boolean sliding) {
+        this.sliding = sliding;
+    }
+
+    public abstract String getNotation();
     public abstract void move(Direction dir, IcyTerrain terrain);
     public abstract void useSpecialAbility(Direction dir, IcyTerrain terrain);
 }

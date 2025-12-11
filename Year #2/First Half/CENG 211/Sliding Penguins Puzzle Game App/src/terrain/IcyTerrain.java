@@ -291,7 +291,7 @@ public class IcyTerrain {
         return x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE;
     }
 
-    private ITerrainObject getObjectAt(int x, int y) {
+    public ITerrainObject getObjectAt(int x, int y) {
         if (!isValidPosition(x, y)) return null;
         return grid.get(y).get(x);
     }

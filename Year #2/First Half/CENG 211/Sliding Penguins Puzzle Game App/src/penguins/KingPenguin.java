@@ -20,7 +20,8 @@ public class KingPenguin extends Penguin {
 
     @Override
     public void useSpecialAbility(Direction dir, IcyTerrain terrain) {
-        terrain.slidePenguin(this, dir, 5, false); // stops on 5th square
+        // King Penguin slides and stops on the 5th square.
+        terrain.slidePenguin(this, dir, 5, false);
         setSpecialActionUsed(true);
     }
 }
