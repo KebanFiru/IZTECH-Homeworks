@@ -5,15 +5,16 @@ import food.FoodItem;
 import hazards.*;
 import model.ITerrainObject;
 
-import java.util. ArrayList;
-import java.util. List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manages the icy terrain grid and object placement.
  * Does NOT handle game flow, UI, or user input.
  */
 public class IcyTerrain {
-    private static final int GRID_SIZE = 10;
+    /** The size of the square grid (10x10) */
+    public static final int GRID_SIZE = 10;
     private final List<List<ITerrainObject>> grid;
     private final List<Penguin> penguins;
     private final List<FoodItem> foodItems;
@@ -35,77 +36,162 @@ public class IcyTerrain {
 
     // --- Grid Management ---
 
+    /**
+     * Gets the size of the grid.
+     * 
+     * @return The grid size (10x10)
+     */
     public int getGridSize() {
         return GRID_SIZE;
     }
 
-    public boolean isValidPosition(int x, int y) {
-        return x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE;
+    /**
+     * Checks if a position is valid within the grid bounds.
+     * 
+     * @param row The row index (0-9)
+     * @param column The column index (0-9)
+     * @return true if the position is valid, false otherwise
+     */
+    public boolean isValidPosition(int row, int column) {
+        return row >= 0 && row < GRID_SIZE && column >= 0 && column < GRID_SIZE;
     }
 
-    public int[] getNextPosition(int x, int y, Direction dir) {
+    /**
+     * Gets the next position based on current position and direction.
+     * 
+     * @param row The current row index
+     * @param column The current column index
+     * @param dir The direction of movement
+     * @return An array [nextRow, nextColumn] representing the next position
+     */
+    public int[] getNextPosition(int row, int column, Direction dir) {
         switch (dir) {
-            case UP: return new int[]{x, y - 1};
-            case DOWN: return new int[]{x, y + 1};
-            case LEFT: return new int[]{x - 1, y};
-            case RIGHT: return new int[]{x + 1, y};
-            default: return new int[]{x, y};
+            case UP: return new int[]{row, column - 1};
+            case DOWN: return new int[]{row, column + 1};
+            case LEFT: return new int[]{row - 1, column};
+            case RIGHT: return new int[]{row + 1, column};
+            default: return new int[]{row, column};
         }
     }
 
-    public ITerrainObject getObjectAt(int x, int y) {
-        if (!isValidPosition(x, y)) return null;
-        return grid.get(y).get(x);
+    /**
+     * Gets the object at a specific position on the grid.
+     * 
+     * @param row The row index
+     * @param column The column index
+     * @return The object at that position, or null if empty or invalid position
+     */
+    public ITerrainObject getObjectAt(int row, int column) {
+        if (!isValidPosition(row, column)) return null;
+        return grid.get(column).get(row);
     }
 
-    public void placeObject(ITerrainObject obj, int x, int y) {
-        if (isValidPosition(x, y)) {
-            grid.get(y).set(x, obj);
+    /**
+     * Places an object at a specific position on the grid.
+     * 
+     * @param obj The object to place
+     * @param row The row index
+     * @param column The column index
+     */
+    public void placeObject(ITerrainObject obj, int row, int column) {
+        if (isValidPosition(row, column)) {
+            grid.get(column).set(row, obj);
         }
     }
 
-    public void removeObject(int x, int y) {
-        if (isValidPosition(x, y)) {
-            grid.get(y).set(x, null);
+    /**
+     * Removes an object from a specific position on the grid.
+     * 
+     * @param row The row index
+     * @param column The column index
+     */
+    public void removeObject(int row, int column) {
+        if (isValidPosition(row, column)) {
+            grid.get(column).set(row, null);
         }
     }
 
     // --- Entity Management ---
 
+    /**
+     * Gets the list of all penguins on the terrain.
+     * 
+     * @return List of penguins
+     */
     public List<Penguin> getPenguins() {
         return penguins;
     }
 
+    /**
+     * Gets the list of all hazards on the terrain.
+     * 
+     * @return List of hazards
+     */
     public List<Hazard> getHazards() {
         return hazards;
     }
 
+    /**
+     * Gets the list of all food items on the terrain.
+     * 
+     * @return List of food items
+     */
     public List<FoodItem> getFoodItems() {
         return foodItems;
     }
 
+    /**
+     * Adds a penguin to the terrain.
+     * 
+     * @param p The penguin to add
+     */
     public void addPenguin(Penguin p) {
-        penguins. add(p);
+        penguins.add(p);
     }
 
+    /**
+     * Adds a hazard to the terrain.
+     * 
+     * @param h The hazard to add
+     */
     public void addHazard(Hazard h) {
         hazards.add(h);
     }
 
+    /**
+     * Adds a food item to the terrain.
+     * 
+     * @param f The food item to add
+     */
     public void addFoodItem(FoodItem f) {
         foodItems.add(f);
     }
 
     // --- Movement Logic ---
 
+    /**
+     * Slides a penguin in a given direction across the icy terrain.
+     * The penguin continues sliding until it hits an obstacle, food, hazard, another penguin,
+     * or falls off the edge.
+     * 
+     * @param penguin The penguin to slide
+     * @param dir The direction to slide
+     * @param stopSquare The square number to stop at (positive value), or -1 to slide until obstacle
+     * @param canJump Whether the penguin can jump over obstacles (special ability)
+     */
     public void slidePenguin(Penguin penguin, Direction dir, int stopSquare, boolean canJump) {
-        removeObject(penguin. getRow(), penguin.getColumn());
+        if (penguin == null || dir == null) {
+            System.err.println("Error: Cannot slide - penguin or direction is null");
+            return;
+        }
+        
+        removeObject(penguin.getRow(), penguin.getColumn());
         int squareCount = 0;
-        int currentX = penguin.getRow();
-        int currentY = penguin. getColumn();
+        int currentRow = penguin.getRow();
+        int currentColumn = penguin.getColumn();
 
         while (true) {
-            int[] next = getNextPosition(currentX, currentY, dir);
+            int[] next = getNextPosition(currentRow, currentColumn, dir);
             squareCount++;
 
             if (!isValidPosition(next[0], next[1])) {
@@ -116,14 +202,14 @@ public class IcyTerrain {
             ITerrainObject obj = getObjectAt(next[0], next[1]);
 
             if (stopSquare > 0 && squareCount == stopSquare && (obj == null || obj instanceof FoodItem)) {
-                currentX = next[0];
-                currentY = next[1];
+                currentRow = next[0];
+                currentColumn = next[1];
                 if (obj instanceof FoodItem) {
                     penguin.collectFood((FoodItem) obj);
                     foodItems.remove(obj);
                 }
-                penguin.setPosition(currentX, currentY);
-                placeObject(penguin, currentX, currentY);
+                penguin.setPosition(currentRow, currentColumn);
+                placeObject(penguin, currentRow, currentColumn);
                 return;
             }
 
@@ -138,18 +224,26 @@ public class IcyTerrain {
                     ((Hazard)obj).onPenguinLand(penguin, this, dir);
                     return;
                 } else if (obj instanceof Penguin) {
-                    penguin.setPosition(currentX, currentY);
-                    placeObject(penguin, currentX, currentY);
+                    penguin.setPosition(currentRow, currentColumn);
+                    placeObject(penguin, currentRow, currentColumn);
                     return;
                 }
             }
-            currentX = next[0];
-            currentY = next[1];
+            currentRow = next[0];
+            currentColumn = next[1];
         }
     }
 
-    // --- Setup Helpers (Can be here or in controller, your choice) ---
+    // --- Setup Helpers ---
 
+    /**
+     * Creates a penguin of the specified type.
+     * Factory method for penguin creation.
+     * 
+     * @param name The name for the penguin
+     * @param type The type of penguin to create
+     * @return A new penguin instance of the specified type
+     */
     public Penguin createPenguin(String name, PenguinType type) {
         switch (type) {
             case KING: return new KingPenguin(name);
@@ -160,25 +254,37 @@ public class IcyTerrain {
         }
     }
 
+    /**
+     * Gets a list of all available edge positions on the grid.
+     * Edge positions are useful for placing penguins at the start of the game.
+     * 
+     * @return List of [row, column] arrays representing edge positions
+     */
     public List<int[]> getAvailableEdgePositions() {
         List<int[]> positions = new ArrayList<>();
         for (int i = 0; i < GRID_SIZE; i++) {
-            positions. add(new int[]{i, 0});
+            positions.add(new int[]{i, 0});
             positions.add(new int[]{i, GRID_SIZE - 1});
         }
         for (int i = 1; i < GRID_SIZE - 1; i++) {
             positions.add(new int[]{0, i});
-            positions. add(new int[]{GRID_SIZE - 1, i});
+            positions.add(new int[]{GRID_SIZE - 1, i});
         }
         return positions;
     }
 
+    /**
+     * Finds a random empty position on the grid.
+     * 
+     * @param avoidPenguins If true, avoids positions occupied by penguins
+     * @return An array [row, column] representing an empty position, or null if none available
+     */
     public int[] findEmptyPosition(boolean avoidPenguins) {
         List<int[]> emptyPositions = new ArrayList<>();
         for (int y = 0; y < GRID_SIZE; y++) {
             for (int x = 0; x < GRID_SIZE; x++) {
                 ITerrainObject obj = getObjectAt(x, y);
-                if (obj == null || (! avoidPenguins && obj instanceof FoodItem)) {
+                if (obj == null || (!avoidPenguins && obj instanceof FoodItem)) {
                     emptyPositions.add(new int[]{x, y});
                 } else if (avoidPenguins && obj instanceof Penguin) {
                     continue;

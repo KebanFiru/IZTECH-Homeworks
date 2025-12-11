@@ -4,6 +4,10 @@ import terrain.Direction;
 import terrain.IcyTerrain;
 import model.ISlidable;
 
+/**
+ * Light Ice Block hazard - a slidable obstacle.
+ * Can be pushed one square by penguins.
+ */
 public class LightIceBlock extends Hazard implements ISlidable {
     private boolean sliding = false;
 
@@ -22,7 +26,12 @@ public class LightIceBlock extends Hazard implements ISlidable {
         return HazardType.LIGHT_ICE_BLOCK.name();
     }
 
-    // Implements ISlidable
+    /**
+     * Slides the ice block one square in the specified direction.
+     * 
+     * @param direction The direction to slide
+     * @param terrain The terrain to slide on
+     */
     @Override
     public void slide(Direction direction, IcyTerrain terrain) {
         int row = getRow(), col = getColumn();

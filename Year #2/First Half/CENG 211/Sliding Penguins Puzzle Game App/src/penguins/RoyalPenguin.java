@@ -3,7 +3,16 @@ package penguins;
 import terrain.Direction;
 import terrain.IcyTerrain;
 
+/**
+ * Royal Penguin implementation.
+ * Special ability: Moves one safe square before sliding normally.
+ */
 public class RoyalPenguin extends Penguin {
+    /**
+     * Constructs a new Royal Penguin.
+     * 
+     * @param name The name of the penguin
+     */
     public RoyalPenguin(String name) {
         super(name, PenguinType.ROYAL);
     }
@@ -18,9 +27,14 @@ public class RoyalPenguin extends Penguin {
         terrain.slidePenguin(this, dir, -1, false);
     }
 
+    /**
+     * Uses special ability: Moves one safe square, then slides normally.
+     * 
+     * @param dir The direction to move and slide
+     * @param terrain The terrain to move on
+     */
     @Override
     public void useSpecialAbility(Direction dir, IcyTerrain terrain) {
-        // Moves one safe square, then slides as usual
         int[] pos = getPosition();
         int[] next = terrain.getNextPosition(pos[0], pos[1], dir);
         if (terrain.isValidPosition(next[0], next[1])) {

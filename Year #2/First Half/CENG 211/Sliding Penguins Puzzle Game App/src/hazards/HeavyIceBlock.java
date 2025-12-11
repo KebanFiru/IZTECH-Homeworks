@@ -4,6 +4,10 @@ import terrain.Direction;
 import terrain.IcyTerrain;
 import model.ISlidable;
 
+/**
+ * Heavy Ice Block hazard - a heavy slidable obstacle.
+ * Harder to move than light ice blocks.
+ */
 public class HeavyIceBlock extends Hazard implements ISlidable {
     private boolean sliding = false;
 
@@ -22,12 +26,17 @@ public class HeavyIceBlock extends Hazard implements ISlidable {
         return HazardType.HEAVY_ICE_BLOCK.name();
     }
 
-    // Implements ISlidable
+    /**
+     * Slides the heavy ice block one square in the specified direction.
+     * Only slides if the next position is valid and empty.
+     * 
+     * @param direction The direction to slide
+     * @param terrain The terrain to slide on
+     */
     @Override
     public void slide(Direction direction, IcyTerrain terrain) {
         int row = getRow(), col = getColumn();
         int[] next = terrain.getNextPosition(row, col, direction);
-        // For HeavyIceBlock, maybe only allow sliding if empty and by special (adjust logic as needed)
         if (terrain.isValidPosition(next[0], next[1]) && terrain.getObjectAt(next[0], next[1]) == null) {
             terrain.removeObject(row, col);
             setPosition(next[0], next[1]);
