@@ -1,6 +1,16 @@
 package hazards;
 
-public class LightIceBlock extends Hazard {
+import terrain.Direction;
+import terrain.IcyTerrain;
+import model.ISlidable;
+
+/**
+ * Light Ice Block hazard - a slidable obstacle.
+ * Can be pushed one square by penguins.
+ */
+public class LightIceBlock extends Hazard implements ISlidable {
+    private boolean sliding = false;
+
     @Override
     public String getNotation() {
         return "LB";
@@ -14,5 +24,35 @@ public class LightIceBlock extends Hazard {
     @Override
     public String getHazardType() {
         return HazardType.LIGHT_ICE_BLOCK.name();
+    }
+
+    /**
+     * Slides the ice block one square in the specified direction.
+     * 
+     * @param direction The direction to slide
+     * @param terrain The terrain to slide on
+     */
+    @Override
+    public void slide(Direction direction, IcyTerrain terrain) {
+        int row = getRow(), col = getColumn();
+        int[] next = terrain.getNextPosition(row, col, direction);
+        if (terrain.isValidPosition(next[0], next[1]) && terrain.getObjectAt(next[0], next[1]) == null) {
+            terrain.removeObject(row, col);
+            setPosition(next[0], next[1]);
+            terrain.placeObject(this, next[0], next[1]);
+            setSliding(true);
+        } else {
+            setSliding(false);
+        }
+    }
+
+    @Override
+    public boolean isSliding() {
+        return sliding;
+    }
+
+    @Override
+    public void setSliding(boolean sliding) {
+        this.sliding = sliding;
     }
 }
