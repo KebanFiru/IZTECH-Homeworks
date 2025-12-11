@@ -77,7 +77,7 @@ public class SeaLion extends Hazard {
             
             Object obj = terrain.getObjectAt(next[0], next[1]);
             
-            if (obj instanceof food.FoodItem) {
+            if (obj != null && obj.getClass() == food.FoodItem.class) {
                 // Remove food and continue
                 terrain.getFoodItems().remove(obj);
                 terrain.removeObject(next[0], next[1]);
@@ -85,21 +85,24 @@ public class SeaLion extends Hazard {
                 currentColumn = next[1];
                 continue;
             } 
-            else if (obj instanceof HoleInIce) {
+            else if (obj != null && obj.getClass() == HoleInIce.class) {
                 // Falls into hole and plugs it
                 ((HoleInIce)obj).setPlugged(true);
                 System.out.println("The SeaLion falls into a hole and plugs it.");
                 return;
             } 
-            else if (obj != null) {
-                // Stops before obstacle
+            else if (obj instanceof Hazard || obj instanceof Penguin) {
+                // Stops before obstacle (Hazard or Penguin)
                 setPosition(currentRow, currentColumn);
                 terrain.placeObject(this, currentRow, currentColumn);
                 return;
+            } 
+            else if (obj == null) {
+                // Continue sliding
+                currentRow = next[0];
+                currentColumn = next[1];
+                continue;
             }
-            
-            currentRow = next[0];
-            currentColumn = next[1];
         }
     }
 }

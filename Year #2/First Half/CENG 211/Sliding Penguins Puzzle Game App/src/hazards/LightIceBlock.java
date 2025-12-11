@@ -72,7 +72,7 @@ public class LightIceBlock extends Hazard implements ISlidable {
             
             Object obj = terrain.getObjectAt(next[0], next[1]);
             
-            if (obj instanceof food.FoodItem) {
+            if (obj != null && obj.getClass() == food.FoodItem.class) {
                 // Remove food and continue sliding
                 terrain.getFoodItems().remove(obj);
                 terrain.removeObject(next[0], next[1]);
@@ -80,7 +80,7 @@ public class LightIceBlock extends Hazard implements ISlidable {
                 col = next[1];
                 continue;
             } 
-            else if (obj instanceof HoleInIce) {
+            else if (obj != null && obj.getClass() == HoleInIce.class) {
                 // Falls into hole and plugs it
                 ((HoleInIce)obj).setPlugged(true);
                 System.out.println("The LightIceBlock falls into a hole and plugs it.");

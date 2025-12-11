@@ -275,9 +275,9 @@ public class GameController {
             
             ITerrainObject obj = terrain.getObjectAt(next[0], next[1]);
             
-            if (obj instanceof FoodItem) {
+            if (obj != null && obj.getClass() == FoodItem.class) {
                 foodDirs.add(dir);
-            } else if (obj instanceof HoleInIce) {
+            } else if (obj != null && obj.getClass() == HoleInIce.class) {
                 HoleInIce hole = (HoleInIce) obj;
                 if (hole.isPlugged()) {
                     safeDirs.add(dir); // Plugged holes are safe
