@@ -18,11 +18,6 @@ public class EmperorPenguin extends Penguin {
     }
 
     @Override
-    public String getNotation() {
-        return "EM";
-    }
-
-    @Override
     public void move(Direction dir, IcyTerrain terrain) {
         terrain.slidePenguin(this, dir, -1, false);
     }

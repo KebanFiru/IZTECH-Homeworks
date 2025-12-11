@@ -229,11 +229,13 @@ public abstract class Penguin implements ITerrainObject, ISlidable {
     
     /**
      * Gets the notation for displaying this penguin on the grid.
-     * Must be implemented by each penguin type.
+     * Returns the penguin's name (P1, P2, P3) for display.
      * 
-     * @return A 2-character notation string
+     * @return The penguin's name
      */
-    public abstract String getNotation();
+    public String getNotation() {
+        return name;
+    }
     
     /**
      * Performs a normal move in the specified direction.
