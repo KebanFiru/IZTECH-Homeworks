@@ -4,13 +4,13 @@ package terrain;
  * Enum representing the four cardinal directions for movement on the terrain.
  */
 public enum Direction {
-    /** Up direction (decreases column index) */
+    /** Up direction (decreases row index) */
     UP,
-    /** Down direction (increases column index) */
+    /** Down direction (increases row index) */
     DOWN,
-    /** Left direction (decreases row index) */
+    /** Left direction (decreases column index) */
     LEFT,
-    /** Right direction (increases row index) */
+    /** Right direction (increases column index) */
     RIGHT;
 
     /**
