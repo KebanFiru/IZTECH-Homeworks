@@ -1,5 +1,6 @@
 package model.tools;
 
+import core.BoxGrid;
 import model.box.Box;
 import core.exceptions.BoxAlreadyFixedException;
 
@@ -10,7 +11,9 @@ public class BoxFixer extends SpecialTool{
         super("BoxFixer");
     }
 
-    public void use(Box box){
+    public void use(BoxGrid grid, int row, int column){
+
+        Box box = new grid.getBox(row, column);
         
         if(box.getClass() == FixedBox){
 
