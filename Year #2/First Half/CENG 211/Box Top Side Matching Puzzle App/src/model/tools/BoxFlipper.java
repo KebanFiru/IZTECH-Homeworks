@@ -8,7 +8,9 @@ public class BoxFlipper extends SpecialTool{
         super("BoxFlipper");
     }
 
-    public void use(Box box){
+    public void use(BoxGrid grid, int row, int column){
+
+        Box box = grid.getBox(row, column);
 
         char[] boxSideLetters = box.getSides();
 
