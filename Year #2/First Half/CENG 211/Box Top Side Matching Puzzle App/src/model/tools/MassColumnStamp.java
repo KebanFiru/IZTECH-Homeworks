@@ -1,4 +1,15 @@
 package model.tools;
 
-public class MassColumnStamp {
+import core.BoxGrid;
+
+public class MassColumnStamp extends SpecialTool{
+
+    public MassColumnStamp(){
+
+        super("MassColumnStamp");
+    }
+
+    public use(BoxGrid grid, int row, int column){
+        
+    }
 }
