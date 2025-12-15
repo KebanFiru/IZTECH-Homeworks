@@ -16,5 +16,5 @@ public abstract class SpecialTool {
         return name;
     }
 
-    public abstract void use(BoxGrid grid, Object... args);
+    public abstract void use(BoxGrid grid, int row, int col);
 }
