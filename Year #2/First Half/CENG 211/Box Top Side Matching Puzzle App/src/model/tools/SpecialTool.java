@@ -1,5 +1,6 @@
 package model.tools;
 
+import core.BoxGrid;
 import model.box.Box;
 
 public abstract class SpecialTool {
@@ -16,5 +17,5 @@ public abstract class SpecialTool {
         return name;
     }
 
-    public abstract void use(Box box);
+    public abstract void use(BoxGrid grid, int row, int column);
 }
