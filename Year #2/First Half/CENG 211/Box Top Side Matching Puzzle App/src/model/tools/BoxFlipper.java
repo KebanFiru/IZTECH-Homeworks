@@ -1,4 +1,10 @@
 package model.tools;
 
-public class BoxFlipper {
+public class BoxFlipper extends SpecialTool{
+
+    public BoxFlipper(){
+        super("BoxFlipper");
+    }
+
+    
 }
