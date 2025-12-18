@@ -79,6 +79,16 @@ public class BoxGrid {
         }
     }
 
-
-
+    public int countTargetLetterOnTop(char target) {
+        int count = 0;
+        for (List<Box> row : grid) {
+            for (Box b : row) {
+                if (b.getTopLetter() == target) count++;
+            }
+        }
+        return count;
+    }
 }
+
+
+
