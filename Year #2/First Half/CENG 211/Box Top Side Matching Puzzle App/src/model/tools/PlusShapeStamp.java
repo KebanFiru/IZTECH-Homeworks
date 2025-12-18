@@ -11,7 +11,7 @@ public class PlusShapeStamp extends SpecialTool{
         super("PlusShapeStamp");
     }
 
-    public void use(BoxGrid grid, int row, int column){
+    public void useTool(BoxGrid grid, int row, int column){
         Box centerBox = grid.getBox(row,column);
 
         if(!(centerBox instanceof FixedBox)){
