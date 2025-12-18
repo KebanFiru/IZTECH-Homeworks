@@ -11,7 +11,7 @@ public class BoxFixer extends SpecialTool{
         super("BoxFixer");
     }
 
-    public void use(BoxGrid grid, int row, int column){
+    public void useTool(BoxGrid grid, int row, int column){
 
         Box box = new grid.getBox(row, column);
         
