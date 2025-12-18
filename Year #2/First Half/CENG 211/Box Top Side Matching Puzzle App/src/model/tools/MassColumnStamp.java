@@ -11,7 +11,9 @@ public class MassColumnStamp extends SpecialTool{
         super("MassColumnStamp");
     }
 
-    public void use(BoxGrid grid, int column){
+    public void useTool(BoxGrid grid, Object... args){
+
+        int column = (Integer)args[0];
 
         char stampLetter = grid.getStampLetter();
 
