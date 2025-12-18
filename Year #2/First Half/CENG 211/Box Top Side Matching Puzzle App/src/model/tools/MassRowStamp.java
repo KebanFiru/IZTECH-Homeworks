@@ -8,7 +8,9 @@ public class MassRowStamp extends SpecialTool{
         super("MassRowStamp");
     }
 
-    public void useTool(BoxGrid grid, int row){
+    public void useTool(BoxGrid grid, Object... args){
+
+        int row = (Integer) args[0];
 
         char stampLetter = grid.getStampLetter();
 
