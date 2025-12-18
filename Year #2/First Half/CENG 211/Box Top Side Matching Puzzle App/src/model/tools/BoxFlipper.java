@@ -16,7 +16,7 @@ public class BoxFlipper extends SpecialTool{
 
         // I assume top as indexed 1 side and 3 as bottom indexed side
 
-        char bottomSide = boxSideLetters[3];
+        char bottomSide = box.getBottomLetter();
         char topSide = box.getTopLetter();
 
         //Implement setSide in Box
