@@ -1,4 +1,4 @@
 package model.box;
 
-public class UnchangingBox {
+public class UnchangingBox implements Box {
 }

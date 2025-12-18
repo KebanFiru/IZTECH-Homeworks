@@ -1,5 +1,4 @@
 package model.box;
 
-public class RegularBox
-{
+public class RegularBox implements Box {
 }
