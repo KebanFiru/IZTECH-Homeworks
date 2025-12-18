@@ -9,7 +9,7 @@ public class BoxFlipper extends SpecialTool{
         super("BoxFlipper");
     }
 
-    public void use(BoxGrid grid, int row, int column){
+    public void useTool(BoxGrid grid, int row, int column){
 
         Box box = grid.getBox(row, column);
 
