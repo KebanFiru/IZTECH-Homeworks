@@ -2,7 +2,7 @@ package model.tools;
 
 import model.box.Box;
 import model.box.FixedBox;
-import model.grid.BoxGrid;
+import core.BoxGrid;
 
 public class MassRowStamp extends SpecialTool{
 
