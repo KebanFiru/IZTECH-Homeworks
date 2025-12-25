@@ -37,11 +37,11 @@ public class PlusShapeStamp extends SpecialTool{
             Box rightBox = grid.getBox(row,column+1);
 
             char stampLetter = grid.getStampLetter();
-            upBox.setTopSide(Letter.valueOf(String.valueOf(stampLetter)));
-            centerBox.setTopSide(Letter.valueOf(String.valueOf(stampLetter)));
-            bottomBox.setTopSide(Letter.valueOf(String.valueOf(stampLetter)));
-            leftBox.setTopSide(Letter.valueOf(String.valueOf(stampLetter)));
-            rightBox.setTopSide(Letter.valueOf(String.valueOf(stampLetter)));
+            upBox.setTopSide(Letter.fromChar(stampLetter));
+            centerBox.setTopSide(Letter.fromChar(stampLetter));
+            bottomBox.setTopSide(Letter.fromChar(stampLetter));
+            leftBox.setTopSide(Letter.fromChar(stampLetter));
+            rightBox.setTopSide(Letter.fromChar(stampLetter));
         }
         else{
             throw new BoxAlreadyFixedException("Cannot use PlusShapeStamp on a fixed box.");
