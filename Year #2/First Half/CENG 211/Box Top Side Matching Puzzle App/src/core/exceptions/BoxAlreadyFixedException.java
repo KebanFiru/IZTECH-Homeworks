@@ -14,7 +14,7 @@ package core.exceptions;
  * Note: Using a BoxFixer on a RegularBox or UnchangingBox is valid - it replaces them
  * with a FixedBox copy and removes any tool inside.
  */
-public class BoxAlreadyFixedException extends Exception {
+public class BoxAlreadyFixedException extends RuntimeException{
     
     /**
      * Constructs a new BoxAlreadyFixedException with no detail message.

@@ -4,6 +4,9 @@ import model.box.*;
 import model.tools.SpecialTool;
 import core.exceptions.*;
 import java.util.Scanner;
+import model.box.FixedBox;
+
+import model.enums.Direction;
 
 public class BoxPuzzle {
     private BoxGrid grid;
@@ -74,7 +77,7 @@ public class BoxPuzzle {
 
             Box selectedBox = grid.getBox(r, c);
 
-            if (selectedBox.isMovable()) {
+            if (!(selectedBox instanceof FixedBox)) {
                 SpecialTool tool = selectedBox.open();
                 if (tool != null) {
                     useTool(tool, r, c);

@@ -213,7 +213,7 @@ public abstract class Box implements IRollable, IOpenable {
      * 
      * @param letter the new letter for the top side
      */
-    protected void setTopSide(Letter letter) {
+    public void setTopSide(Letter letter) {
         this.topSide = letter;
     }
     
