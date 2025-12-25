@@ -32,5 +32,8 @@ public class PlusShapeStamp extends SpecialTool{
             rightBox.setTopLetter(grid.getStampLetter());
             
         }
+        else{
+            throw new BoxAlreadyFixedException("Cannot use PlusShapeStamp on a fixed box.");
+        }
     }
 }
