@@ -2,6 +2,7 @@ package model.tools;
 
 import core.BoxGrid;
 import model.box.Box;
+import model.box.FixedBox;
 import core.exceptions.BoxAlreadyFixedException;
 
 
