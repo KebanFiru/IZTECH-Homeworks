@@ -1,7 +1,6 @@
 package model.tools;
 
 import core.BoxGrid;
-import model.box.Box;
 
 public abstract class SpecialTool {
 
