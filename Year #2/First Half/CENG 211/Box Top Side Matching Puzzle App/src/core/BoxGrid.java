@@ -195,9 +195,9 @@ public class BoxGrid {
      */
     public void displayGrid() {
         // Print column headers
-        System.out.print("        ");
+        System.out.print("      ");
         for (int c = 1; c <= COLUMN; c++) {
-            System.out.printf("C%-6d", c);
+            System.out.printf(" C%-6d", c);
         }
         System.out.println();
 
@@ -217,7 +217,16 @@ public class BoxGrid {
         }
     }
 
-
+    /**
+     * Checks if a box is on a corner of the grid.
+     *
+     * @param row Row index
+     * @param col Column index
+     * @return true if on corner, false otherwise
+     */
+    public boolean isCornerBox(int row, int col) {
+        return (row == 0 || row == 7) && (col == 0 || col == 7);
+    }
 
     /**
      * Counts how many boxes in the grid have the specified letter on their top face.
@@ -225,6 +234,7 @@ public class BoxGrid {
      * @param target the target letter to count
      * @return the number of boxes with the target letter on top
      */
+
     public int countTargetLetterOnTop(char target) {
         int count = 0;
         for (List<Box> row : grid) {

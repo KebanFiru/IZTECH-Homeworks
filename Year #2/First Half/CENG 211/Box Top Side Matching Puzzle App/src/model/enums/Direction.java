@@ -45,4 +45,5 @@ public enum Direction {
                 throw new IllegalStateException("Unknown direction: " + this);
         }
     }
+
 }
