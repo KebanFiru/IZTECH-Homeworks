@@ -135,18 +135,28 @@ public class BoxGrid {
      * and the notation of each box.
      */
     public void displayGrid() {
-        System.out.print("    ");
-        for(int c=1; c<=COLUMN; c++) System.out.print("C" + c + "    ");
-        System.out.println("\n");
+        System.out.print("   ");
+        for (int c = 1; c <= COLUMN; c++) {
+            System.out.printf("     C%-4d", c);
+        }
+        System.out.println();
+
+        String horizontalLine = "    " + "-".repeat((COLUMN * 10) + 1);
+
+        System.out.println(horizontalLine);
 
         for (int r = 0; r < ROW; r++) {
-            System.out.print("R" + (r + 1) + "  ");
+            System.out.printf("R%-2d ", (r + 1));
             for (int c = 0; c < COLUMN; c++) {
-                System.out.print("| " + grid.get(r).get(c).getNotation() + " ");
+                String content = grid.get(r).get(c).getGridDisplay();
+                System.out.print("| " + content + " ");
             }
             System.out.println("|");
+            System.out.println(horizontalLine);
         }
     }
+
+
 
     /**
      * Counts how many boxes in the grid have the specified letter on their top face.

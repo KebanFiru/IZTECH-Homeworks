@@ -110,7 +110,7 @@ public class UnchangingBox extends Box implements IStampable {
     @Override
     public String getGridDisplay() {
         char status = isOpened() ? 'O' : 'M';
-        return String.format("| U-%c-%c |", topSide.toChar(), status);
+        return String.format(" U-%c-%c ", topSide.toChar(), status);
     }
 }
 

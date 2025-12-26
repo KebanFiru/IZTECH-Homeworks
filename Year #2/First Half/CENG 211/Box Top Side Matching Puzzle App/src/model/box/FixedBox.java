@@ -106,7 +106,8 @@ public class FixedBox extends Box {
      */
     @Override
     public String getGridDisplay() {
-        return String.format("| X-%c-O |", topSide.toChar());
+        return String.format(" X-%c-O ", topSide.toChar());
     }
+
 }
 
