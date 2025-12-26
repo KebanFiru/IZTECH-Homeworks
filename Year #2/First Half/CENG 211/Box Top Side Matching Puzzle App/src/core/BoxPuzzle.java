@@ -107,8 +107,10 @@ public class BoxPuzzle {
                     int[] coords = parseLocation(loc);
                     Box box = grid.getBox(coords[0], coords[1]);
                     System.out.println(box.displayAllSurfaces());
-                } else {
+                } else if (choice.equals("2")){
                     System.out.println("\nContinuing to the first stage...");
+                } else{
+                    throw new IllegalArgumentException("This is not a valid input.");
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println("INCORRECT INPUT: " + e.getMessage());
@@ -130,7 +132,6 @@ public class BoxPuzzle {
                 int r = coords[0];
                 int c = coords[1];
 
-                // Check if box is on edge
                 boolean isEdge = (r == 0 || r == 7 || c == 0 || c == 7);
                 if (!isEdge) {
                     System.out.print("INCORRECT INPUT: The chosen box is not on any of the edges. Please reenter the location: ");
@@ -138,37 +139,20 @@ public class BoxPuzzle {
                     return;
                 }
 
-                // Determine direction based on position
-                Direction dir = null;
-                boolean isCorner = (r == 0 || r == 7) && (c == 0 || c == 7);
-                
-                if (isCorner) {
-                    // Corner box: user chooses direction
-                    System.out.print("\nThe chosen box can be rolled to either ");
-                    if (r == 0 && c == 0) {
-                        System.out.print("[1] right or [2] downwards: ");
-                        int choice = Integer.parseInt(sc.nextLine().trim());
-                        dir = (choice == 1) ? Direction.RIGHT : Direction.DOWN;
-                    } else if (r == 0 && c == 7) {
-                        System.out.print("[1] left or [2] downwards: ");
-                        int choice = Integer.parseInt(sc.nextLine().trim());
-                        dir = (choice == 1) ? Direction.LEFT : Direction.DOWN;
-                    } else if (r == 7 && c == 0) {
-                        System.out.print("[1] right or [2] upwards: ");
-                        int choice = Integer.parseInt(sc.nextLine().trim());
-                        dir = (choice == 1) ? Direction.RIGHT : Direction.UP;
-                    } else { // r == 7 && c == 7
-                        System.out.print("[1] left or [2] upwards: ");
-                        int choice = Integer.parseInt(sc.nextLine().trim());
-                        dir = (choice == 1) ? Direction.LEFT : Direction.UP;
-                    }
+                Direction dir;
+
+                if (isCornerBox(r, c)) {
+                    dir = askCornerDirection(r, c);
                 } else {
-                    // Edge box: automatic direction
-                    if (r == 0) dir = Direction.DOWN;
-                    else if (r == 7) dir = Direction.UP;
-                    else if (c == 0) dir = Direction.RIGHT;
-                    else dir = Direction.LEFT;
-                    System.out.println("The chosen box is automatically rolled to " + dir.toString().toLowerCase() + ".");
+                    dir = determineAutoDirection(r, c);
+
+                    String moveStatus = "until a FixedBox has been reached.";
+                    try {
+                        moveStatus = "."; // Şimdilik basit nokta koyuyoruz.
+                    } catch (Exception e) {}
+
+                    System.out.println("The chosen box is automatically rolled to " +
+                            getDirectionName(dir) + moveStatus);
                 }
 
                 // Roll the boxes
@@ -259,6 +243,51 @@ public class BoxPuzzle {
                 System.out.println("INCORRECT INPUT: " + e.getMessage());
                 useToolInteractively(tool);
             }
+        }
+
+        private boolean isEdgeBox(int r, int c) {
+            return (r == 0 || r == 7 || c == 0 || c == 7);
+        }
+
+        private boolean isCornerBox(int r, int c) {
+            return (r == 0 || r == 7) && (c == 0 || c == 7);
+        }
+
+        private Direction askCornerDirection(int r, int c) {
+            System.out.print("\nThe chosen box can be rolled to either ");
+            int choice;
+
+            if (r == 0 && c == 0) {
+                System.out.print("[1] right or [2] downwards: ");
+                choice = Integer.parseInt(sc.nextLine().trim());
+                return (choice == 1) ? Direction.RIGHT : Direction.DOWN;
+            }
+            else if (r == 0 && c == 7) {
+                System.out.print("[1] left or [2] downwards: ");
+                choice = Integer.parseInt(sc.nextLine().trim());
+                return (choice == 1) ? Direction.LEFT : Direction.DOWN;
+            }
+            else if (r == 7 && c == 0) {
+                System.out.print("[1] right or [2] upwards: ");
+                choice = Integer.parseInt(sc.nextLine().trim());
+                return (choice == 1) ? Direction.RIGHT : Direction.UP;
+            }
+            else {
+                System.out.print("[1] left or [2] upwards: ");
+                choice = Integer.parseInt(sc.nextLine().trim());
+                return (choice == 1) ? Direction.LEFT : Direction.UP;
+            }
+        }
+
+        private Direction determineAutoDirection(int r, int c) {
+            if (r == 0) return Direction.DOWN;
+            else if (r == 7) return Direction.UP;
+            else if (c == 0) return Direction.RIGHT;
+            else return Direction.LEFT;
+        }
+
+        private String getDirectionName(Direction d) {
+            return d.toString().toLowerCase();
         }
 
         /**
