@@ -1,11 +1,11 @@
 package model.tools;
 
 import core.BoxGrid;
-import core.exceptions.BoxAlreadyFixedException;
 
 /**
  * Abstract base class for all special tools in the puzzle game.
  * Each tool has a name and a useTool method to apply its effect to the grid.
+ * Tools may throw exceptions when used incorrectly (e.g., on FixedBoxes).
  */
 public abstract class SpecialTool {
 

@@ -57,10 +57,10 @@ public class FixedBox extends Box {
      * FixedBox cannot be rolled - always throws UnmovableFixedBoxException.
      * 
      * @param direction the direction to roll (ignored)
-     * @throws UnmovableFixedBoxException always thrown when attempting to roll a FixedBox
+     * @throws UnmovableFixedBoxException always thrown (unchecked - RuntimeException)
      */
     @Override
-    public void roll(Direction direction) throws UnmovableFixedBoxException {
+    public void roll(Direction direction) {
         throw new UnmovableFixedBoxException("FixedBox cannot be rolled!");
     }
     
@@ -80,7 +80,7 @@ public class FixedBox extends Box {
      * Attempting to flip a FixedBox should throw an exception.
      * This method is called by BoxFlipper tool.
      * 
-     * @throws UnmovableFixedBoxException when attempting to flip a FixedBox
+     * @throws UnmovableFixedBoxException when attempting to flip a FixedBox (unchecked - RuntimeException)
      */
     @Override
     public void flipUpsideDown() {

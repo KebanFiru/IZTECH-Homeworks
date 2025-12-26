@@ -5,12 +5,17 @@ import model.box.Box;
 import model.box.FixedBox;
 import core.exceptions.BoxAlreadyFixedException;
 
-
 /**
  * BoxFixer is a SpecialTool that replaces a box with an identical FixedBox copy.
- * If the box is already a FixedBox, throws BoxAlreadyFixedException and wastes the turn.
- * If the box contains a tool, it is removed from the game.
- * Usage: select a box location, and the box at that location is replaced with a FixedBox.
+ * 
+ * Behavior:
+ * - RegularBox/UnchangingBox: Replaced with FixedBox (same surfaces, tool removed)
+ * - FixedBox: Throws BoxAlreadyFixedException (cannot fix an already fixed box)
+ * 
+ * After fixing:
+ * - The new FixedBox has the same letters on all surfaces
+ * - Any tool inside the original box is removed from the game
+ * - The box becomes immovable for the rest of the game
  */
 public class BoxFixer extends SpecialTool {
 
@@ -23,9 +28,9 @@ public class BoxFixer extends SpecialTool {
 
     /**
      * Replaces the box at the specified location with a FixedBox copy.
-     * Throws BoxAlreadyFixedException if the box is already fixed.
      * @param grid the BoxGrid
      * @param args expects (int row, int column)
+     * @throws BoxAlreadyFixedException if the box is already a FixedBox (unchecked - RuntimeException)
      */
     @Override
     public void useTool(BoxGrid grid, Object... args) {
@@ -34,7 +39,7 @@ public class BoxFixer extends SpecialTool {
 
         Box box = grid.getBox(row, column);
         if (box instanceof FixedBox) {
-            throw new BoxAlreadyFixedException("Box at (" + row + "," + column + ") is already a FixedBox.");
+            throw new BoxAlreadyFixedException("Box at R" + (row + 1) + "-C" + (column + 1) + " is already a FixedBox.");
         }
 
         // Create a FixedBox with the same surfaces as the original box
@@ -47,7 +52,7 @@ public class BoxFixer extends SpecialTool {
             box.getRightSide()
         );
 
-        // Replace the box in the grid (assume grid has a replaceBox method)
+        // Replace the box in the grid
         grid.replaceBox(row, column, fixedBox);
     }
 }

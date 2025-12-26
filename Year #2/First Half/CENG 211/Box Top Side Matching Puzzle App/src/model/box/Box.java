@@ -218,9 +218,6 @@ public abstract class Box implements IRollable, IOpenable {
     }
     
     /**
-     
-    
-    /**
      * Opens the box and retrieves the SpecialTool inside (IOpenable interface implementation).
      * After opening, the box is marked as empty and opened.
      * The box must have been rolled during the current turn to be opened.
@@ -291,9 +288,11 @@ public abstract class Box implements IRollable, IOpenable {
     protected abstract void initializeTool();
     
     /**
-    /* Flips the box upside down.
+     * Flips the box upside down.
      * The top becomes the bottom, and the bottom becomes the top.
      * Used by BoxFlipper tool.
+     * 
+     * @throws UnmovableFixedBoxException if this is a FixedBox (overridden in FixedBox class) - unchecked
      */
     public void flipUpsideDown() {
         Letter temp = topSide;
@@ -339,10 +338,10 @@ public abstract class Box implements IRollable, IOpenable {
      * FixedBox will override this method to throw an exception.
      * 
      * @param direction the direction to roll the box
-     * @throws UnmovableFixedBoxException if attempting to roll a FixedBox
+     * @throws UnmovableFixedBoxException if attempting to roll a FixedBox (unchecked - RuntimeException)
      */
     @Override
-    public void roll(Direction direction) throws UnmovableFixedBoxException {
+    public void roll(Direction direction) {
         performRoll(direction);
     }
     

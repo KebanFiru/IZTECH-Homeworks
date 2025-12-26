@@ -1,36 +1,41 @@
 package model.tools;
 
 import core.BoxGrid;
-import model.box.FixedBox;
 import model.box.Box;
-
+import interfaces.IStampable;
 import model.enums.Letter;
+
 /**
- * MassColumnStamp is a SpecialTool that stamps all boxes in a column with a new letter.
- * Skips FixedBoxes.
+ * MassColumnStamp is a SpecialTool that stamps all boxes in an entire column with the target letter.
+ * 
+ * Behavior:
+ * - Stamps all stampable boxes in the column
+ * - UnchangingBox: Can be stamped but letter doesn't change
+ * - FixedBox: Cannot be stamped (skipped, doesn't implement IStampable)
  */
-public class MassColumnStamp extends SpecialTool{
+public class MassColumnStamp extends SpecialTool {
 
     /**
      * Constructs a MassColumnStamp tool.
      */
-    public MassColumnStamp(){
+    public MassColumnStamp() {
         super("MassColumnStamp");
     }
 
     /**
-     * Stamps all boxes in the specified column with a new letter, skipping FixedBoxes.
+     * Stamps all stampable boxes in the specified column with the target letter.
      * @param grid the BoxGrid
      * @param args expects (int column)
      */
     @Override
-    public void useTool(BoxGrid grid, Object... args){
-        int column = (Integer)args[0];
-        char stampLetter = grid.getStampLetter();
-        for(int i= 0; i<grid.getRowCount(); i++){
-            Box box = grid.getBox(i, column);
-            if(!(box instanceof FixedBox)){
-                box.setTopSide(Letter.fromChar(stampLetter));
+    public void useTool(BoxGrid grid, Object... args) {
+        int column = (Integer) args[0];
+        Letter targetLetter = Letter.fromChar(grid.getStampLetter());
+        
+        for (int row = 0; row < grid.getRowCount(); row++) {
+            Box box = grid.getBox(row, column);
+            if (box instanceof IStampable) {
+                ((IStampable) box).stampTopSide(targetLetter);
             }
         }
     }
