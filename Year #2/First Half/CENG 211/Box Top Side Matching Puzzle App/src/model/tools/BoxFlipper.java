@@ -25,10 +25,10 @@ public class BoxFlipper extends SpecialTool {
      * Flips the box at the specified location upside down.
      * @param grid the BoxGrid
      * @param args expects (int row, int column)
-     * @throws UnmovableFixedBoxException if attempting to flip a FixedBox
+     * @throws UnmovableFixedBoxException if attempting to flip a FixedBox (unchecked - RuntimeException)
      */
     @Override
-    public void useTool(BoxGrid grid, Object... args) throws UnmovableFixedBoxException {
+    public void useTool(BoxGrid grid, Object... args) {
         int row = (Integer) args[0];
         int column = (Integer) args[1];
         Box box = grid.getBox(row, column);

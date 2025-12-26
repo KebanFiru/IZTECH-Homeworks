@@ -30,10 +30,10 @@ public class BoxFixer extends SpecialTool {
      * Replaces the box at the specified location with a FixedBox copy.
      * @param grid the BoxGrid
      * @param args expects (int row, int column)
-     * @throws BoxAlreadyFixedException if the box is already a FixedBox
+     * @throws BoxAlreadyFixedException if the box is already a FixedBox (unchecked - RuntimeException)
      */
     @Override
-    public void useTool(BoxGrid grid, Object... args) throws BoxAlreadyFixedException {
+    public void useTool(BoxGrid grid, Object... args) {
         int row = (Integer) args[0];
         int column = (Integer) args[1];
 

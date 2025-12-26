@@ -41,10 +41,8 @@ public class BoxPuzzle {
      * 
      * @param <T> the type of SpecialTool (must extend SpecialTool)
      * @param tool the tool to use
-     * @throws BoxAlreadyFixedException if using BoxFixer on already fixed box
-     * @throws UnmovableFixedBoxException if using BoxFlipper on FixedBox
      */
-    public <T extends SpecialTool> void useTool(T tool) throws BoxAlreadyFixedException, UnmovableFixedBoxException {
+    public <T extends SpecialTool> void useTool(T tool) {
         if (tool != null) {
             tool.useTool(this.grid);
         }
@@ -122,9 +120,8 @@ public class BoxPuzzle {
 
         /**
          * Prompts user to select and roll an edge box.
-         * @throws UnmovableFixedBoxException if selected box is FixedBox
          */
-        private void promptEdgeRoll() throws UnmovableFixedBoxException {
+        private void promptEdgeRoll() {
             try {
                 System.out.print("Please enter the location of the edge box you want to roll: ");
                 String loc = sc.nextLine().toUpperCase().trim();
@@ -188,10 +185,8 @@ public class BoxPuzzle {
         /**
          * Prompts user to open a box that was rolled and use any tool found inside.
          * @throws EmptyBoxException if the box is empty
-         * @throws BoxAlreadyFixedException if using BoxFixer on FixedBox
-         * @throws UnmovableFixedBoxException if using BoxFlipper on FixedBox
          */
-        private void promptOpenBox() throws EmptyBoxException, BoxAlreadyFixedException, UnmovableFixedBoxException {
+        private void promptOpenBox() throws EmptyBoxException {
             try {
                 System.out.print("Please enter the location of the box you want to open: ");
                 String loc = sc.nextLine().toUpperCase().trim();
@@ -235,10 +230,8 @@ public class BoxPuzzle {
         /**
          * Prompts user for tool-specific inputs and applies the tool.
          * @param tool the tool to use
-         * @throws BoxAlreadyFixedException if fixing already fixed box
-         * @throws UnmovableFixedBoxException if flipping FixedBox
          */
-        private void useToolInteractively(SpecialTool tool) throws BoxAlreadyFixedException, UnmovableFixedBoxException {
+        private void useToolInteractively(SpecialTool tool) {
             try {
                 String toolName = tool.getName();
                 
