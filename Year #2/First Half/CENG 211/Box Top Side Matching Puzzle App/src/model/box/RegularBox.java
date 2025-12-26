@@ -115,7 +115,7 @@ public class RegularBox extends Box implements IStampable {
     @Override
     public String getGridDisplay() {
         char status = isOpened() || isEmpty() ? 'O' : 'M';
-        return String.format("| R-%c-%c |", topSide.toChar(), status);
+        return String.format(" R-%c-%c ", topSide.toChar(), status);
     }
 }
 

@@ -417,4 +417,6 @@ public abstract class Box implements IRollable, IOpenable {
      * @return formatted string for grid display
      */
     public abstract String getGridDisplay();
+
 }
+
