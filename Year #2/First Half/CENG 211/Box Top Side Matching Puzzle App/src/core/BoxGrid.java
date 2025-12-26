@@ -5,7 +5,6 @@ import model.box.Box;
 import model.box.FixedBox;
 import model.box.RegularBox;
 import model.box.UnchangingBox;
-
 import model.enums.Direction;
 
 import java.util.ArrayList;
@@ -13,38 +12,67 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * BoxGrid manages the 8x8 grid of boxes for the puzzle game.
- * Handles box generation, access, rolling, and display operations.
- * Provides methods for tool usage and letter counting.
+ * ANSWER TO COLLECTIONS QUESTION:
+ * 
+ * This class uses ArrayList<ArrayList<Box>> to represent the 8x8 grid of boxes.
+ * 
+ * Why ArrayList?
+ * - Dynamic sizing: Although we have a fixed 8x8 grid, ArrayList provides flexibility
+ *   for potential future enhancements (different grid sizes).
+ * - Index-based access: We need O(1) constant time access to boxes by row/column indices.
+ *   ArrayList.get(index) provides this efficiency, which is crucial for frequent 
+ *   box lookups during rolling, stamping, and display operations.
+ * - Memory efficiency: ArrayList is more memory-efficient than LinkedList for our use case
+ *   since we don't need frequent insertions/deletions in the middle of the structure.
+ * - Iteration performance: Enhanced for-loop iteration over ArrayList is very fast,
+ *   which is important for countTargetLetterOnTop() and display operations.
+ * 
+ * Why not other Collections?
+ * - LinkedList: Would provide O(n) access time, which is inefficient for grid[row][col] lookups.
+ * - HashMap: Unnecessary overhead for a simple 2D grid with sequential indices.
+ * - Array[][]: While slightly more efficient, ArrayList provides better abstraction and
+ *   is more flexible for future modifications while maintaining similar performance.
+ * 
+ * Structure: List<List<Box>> (outer list = rows, inner list = columns)
+ * - Intuitive representation of 2D grid
+ * - Easy to iterate over rows and columns
+ * - Supports polymorphism: Can store RegularBox, UnchangingBox, and FixedBox objects
  */
 public class BoxGrid {
     private List<List<Box>> grid;
+    private char targetLetter;
     private final static int ROW = 8;
     private final static int COLUMN = 8;
 
 
     /**
      * Constructs a new BoxGrid and generates the initial 8x8 grid of boxes.
+     * @param targetLetter the target letter for this game (used by stamping tools)
      */
-    public BoxGrid(){
+    public BoxGrid(char targetLetter) {
+        this.targetLetter = targetLetter;
         grid = new ArrayList<>();
         generateGrid();
     }
 
     /**
      * Generates the 8x8 grid of boxes with the specified probabilities:
-     * - 5% FixedBox, 5% UnchangingBox, 90% RegularBox
+     * - 85% RegularBox, 10% UnchangingBox, 5% FixedBox
      */
-    public void generateGrid(){
+    public void generateGrid() {
         Random random = new Random();
-        for (int r=0; r < ROW; r++){
+        for (int r = 0; r < ROW; r++) {
             List<Box> currentRow = new ArrayList<>();
-            for(int c=0; c < COLUMN; c++){
+            for (int c = 0; c < COLUMN; c++) {
                 double chance = random.nextDouble() * 100;
                 Box box;
-                if(chance < 5) box = new FixedBox();
-                else if (chance < 10) box = new UnchangingBox();
-                else box = new RegularBox();
+                if (chance < 5) {
+                    box = new FixedBox();
+                } else if (chance < 15) {  // 5% to 15% = 10% for UnchangingBox
+                    box = new UnchangingBox();
+                } else {  // 15% to 100% = 85% for RegularBox
+                    box = new RegularBox();
+                }
                 currentRow.add(box);
             }
             grid.add(currentRow);
@@ -90,43 +118,74 @@ public class BoxGrid {
     }
 
     /**
-     * Returns the letter to be used for stamping tools (random A-H).
-     * @return a random letter (A-H)
+     * Returns the target letter to be used for stamping tools.
+     * This is the letter that players are trying to maximize on box tops.
+     * @return the target letter for this game
      */
     public char getStampLetter() {
-        return (char)('A' + new Random().nextInt(8));
+        return targetLetter;
     }
 
     /**
+     * Resets the rolled status of all boxes in the grid.
+     * Should be called at the start of each turn.
+     */
+    public void resetRolledStatus() {
+        for (List<Box> row : grid) {
+            for (Box box : row) {
+                box.setRolledThisTurn(false);
+            }
+        }
+    }
+    
+    /**
      * Rolls the boxes along the specified edge starting from the given position in the given direction.
-     * Stops rolling when a FixedBox is encountered or the edge of the grid is reached.
+     * Implements the domino-effect: all boxes in the path roll until a FixedBox is encountered.
+     * Marks all rolled boxes with setRolledThisTurn(true) for validation in stage 2.
      *
-     * @param row the starting row index
-     * @param column the starting column index
+     * @param row the starting row index (0-based)
+     * @param column the starting column index (0-based)
      * @param direction the direction to roll (UP, DOWN, LEFT, RIGHT)
      * @throws UnmovableFixedBoxException if the starting box is a FixedBox
      */
-    public void rollEdgeBox (int row, int column, Direction direction) throws UnmovableFixedBoxException {
+    public void rollEdgeBox(int row, int column, Direction direction) throws UnmovableFixedBoxException {
         Box startBox = grid.get(row).get(column);
 
-        if (startBox instanceof FixedBox){
-            throw new UnmovableFixedBoxException("Unmovable Fixed Box selected!");
+        if (startBox instanceof FixedBox) {
+            throw new UnmovableFixedBoxException("The chosen box is FIXED and cannot be moved!");
         }
 
         int currRow = row;
         int currColumn = column;
 
-        while (currRow >= 0 && currRow < ROW && currColumn >= 0 && currColumn < COLUMN){
+        // Roll boxes in the specified direction until boundary or FixedBox
+        while (currRow >= 0 && currRow < ROW && currColumn >= 0 && currColumn < COLUMN) {
             Box currentBox = getBox(currRow, currColumn);
 
-            if (currentBox instanceof FixedBox) break;
+            // Stop if we hit a FixedBox (domino-effect stops here)
+            if (currentBox instanceof FixedBox) {
+                break;
+            }
 
+            // Roll the box and mark it as rolled this turn
             currentBox.roll(direction);
+            currentBox.setRolledThisTurn(true);
 
-            if (direction == Direction.RIGHT) currColumn++;
-            else if (direction == Direction.LEFT) currColumn--;
-            else if (direction == Direction.UP) currRow--;
-            else if (direction == Direction.DOWN) currRow++;
+            // Move to next box in the rolling direction
+            switch (direction) {
+                case RIGHT:
+                    currColumn++;
+                    break;
+                case LEFT:
+                    currColumn--;
+                    break;
+                case UP:
+                    currRow--;
+                    break;
+                case DOWN:
+                    currRow++;
+                    break;
+            }
         }
     }
 
@@ -135,21 +194,23 @@ public class BoxGrid {
      * and the notation of each box.
      */
     public void displayGrid() {
-        System.out.print("   ");
+        // Print column headers
+        System.out.print("        ");
         for (int c = 1; c <= COLUMN; c++) {
-            System.out.printf("     C%-4d", c);
+            System.out.printf("C%-6d", c);
         }
         System.out.println();
 
-        String horizontalLine = "    " + "-".repeat((COLUMN * 10) + 1);
-
+        // Print top border
+        String horizontalLine = "    " + "-".repeat(COLUMN * 8 + 1);
         System.out.println(horizontalLine);
 
+        // Print each row
         for (int r = 0; r < ROW; r++) {
             System.out.printf("R%-2d ", (r + 1));
             for (int c = 0; c < COLUMN; c++) {
                 String content = grid.get(r).get(c).getGridDisplay();
-                System.out.print("| " + content + " ");
+                System.out.print("|" + content);
             }
             System.out.println("|");
             System.out.println(horizontalLine);

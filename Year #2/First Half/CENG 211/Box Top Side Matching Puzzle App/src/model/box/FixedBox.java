@@ -83,7 +83,7 @@ public class FixedBox extends Box {
      * @throws UnmovableFixedBoxException when attempting to flip a FixedBox
      */
     @Override
-    public void flipUpsideDown() {
+    public void flipUpsideDown() throws UnmovableFixedBoxException {
         throw new UnmovableFixedBoxException("FixedBox cannot be flipped!");
     }
     

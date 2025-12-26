@@ -14,7 +14,7 @@ package core.exceptions;
  * When this exception is thrown, the turn is wasted and the game continues to the next turn.
  * The application should catch and handle this exception gracefully without terminating.
  */
-public class UnmovableFixedBoxException extends RuntimeException {
+public class UnmovableFixedBoxException extends Exception {
     
     /**
      * Constructs a new UnmovableFixedBoxException with no detail message.
