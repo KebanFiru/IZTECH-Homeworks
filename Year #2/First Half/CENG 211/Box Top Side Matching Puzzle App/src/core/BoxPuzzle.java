@@ -122,8 +122,9 @@ public class BoxPuzzle {
 
         /**
          * Prompts user to select and roll an edge box.
+         * @throws UnmovableFixedBoxException if attempting to roll a FixedBox
          */
-        private void promptEdgeRoll() {
+        private void promptEdgeRoll() throws UnmovableFixedBoxException {
             try {
                 System.out.print("Please enter the location of the edge box you want to roll: ");
                 String loc = sc.nextLine().toUpperCase().trim();
@@ -132,8 +133,7 @@ public class BoxPuzzle {
                 int r = coords[0];
                 int c = coords[1];
 
-                boolean isEdge = (r == 0 || r == 7 || c == 0 || c == 7);
-                if (!isEdge) {
+                if (!isEdgeBox(r, c)) {
                     System.out.print("INCORRECT INPUT: The chosen box is not on any of the edges. Please reenter the location: ");
                     promptEdgeRoll();
                     return;
@@ -145,23 +145,13 @@ public class BoxPuzzle {
                     dir = askCornerDirection(r, c);
                 } else {
                     dir = determineAutoDirection(r, c);
-
-                    String moveStatus = "until a FixedBox has been reached.";
-                    try {
-                        moveStatus = "."; // Şimdilik basit nokta koyuyoruz.
-                    } catch (Exception e) {}
-
-                    System.out.println("The chosen box is automatically rolled to " +
-                            getDirectionName(dir) + moveStatus);
+                    System.out.println("The chosen box is automatically rolled to " + getDirectionName(dir) + ".");
                 }
 
                 // Roll the boxes
                 grid.rollEdgeBox(r, c, dir);
             } catch (IllegalArgumentException e) {
                 System.out.println("INCORRECT INPUT: " + e.getMessage());
-                promptEdgeRoll();
-            } catch (Exception e) {
-                System.out.println("INCORRECT INPUT");
                 promptEdgeRoll();
             }
         }
@@ -245,14 +235,33 @@ public class BoxPuzzle {
             }
         }
 
+        /**
+         * Checks if the given box position is on the edge of the grid.
+         * @param r the row index (0-7)
+         * @param c the column index (0-7)
+         * @return true if the box is on any edge, false otherwise
+         */
         private boolean isEdgeBox(int r, int c) {
             return (r == 0 || r == 7 || c == 0 || c == 7);
         }
 
+        /**
+         * Checks if the given box position is at a corner of the grid.
+         * @param r the row index (0-7)
+         * @param c the column index (0-7)
+         * @return true if the box is at any corner, false otherwise
+         */
         private boolean isCornerBox(int r, int c) {
             return (r == 0 || r == 7) && (c == 0 || c == 7);
         }
 
+        /**
+         * Asks the user to choose a direction for rolling a corner box.
+         * Corner boxes can be rolled in two possible directions.
+         * @param r the row index of the corner box
+         * @param c the column index of the corner box
+         * @return the chosen Direction
+         */
         private Direction askCornerDirection(int r, int c) {
             System.out.print("\nThe chosen box can be rolled to either ");
             int choice;
@@ -279,6 +288,12 @@ public class BoxPuzzle {
             }
         }
 
+        /**
+         * Determines the automatic rolling direction for non-corner edge boxes.
+         * @param r the row index of the edge box
+         * @param c the column index of the edge box
+         * @return the Direction to roll automatically
+         */
         private Direction determineAutoDirection(int r, int c) {
             if (r == 0) return Direction.DOWN;
             else if (r == 7) return Direction.UP;
@@ -286,6 +301,11 @@ public class BoxPuzzle {
             else return Direction.LEFT;
         }
 
+        /**
+         * Converts a Direction enum to its lowercase string representation.
+         * @param d the Direction enum
+         * @return the direction name in lowercase (e.g., "up", "down", "left", "right")
+         */
         private String getDirectionName(Direction d) {
             return d.toString().toLowerCase();
         }
