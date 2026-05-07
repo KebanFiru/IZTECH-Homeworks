@@ -352,9 +352,10 @@ fish_tail_points = [
 # Fin uses 4 points — no vertical segment
 fish_fin_points = [
     (4.5, 6.0),
-    (4.2, 6.8),
-    (4.8, 7.2),
-    (5.3, 6.2),
+    (4.2, 6.5),
+    (4.0, 7.0),
+    (4.7, 6.6),
+    (5.3, 6.2)
 ]
 
 
